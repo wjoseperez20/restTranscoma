@@ -59,7 +59,7 @@ class CsvImportCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $io->title('Leyendo Csv...');
 
-        $reader = Reader::createFromPath('%kernel.root_dir%/../assets/dataPartidasDua.csv');
+        $reader = Reader::createFromPath('%kernel.root_dir%/../src/AppBundle/Data/dataPartidasDua.csv');
 
         // https://github.com/thephpleague/csv/issues/208
         $results = $reader->fetchAssoc();
@@ -69,9 +69,9 @@ class CsvImportCommand extends Command
         foreach ($results as $row) {
 
             $postalDua = (new Postal())
-                ->setFirstName($row['first_name'])
-                ->setLastName($row['last_name'])
-                ->setDateOfBirth(new \DateTime($row['date_of_birth']))
+                ->setTrackingNumber($row['Tracking Number'])
+                ->setConocimientoAereo($row['Conocimiento Aereo'])
+                ->setReference($row['Reference'])
             ;
 
             $this->em->persist($postalDua);
