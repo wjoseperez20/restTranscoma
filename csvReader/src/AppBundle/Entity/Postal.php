@@ -283,7 +283,7 @@ class Postal
     /**
      * @var int
      *
-     * @ORM\Column(name="itemQuatity", type="integer")
+     * @ORM\Column(name="itemQuantity", type="integer")
      */
     private $itemQuantity;
 
