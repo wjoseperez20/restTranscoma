@@ -23,3 +23,7 @@ Attempting import of Feed...
 #### para generar las entidades en doctrine:
 
 >php bin/console doctrine:generate:entity
+
+#### para actualizar la b/d
+
+>php bin/console doctrine:schema:update --force
