@@ -20,6 +20,9 @@ Attempting import of Feed...
  [OK] Command exited cleanly!                                                                                           
                                                                                                                         
 ```
+
+### Jueves 9/08/2018
+
 #### para generar las entidades en doctrine:
 
 >php bin/console doctrine:generate:entity
@@ -27,3 +30,14 @@ Attempting import of Feed...
 #### para actualizar la b/d
 
 >php bin/console doctrine:schema:update --force
+
+#### creacion de un nuevo comando (clase) para ejecutarlo en consola:
+
+>php bin/console csv:excel
+
+para ello se registro el comando en el archivo /app/config/services.yml
+
+#### prueba de la lectura del archivo .csv y la escritura en la base de datos con el siguiente comando:
+
+>php bin/console csv:import
+
