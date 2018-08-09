@@ -19,5 +19,7 @@ Attempting import of Feed...
                                                                                                                         
  [OK] Command exited cleanly!                                                                                           
                                                                                                                         
-
 ```
+####para generar las entidades en doctrine:
+
+>php bin/console doctrine:generate:entity

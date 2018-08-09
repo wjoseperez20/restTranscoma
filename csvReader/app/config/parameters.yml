@@ -10,3 +10,4 @@ parameters:
     mailer_user: null
     mailer_password: null
     secret: ThisTokenIsNotSoSecretChangeIt
+#parametros de la bd de mysql
