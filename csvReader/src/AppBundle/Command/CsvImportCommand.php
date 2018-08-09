@@ -2,8 +2,7 @@
 
 namespace AppBundle\Command;
 
-use AppBundle\Entity\Athlete;
-use AppBundle\Entity\Competitor;
+use AppBundle\Entity\Postal;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Csv\Reader;
 use Symfony\Component\Console\Command\Command;
@@ -58,9 +57,9 @@ class CsvImportCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);
-        $io->title('Attempting import of Feed...');
+        $io->title('Leyendo Csv...');
 
-        $reader = Reader::createFromPath('%kernel.root_dir%/../src/AppBundle/Data/MOCK_DATA.csv');
+        $reader = Reader::createFromPath('%kernel.root_dir%/../assets/dataPartidasDua.csv');
 
         // https://github.com/thephpleague/csv/issues/208
         $results = $reader->fetchAssoc();
@@ -69,35 +68,13 @@ class CsvImportCommand extends Command
 
         foreach ($results as $row) {
 
-            // do a look up for existing Athlete matching first + last + dob
-            // or create new athlete
-            $athlete = (new Athlete())
+            $postalDua = (new Postal())
                 ->setFirstName($row['first_name'])
                 ->setLastName($row['last_name'])
                 ->setDateOfBirth(new \DateTime($row['date_of_birth']))
             ;
 
-            $this->em->persist($athlete);
-
-            // do a lookup for existing Competitor matching some combination of fields
-            $competitor = $this->em->getRepository('AppBundle:Competitor')
-                ->findOneBy([
-                    'category' => $row['category'],
-                    'competition' => $row['competition']
-                ]);
-
-            if ($competitor === null) {
-                // or create new Competitor
-                $competitor = (new Competitor())
-                    ->setCategory($row['category'])
-                    ->setCompetition($row['competition'])
-                    ->setWeight($row['weight'])
-                ;
-
-                $this->em->persist($competitor);
-            }
-
-            $athlete->setCompetitor($competitor);
+            $this->em->persist($postalDua);
 
             $io->progressAdvance();
         }

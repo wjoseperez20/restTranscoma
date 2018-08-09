@@ -87,7 +87,7 @@
     <parameter key="kernel.container_class">appDevDebugProjectContainer</parameter>
     <parameter key="database_host">127.0.0.1</parameter>
     <parameter key="database_port">3306</parameter>
-    <parameter key="database_name">csvReader</parameter>
+    <parameter key="database_name">csvReaderDua</parameter>
     <parameter key="database_user">wjoseperez</parameter>
     <parameter key="database_password">3squ3l3t0</parameter>
     <parameter key="mailer_transport">smtp</parameter>
@@ -484,7 +484,7 @@
                 <tag name="cache.pool" clearer="cache.default_clearer"/>
                 <argument>M-QiAkjU+U</argument>
                 <argument>0</argument>
-                <argument>sHsxwOB0ktlwMjyL-rS5So</argument>
+                <argument>whwnf9Bw3wPS5oUxzjHo08</argument>
                 <argument>/home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReader/var/cache/dev/pools</argument>
                 <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
                 <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
@@ -667,7 +667,7 @@
       <tag name="cache.pool" clearer="cache.default_clearer"/>
       <argument>GzHLh6b7KM</argument>
       <argument>0</argument>
-      <argument>sHsxwOB0ktlwMjyL-rS5So</argument>
+      <argument>whwnf9Bw3wPS5oUxzjHo08</argument>
       <argument>/home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReader/var/cache/dev/pools</argument>
       <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
@@ -677,7 +677,7 @@
       <tag name="cache.pool" clearer="cache.default_clearer"/>
       <argument>yLtyuwzhBe</argument>
       <argument>0</argument>
-      <argument>sHsxwOB0ktlwMjyL-rS5So</argument>
+      <argument>whwnf9Bw3wPS5oUxzjHo08</argument>
       <argument>/home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReader/var/cache/dev/pools</argument>
       <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
@@ -1670,7 +1670,7 @@
       <argument type="collection">
         <argument type="service">
           <service class="Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider" public="false">
-            <argument>5b6ca819b48d21.37095508</argument>
+            <argument>5b6cbc50cdbb65.46994186</argument>
           </service>
         </argument>
       </argument>
@@ -1818,7 +1818,7 @@
         <argument type="service">
           <service class="Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener" public="false">
             <argument type="service" id="security.token_storage"/>
-            <argument>5b6ca819b48d21.37095508</argument>
+            <argument>5b6cbc50cdbb65.46994186</argument>
             <argument type="service" id="monolog.logger.security" on-invalid="null"/>
             <argument type="service" id="security.authentication.manager"/>
           </service>
@@ -2210,7 +2210,7 @@
         <argument key="driver">pdo_mysql</argument>
         <argument key="host">127.0.0.1</argument>
         <argument key="port">3306</argument>
-        <argument key="dbname">csvReader</argument>
+        <argument key="dbname">csvReaderDua</argument>
         <argument key="user">wjoseperez</argument>
         <argument key="password">3squ3l3t0</argument>
         <argument key="charset">UTF8</argument>

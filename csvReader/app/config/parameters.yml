@@ -2,7 +2,7 @@
 parameters:
     database_host: 127.0.0.1
     database_port: 3306
-    database_name: csvReader
+    database_name: csvReaderDua
     database_user: wjoseperez
     database_password: 3squ3l3t0
     mailer_transport: smtp

@@ -13,11 +13,3 @@ services:
         tags:
             -  { name: console.command }
 
-    console_command.csv_excel_import:
-        class: AppBundle\Command\CsvImportExcelCommand
-
-        arguments:
-        - "@doctrine.orm.default_entity_manager"
-        tags:
-        -  { name: console.command }
-
