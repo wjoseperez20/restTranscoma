@@ -43,12 +43,11 @@ class CsvImportCommand extends Command
     {
         $this
             ->setName('csv:import')
-            ->setDescription('Imports the mock CSV data file')
-        ;
+            ->setDescription('Importa un CSV, y lo guarda en Base de Datos');
     }
 
     /**
-     * @param InputInterface  $input
+     * @param InputInterface $input
      * @param OutputInterface $output
      *
      * @return void
@@ -64,50 +63,50 @@ class CsvImportCommand extends Command
         // https://github.com/thephpleague/csv/issues/208
         $results = $reader->fetchAssoc();
 
-        $io->progressStart(count($results));
+        $io->progressStart(iterator_count($results));
 
         foreach ($results as $row) {
 
             $postalDua = (new Postal())
-                ->setTrackingNumber($row['Tracking Number'])
-                ->setConocimientoAereo($row['Conocimiento Aereo'])
-                ->setReference($row['Reference'])
-                ->setBagLabel($row['Bag Label'])
-                ->setOrigin($row['Origin'])
-                ->setDestination($row['Destination'])
-                ->setSumaria($row['Sumaria'])
-                ->setPartida($row['Partida'])
-                ->setInternalAccountNumber($row['Internal Account Number'])
-                ->setShipperName($row['Shipper Name'])
-                ->setShipAdd1($row['Ship Add 1'])
-                ->setShipAdd2($row['Ship Add 2'])
-                ->setShipAdd3($row['Ship Add 3'])
-                ->setCity($row['City'])
-                ->setState($row['State'])
-                ->setShipZip($row['Ship Zip'])
-                ->setShipCountryCode($row['Ship Contry Code'])
-                ->setNif($row['NIF'])
-                ->setConsignee($row['Consignee'])
-                ->setAddress1($row['Address1'])
-                ->setAddress2($row['Address2'])
-                ->setAddress3($row['Address3'])
-                ->setCity($row['City'])
-                ->setState($row['State'])
-                ->setZip($row['Zip'])
-                ->setCountryCode($row['Country Code'])
-                ->setEmail($row['Email'])
-                ->setPhone($row['Phone'])
-                ->setPieces($row['Pieces'])
-                ->setTotalWeight($row['Total Weight'])
-                ->setWeightUOM($row['Weight UOM'])
-                ->setTotalValue($row['Total Value'])
-                ->setCurrency($row['Currency'])
-                ->setIncoterms($row['Incoterms'])
-                ->setService($row['Service'])
-                ->setItemDescription($row['Item Description'])
-                ->setItemHsCode($row['Item HS Code'])
-                ->setItemQuantity($row['Item Quantity'])
-                ->setItemValue($row['Item Value'])
+                ->setTrackingNumber($row["TrackingNumber"])
+                ->setConocimientoAereo($row["ConocimientoAereo"])
+                ->setReference($row["Reference"])
+                ->setBagLabel($row["BagLabel"])
+                ->setOrigin($row["Origin"])
+                ->setDestination($row["Destination"])
+                ->setSumaria($row["Sumaria"])
+                ->setPartida($row["Partida"])
+                ->setInternalAccountNumber($row["InternalAccountNumber"])
+                ->setShipperName($row["ShipperName"])
+                ->setShipAdd1($row["ShipAdd1"])
+                ->setShipAdd2($row["ShipAdd2"])
+                ->setShipAdd3($row["ShipAdd3"])
+                ->setCity($row["City"])
+                ->setState($row["State"])
+                ->setShipZip($row["ShipZip"])
+                ->setShipCountryCode($row["ShipContryCode"])
+                ->setNif($row["NIF"])
+                ->setConsignee($row["Consignee"])
+                ->setAddress1($row["Address1"])
+                ->setAddress2($row["Address2"])
+                ->setAddress3($row["Address3"])
+                ->setCity($row["City"])
+                ->setState($row["State"])
+                ->setZip($row["Zip"])
+                ->setCountryCode($row["CountryCode"])
+                ->setEmail($row["Email"])
+                ->setPhone($row["Phone"])
+                ->setPieces($row["Pieces"])
+                ->setTotalWeight($row["TotalWeight"])
+                ->setWeightUOM($row["WeightUOM"])
+                ->setTotalValue($row["TotalValue"])
+                ->setCurrency($row["Currency"])
+                ->setIncoterms($row["Incoterms"])
+                ->setService($row["Service"])
+                ->setItemDescription($row["ItemDescription"])
+                ->setItemHsCode($row["ItemHSCode"])
+                ->setItemQuantity($row["ItemQuantity"])
+                ->setItemValue($row["ItemValue"])
             ;
 
             $this->em->persist($postalDua);

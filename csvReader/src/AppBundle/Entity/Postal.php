@@ -36,9 +36,9 @@ class Postal
     private $conocimientoAereo;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="reference", type="integer")
+     * @ORM\Column(name="reference", type="string", length=255)
      */
     private $reference;
 
@@ -64,9 +64,9 @@ class Postal
     private $destination;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="sumaria", type="integer")
+     * @ORM\Column(name="sumaria", type="string", length=255)
      */
     private $sumaria;
 
@@ -78,9 +78,9 @@ class Postal
     private $partida;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="internalAccountNumber", type="integer")
+     * @ORM\Column(name="internalAccountNumber", type="string", length=255)
      */
     private $internalAccountNumber;
 
@@ -278,7 +278,7 @@ class Postal
      *
      * @ORM\Column(name="itemHsCore", type="integer")
      */
-    private $itemHsCore;
+    private $itemHsCode;
 
     /**
      * @var int
@@ -294,11 +294,7 @@ class Postal
      */
     private $itemValue;
 
-    /** -------------------------------getters y setters------------------- */
-
     /**
-     * Get id.
-     *
      * @return int
      */
     public function getId()
@@ -307,22 +303,17 @@ class Postal
     }
 
     /**
-     * Set trackingNumber.
-     *
-     * @param string $trackingNumber
-     *
-     * @return Postal
+     * @param $id
+     * @return $this
      */
-    public function setTrackingNumber($trackingNumber)
+    public function setId($id)
     {
-        $this->trackingNumber = $trackingNumber;
+        $this->id = $id;
 
         return $this;
     }
 
     /**
-     * Get trackingNumber.
-     *
      * @return string
      */
     public function getTrackingNumber()
@@ -331,11 +322,28 @@ class Postal
     }
 
     /**
-     * Set conocimientoAereo.
-     *
-     * @param string $conocimientoAereo
-     *
-     * @return Postal
+     * @param $trackingNumber
+     * @return $this
+     */
+    public function setTrackingNumber($trackingNumber)
+    {
+        $this->trackingNumber = $trackingNumber;
+
+        return $this;
+
+    }
+
+    /**
+     * @return string
+     */
+    public function getConocimientoAereo()
+    {
+        return $this->conocimientoAereo;
+    }
+
+    /**
+     * @param $conocimientoAereo
+     * @return $this
      */
     public function setConocimientoAereo($conocimientoAereo)
     {
@@ -345,21 +353,16 @@ class Postal
     }
 
     /**
-     * Get conocimientoAereo.
-     *
-     * @return string
+     * @return int
      */
-    public function getConocimientoAereo()
+    public function getReference()
     {
-        return $this->conocimientoAereo;
+        return $this->reference;
     }
 
     /**
-     * Set reference.
-     *
-     * @param int $reference
-     *
-     * @return Postal
+     * @param $reference
+     * @return $this
      */
     public function setReference($reference)
     {
@@ -369,21 +372,16 @@ class Postal
     }
 
     /**
-     * Get reference.
-     *
-     * @return int
+     * @return string
      */
-    public function getReference()
+    public function getBagLabel()
     {
-        return $this->reference;
+        return $this->bagLabel;
     }
 
     /**
-     * Set bagLabel.
-     *
-     * @param string $bagLabel
-     *
-     * @return Postal
+     * @param $bagLabel
+     * @return $this
      */
     public function setBagLabel($bagLabel)
     {
@@ -393,21 +391,16 @@ class Postal
     }
 
     /**
-     * Get bagLabel.
-     *
      * @return string
      */
-    public function getBagLabel()
+    public function getOrigin()
     {
-        return $this->bagLabel;
+        return $this->origin;
     }
 
     /**
-     * Set origin.
-     *
-     * @param string $origin
-     *
-     * @return Postal
+     * @param $origin
+     * @return $this
      */
     public function setOrigin($origin)
     {
@@ -417,21 +410,16 @@ class Postal
     }
 
     /**
-     * Get origin.
-     *
      * @return string
      */
-    public function getOrigin()
+    public function getDestination()
     {
-        return $this->origin;
+        return $this->destination;
     }
 
     /**
-     * Set destination.
-     *
-     * @param string $destination
-     *
-     * @return Postal
+     * @param $destination
+     * @return $this
      */
     public function setDestination($destination)
     {
@@ -441,21 +429,16 @@ class Postal
     }
 
     /**
-     * Get destination.
-     *
-     * @return string
+     * @return int
      */
-    public function getDestination()
+    public function getSumaria()
     {
-        return $this->destination;
+        return $this->sumaria;
     }
 
     /**
-     * Set sumaria.
-     *
-     * @param int $sumaria
-     *
-     * @return Postal
+     * @param $sumaria
+     * @return $this
      */
     public function setSumaria($sumaria)
     {
@@ -465,21 +448,16 @@ class Postal
     }
 
     /**
-     * Get sumaria.
-     *
      * @return int
      */
-    public function getSumaria()
+    public function getPartida()
     {
-        return $this->sumaria;
+        return $this->partida;
     }
 
     /**
-     * Set partida.
-     *
-     * @param int $partida
-     *
-     * @return Postal
+     * @param $partida
+     * @return $this
      */
     public function setPartida($partida)
     {
@@ -489,21 +467,16 @@ class Postal
     }
 
     /**
-     * Get partida.
-     *
      * @return int
      */
-    public function getPartida()
+    public function getInternalAccountNumber()
     {
-        return $this->partida;
+        return $this->internalAccountNumber;
     }
 
     /**
-     * Set internalAccountNumber.
-     *
-     * @param int $internalAccountNumber
-     *
-     * @return Postal
+     * @param $internalAccountNumber
+     * @return $this
      */
     public function setInternalAccountNumber($internalAccountNumber)
     {
@@ -513,21 +486,16 @@ class Postal
     }
 
     /**
-     * Get internalAccountNumber.
-     *
-     * @return int
+     * @return string
      */
-    public function getInternalAccountNumber()
+    public function getShipperName()
     {
-        return $this->internalAccountNumber;
+        return $this->shipperName;
     }
 
     /**
-     * Set shipperName.
-     *
-     * @param string $shipperName
-     *
-     * @return Postal
+     * @param $shipperName
+     * @return $this
      */
     public function setShipperName($shipperName)
     {
@@ -537,21 +505,16 @@ class Postal
     }
 
     /**
-     * Get shipperName.
-     *
      * @return string
      */
-    public function getShipperName()
+    public function getShipAdd1()
     {
-        return $this->shipperName;
+        return $this->shipAdd1;
     }
 
     /**
-     * Set shipAdd1.
-     *
-     * @param string $shipAdd1
-     *
-     * @return Postal
+     * @param $shipAdd1
+     * @return $this
      */
     public function setShipAdd1($shipAdd1)
     {
@@ -561,21 +524,16 @@ class Postal
     }
 
     /**
-     * Get shipAdd1.
-     *
      * @return string
      */
-    public function getShipAdd1()
+    public function getShipAdd2()
     {
-        return $this->shipAdd1;
+        return $this->shipAdd2;
     }
 
     /**
-     * Set shipAdd2.
-     *
-     * @param string $shipAdd2
-     *
-     * @return Postal
+     * @param $shipAdd2
+     * @return $this
      */
     public function setShipAdd2($shipAdd2)
     {
@@ -585,21 +543,16 @@ class Postal
     }
 
     /**
-     * Get shipAdd2.
-     *
      * @return string
      */
-    public function getShipAdd2()
+    public function getShipAdd3()
     {
-        return $this->shipAdd2;
+        return $this->shipAdd3;
     }
 
     /**
-     * Set shipAdd3.
-     *
-     * @param string $shipAdd3
-     *
-     * @return Postal
+     * @param $shipAdd3
+     * @return $this
      */
     public function setShipAdd3($shipAdd3)
     {
@@ -609,21 +562,16 @@ class Postal
     }
 
     /**
-     * Get shipAdd3.
-     *
      * @return string
      */
-    public function getShipAdd3()
+    public function getShipCity()
     {
-        return $this->shipAdd3;
+        return $this->shipCity;
     }
 
     /**
-     * Set shipCity.
-     *
-     * @param string $shipCity
-     *
-     * @return Postal
+     * @param $shipCity
+     * @return $this
      */
     public function setShipCity($shipCity)
     {
@@ -633,21 +581,16 @@ class Postal
     }
 
     /**
-     * Get shipCity.
-     *
      * @return string
      */
-    public function getShipCity()
+    public function getShipState()
     {
-        return $this->shipCity;
+        return $this->shipState;
     }
 
     /**
-     * Set shipState.
-     *
-     * @param string $shipState
-     *
-     * @return Postal
+     * @param $shipState
+     * @return $this
      */
     public function setShipState($shipState)
     {
@@ -657,21 +600,16 @@ class Postal
     }
 
     /**
-     * Get shipState.
-     *
-     * @return string
+     * @return int
      */
-    public function getShipState()
+    public function getShipZip()
     {
-        return $this->shipState;
+        return $this->shipZip;
     }
 
     /**
-     * Set shipZip.
-     *
-     * @param int $shipZip
-     *
-     * @return Postal
+     * @param $shipZip
+     * @return $this
      */
     public function setShipZip($shipZip)
     {
@@ -681,21 +619,16 @@ class Postal
     }
 
     /**
-     * Get shipZip.
-     *
-     * @return int
+     * @return string
      */
-    public function getShipZip()
+    public function getShipCountryCode()
     {
-        return $this->shipZip;
+        return $this->shipCountryCode;
     }
 
     /**
-     * Set shipCountryCode.
-     *
-     * @param string $shipCountryCode
-     *
-     * @return Postal
+     * @param $shipCountryCode
+     * @return $this
      */
     public function setShipCountryCode($shipCountryCode)
     {
@@ -705,21 +638,16 @@ class Postal
     }
 
     /**
-     * Get shipCountryCode.
-     *
      * @return string
      */
-    public function getShipCountryCode()
+    public function getNif()
     {
-        return $this->shipCountryCode;
+        return $this->nif;
     }
 
     /**
-     * Set nif.
-     *
-     * @param string $nif
-     *
-     * @return Postal
+     * @param $nif
+     * @return $this
      */
     public function setNif($nif)
     {
@@ -729,21 +657,16 @@ class Postal
     }
 
     /**
-     * Get nif.
-     *
      * @return string
      */
-    public function getNif()
+    public function getConsignee()
     {
-        return $this->nif;
+        return $this->consignee;
     }
 
     /**
-     * Set consignee.
-     *
-     * @param string $consignee
-     *
-     * @return Postal
+     * @param $consignee
+     * @return $this
      */
     public function setConsignee($consignee)
     {
@@ -753,21 +676,16 @@ class Postal
     }
 
     /**
-     * Get consignee.
-     *
      * @return string
      */
-    public function getConsignee()
+    public function getAddress1()
     {
-        return $this->consignee;
+        return $this->address1;
     }
 
     /**
-     * Set address1.
-     *
-     * @param string $address1
-     *
-     * @return Postal
+     * @param $address1
+     * @return $this
      */
     public function setAddress1($address1)
     {
@@ -777,21 +695,16 @@ class Postal
     }
 
     /**
-     * Get address1.
-     *
      * @return string
      */
-    public function getAddress1()
+    public function getAddress2()
     {
-        return $this->address1;
+        return $this->address2;
     }
 
     /**
-     * Set address2.
-     *
-     * @param string $address2
-     *
-     * @return Postal
+     * @param $address2
+     * @return $this
      */
     public function setAddress2($address2)
     {
@@ -801,21 +714,16 @@ class Postal
     }
 
     /**
-     * Get address2.
-     *
      * @return string
      */
-    public function getAddress2()
+    public function getAddress3()
     {
-        return $this->address2;
+        return $this->address3;
     }
 
     /**
-     * Set address3.
-     *
-     * @param string $address3
-     *
-     * @return Postal
+     * @param $address3
+     * @return $this
      */
     public function setAddress3($address3)
     {
@@ -825,21 +733,16 @@ class Postal
     }
 
     /**
-     * Get address3.
-     *
      * @return string
      */
-    public function getAddress3()
+    public function getCity()
     {
-        return $this->address3;
+        return $this->city;
     }
 
     /**
-     * Set city.
-     *
-     * @param string $city
-     *
-     * @return Postal
+     * @param $city
+     * @return $this
      */
     public function setCity($city)
     {
@@ -849,21 +752,16 @@ class Postal
     }
 
     /**
-     * Get city.
-     *
      * @return string
      */
-    public function getCity()
+    public function getState()
     {
-        return $this->city;
+        return $this->state;
     }
 
     /**
-     * Set state.
-     *
-     * @param string $state
-     *
-     * @return Postal
+     * @param $state
+     * @return $this
      */
     public function setState($state)
     {
@@ -873,21 +771,16 @@ class Postal
     }
 
     /**
-     * Get state.
-     *
-     * @return string
+     * @return int
      */
-    public function getState()
+    public function getZip()
     {
-        return $this->state;
+        return $this->zip;
     }
 
     /**
-     * Set zip.
-     *
-     * @param int $zip
-     *
-     * @return Postal
+     * @param $zip
+     * @return $this
      */
     public function setZip($zip)
     {
@@ -897,21 +790,16 @@ class Postal
     }
 
     /**
-     * Get zip.
-     *
-     * @return int
+     * @return string
      */
-    public function getZip()
+    public function getCountryCode()
     {
-        return $this->zip;
+        return $this->countryCode;
     }
 
     /**
-     * Set countryCode.
-     *
-     * @param string $countryCode
-     *
-     * @return Postal
+     * @param $countryCode
+     * @return $this
      */
     public function setCountryCode($countryCode)
     {
@@ -921,21 +809,16 @@ class Postal
     }
 
     /**
-     * Get countryCode.
-     *
      * @return string
      */
-    public function getCountryCode()
+    public function getEmail()
     {
-        return $this->countryCode;
+        return $this->email;
     }
 
     /**
-     * Set email.
-     *
-     * @param string $email
-     *
-     * @return Postal
+     * @param $email
+     * @return $this
      */
     public function setEmail($email)
     {
@@ -945,21 +828,16 @@ class Postal
     }
 
     /**
-     * Get email.
-     *
      * @return string
      */
-    public function getEmail()
+    public function getPhone()
     {
-        return $this->email;
+        return $this->phone;
     }
 
     /**
-     * Set phone.
-     *
-     * @param string $phone
-     *
-     * @return Postal
+     * @param $phone
+     * @return $this
      */
     public function setPhone($phone)
     {
@@ -969,21 +847,16 @@ class Postal
     }
 
     /**
-     * Get phone.
-     *
-     * @return string
+     * @return int
      */
-    public function getPhone()
+    public function getPieces()
     {
-        return $this->phone;
+        return $this->pieces;
     }
 
     /**
-     * Set pieces.
-     *
-     * @param int $pieces
-     *
-     * @return Postal
+     * @param $pieces
+     * @return $this
      */
     public function setPieces($pieces)
     {
@@ -993,37 +866,22 @@ class Postal
     }
 
     /**
-     * Get pieces.
-     *
-     * @return int
+     * @return float
      */
-    public function getPieces()
+    public function getTotalWeight()
     {
-        return $this->pieces;
+        return $this->totalWeight;
     }
 
     /**
-     * Set totalWeight.
-     *
-     * @param float $totalWeight
-     *
-     * @return Postal
+     * @param $totalWeight
+     * @return $this
      */
     public function setTotalWeight($totalWeight)
     {
         $this->totalWeight = $totalWeight;
 
         return $this;
-    }
-
-    /**
-     * Get totalWeight.
-     *
-     * @return float
-     */
-    public function getTotalWeight()
-    {
-        return $this->totalWeight;
     }
 
     /**
@@ -1035,11 +893,14 @@ class Postal
     }
 
     /**
-     * @param string $weightUOM
+     * @param $weightUOM
+     * @return $this
      */
     public function setWeightUOM($weightUOM)
     {
         $this->weightUOM = $weightUOM;
+
+        return $this;
     }
 
     /**
@@ -1051,11 +912,14 @@ class Postal
     }
 
     /**
-     * @param float $totalValue
+     * @param $totalValue
+     * @return $this
      */
     public function setTotalValue($totalValue)
     {
         $this->totalValue = $totalValue;
+
+        return $this;
     }
 
     /**
@@ -1067,11 +931,14 @@ class Postal
     }
 
     /**
-     * @param string $currency
+     * @param $currency
+     * @return $this
      */
     public function setCurrency($currency)
     {
         $this->currency = $currency;
+
+        return $this;
     }
 
     /**
@@ -1083,11 +950,14 @@ class Postal
     }
 
     /**
-     * @param string $incoterms
+     * @param $incoterms
+     * @return $this
      */
     public function setIncoterms($incoterms)
     {
         $this->incoterms = $incoterms;
+
+        return $this;
     }
 
     /**
@@ -1099,11 +969,14 @@ class Postal
     }
 
     /**
-     * @param string $service
+     * @param $service
+     * @return $this
      */
     public function setService($service)
     {
         $this->service = $service;
+
+        return $this;
     }
 
     /**
@@ -1115,27 +988,33 @@ class Postal
     }
 
     /**
-     * @param string $itemDescription
+     * @param $itemDescription
+     * @return $this
      */
     public function setItemDescription($itemDescription)
     {
         $this->itemDescription = $itemDescription;
+
+        return $this;
     }
 
     /**
      * @return int
      */
-    public function getItemHsCore()
+    public function getItemHsCode()
     {
-        return $this->itemHsCore;
+        return $this->itemHsCode;
     }
 
     /**
-     * @param int $itemHsCore
+     * @param $itemHsCode
+     * @return $this
      */
-    public function setItemHsCore($itemHsCore)
+    public function setItemHsCode($itemHsCode)
     {
-        $this->itemHsCore = $itemHsCore;
+        $this->itemHsCode = $itemHsCode;
+
+        return $this;
     }
 
     /**
@@ -1147,11 +1026,14 @@ class Postal
     }
 
     /**
-     * @param int $itemQuantity
+     * @param $itemQuantity
+     * @return $this
      */
     public function setItemQuantity($itemQuantity)
     {
         $this->itemQuantity = $itemQuantity;
+
+        return $this;
     }
 
     /**
@@ -1163,12 +1045,14 @@ class Postal
     }
 
     /**
-     * @param float $itemValue
+     * @param $itemValue
+     * @return $this
      */
     public function setItemValue($itemValue)
     {
         $this->itemValue = $itemValue;
-    }
 
+        return $this;
+    }
 
 }
