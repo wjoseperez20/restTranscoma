@@ -115,21 +115,21 @@ class Postal
     /**
      * @var string
      *
-     * @ORM\Column(name="shipCity", type="string", length=255)
+     * @ORM\Column(name="shipCity", type="string", length=255, nullable=true)
      */
     private $shipCity;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="shipState", type="string", length=255)
+     * @ORM\Column(name="shipState", type="string", length=255,nullable=true)
      */
     private $shipState;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="shipZip", type="integer")
+     * @ORM\Column(name="shipZip", type="integer",nullable=true)
      */
     private $shipZip;
 
@@ -238,10 +238,11 @@ class Postal
      */
     private $weightUOM;
 
+    // @ORM\Column(name="totalValue", type="float", scale=2)
     /**
      * @var float
      *
-     * @ORM\Column(name="totalValue", type="float")
+     * @ORM\Column(name="totalValue", type="string", length=10)
      */
     private $totalValue;
 
@@ -276,7 +277,7 @@ class Postal
     /**
      * @var int
      *
-     * @ORM\Column(name="itemHsCore", type="integer")
+     * @ORM\Column(name="itemHsCode", type="bigint")
      */
     private $itemHsCode;
 
