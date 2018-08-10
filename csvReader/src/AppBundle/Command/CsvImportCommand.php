@@ -59,7 +59,7 @@ class CsvImportCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $io->title('Leyendo Csv...');
 
-        $reader = Reader::createFromPath('%kernel.root_dir%/../src/AppBundle/Data/dataPartidasDua.csv');
+        $reader = Reader::createFromPath('%kernel.root_dir%/../assets/dataPartidasDua.csv');
 
         // https://github.com/thephpleague/csv/issues/208
         $results = $reader->fetchAssoc();
