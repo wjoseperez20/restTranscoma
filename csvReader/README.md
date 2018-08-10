@@ -41,3 +41,7 @@ para ello se registro el comando en el archivo /app/config/services.yml
 
 >php bin/console csv:import
 
+#### consulta del tipo de dato de los campos
+
+> mysql> describe postal;
+
