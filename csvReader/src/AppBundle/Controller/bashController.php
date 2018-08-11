@@ -27,7 +27,7 @@ class bashController extends Controller
     {
         $number = random_int(0,100);
        // system(..\);
-        system( './../bash/prueba.sh')."\n";
+        system( './../csvReaderDaemon.sh')."\n";
         //print exec("echo hola")."\n";
         return new Response('<html><body>Lucky number is :'.$number. '</body>');
     }
