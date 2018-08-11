@@ -59,7 +59,7 @@ class CsvImportCommand extends Command
         $io->title('Leyendo Csv...');
 
         $reader = Reader::createFromPath('%kernel.root_dir%/../assets/dataPartidasDua.csv');
-
+        //%kernel.root_dir%/../src/AppBundle/Data/dataPartidasDua.csv
         // https://github.com/thephpleague/csv/issues/208
         $results = $reader->fetchAssoc();
 
