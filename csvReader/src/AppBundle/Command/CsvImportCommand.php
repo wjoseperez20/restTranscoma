@@ -117,12 +117,12 @@ class CsvImportCommand extends Command
         $this->em->flush();
 
         $io->progressFinish();
-        $io->success('Command exited cleanly!');
+        $io->success('Comando Ejecutado con Exito!');
     }
 
 
     /**
-     * valida si el valor dentro del documentp es vacio, escribe null
+     * Valida si el valor dentro del documento es vacio, escribe null
      * en la base de datos
      * @param $valor
      * @return string
