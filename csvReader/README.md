@@ -45,3 +45,16 @@ para ello se registro el comando en el archivo /app/config/services.yml
 
 > mysql> describe postal;
 
+#### Formato para realizar los logguer con monolog
+
+        $logger = $this->get('logger');
+        $logger->info('I just got the logger -----');
+        $logger->err('An error occurred');
+        $logger->alert('An alert ocurred');
+        $logger->emergency('An emergency occurred');
+        $logger->warning('A warning occurred');
+        $logger->critical('I left the oven on!', array(
+        // include extra "context" info in your logs
+            'cause' => 'in_hurry',
+        ));
+
