@@ -45,7 +45,7 @@ para ello se registro el comando en el archivo /app/config/services.yml
 
 > mysql> describe postal;
 
-#### Formato para realizar los logguer con monolog
+#### Formato para realizar loser con monolog
 
         $logger = $this->get('logger');
         $logger->info('I just got the logger -----');

@@ -18,6 +18,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class bashController extends Controller
 {
+
+
     /**
      * @return Response
      * @Route("Lucky/number")
@@ -26,8 +28,24 @@ class bashController extends Controller
     public function numberAction()
     {
         $number = random_int(0,100);
+
        // system(..\);
+      //  $obj = new bashController();
+
         system( './../csvReaderDaemon.sh')."\n";
+        $logger =$this->get('logger');
+        $logger->info('I just got the logger -----');
+        $logger->err('An error occurredffff');
+        $logger->alert('An error occurredffff');
+        $logger->emergency('An error occurredffff');
+        $logger->warning('An error occurredffff');
+        $logger->critical('I left the oven on!', array(
+            // include extra "context" info in your logs
+            'cause' => 'in_hurry',
+        ));
+
+
+
         //print exec("echo hola")."\n";
         return new Response('<html><body>Lucky number is :'.$number. '</body>');
     }
