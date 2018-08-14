@@ -32,24 +32,13 @@ class bashController extends Controller
 
         $number = random_int(0, 100);
 
-        // system(..\);
-        //  $obj = new bashController();
         system('./../csvReaderDaemon.sh') . "\n";
         $logger = $this->get('logger');
-        $logger->info('This process was started in '.bashController::class);
-
-//        $logger->err('An error occurredffff');
-//        $logger->alert('An error occurredffff');
-//        $logger->emergency('An error occurredffff');
-//        $logger->warning('An error occurredffff');
-//        $logger->critical('I left the oven on!', array(
-//            // include extra "context" info in your logs
-//            'cause' => 'in_hurry',
-//        ));
-
+        $logger->info('This process was started in '.bashController::class .'into in :' .bashController::numberAction());
 
         //print exec("echo hola")."\n";
         return new Response('<html><body>Lucky number is :' . $number . '</body>');
+
     }
 
 
