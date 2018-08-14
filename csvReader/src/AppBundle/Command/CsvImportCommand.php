@@ -5,21 +5,32 @@ namespace AppBundle\Command;
 use AppBundle\Entity\Postal;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Csv\Reader;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+use MonologLogger;
+use MonologHandlerLogglyHandler;
+use Monolog\Handler\LogglyHandler;
+use Psr\Log\LoggerInterface;
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+
 
 /**
  * Class CsvImportCommand
  * @package AppBundle\ConsoleCommand
  */
-class CsvImportCommand extends Command
+class CsvImportCommand extends ContainerAwareCommand
 {
     /**
      * @var EntityManagerInterface
      */
     private $em;
+
+
 
     /**
      * CsvImportCommand constructor.
@@ -55,70 +66,86 @@ class CsvImportCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $io = new SymfonyStyle($input, $output);
-        $io->title('Leyendo Csv...');
 
-        $reader = Reader::createFromPath('%kernel.root_dir%/../assets/dataPartidasDua.csv');
-        //%kernel.root_dir%/../src/AppBundle/Data/dataPartidasDua.csv
-        // https://github.com/thephpleague/csv/issues/208
-        $results = $reader->fetchAssoc();
+        $logger = $this->getContainer()->get('logger');
+        try
+        {
 
-        $io->progressStart(iterator_count($results));
+            $logger->info('This process was started in '.CsvImportCommand::class);
+            $io = new SymfonyStyle($input, $output);
+            $io->title('Leyendo Csv...');
 
-        foreach ($results as $row) {
+            $logger->info('Reading Csv file');
+            $reader = Reader::createFromPath('%kernel.root_dir%/../assets/dataPartidasDua.csv');
+            $results = $reader->fetchAssoc();
 
-            $postalDua = (new Postal())
-                ->setTrackingNumber($this->validarCadenaVacia($row["TrackingNumber"]))
-                ->setConocimientoAereo($this->validarCadenaVacia($row["ConocimientoAereo"]))
-                ->setReference($this->validarCadenaVacia($row["Reference"]))
-                ->setBagLabel($this->validarCadenaVacia($row["BagLabel"]))
-                ->setOrigin($this->validarCadenaVacia($row["Origin"]))
-                ->setDestination($this->validarCadenaVacia($row["Destination"]))
-                ->setSumaria($this->validarCadenaVacia($row["Sumaria"]))
-                ->setPartida($row["Partida"])
-                ->setInternalAccountNumber($this->validarCadenaVacia( $row["InternalAccountNumber"]))
-                ->setShipperName($this->validarCadenaVacia( $row["ShipperName"]))
-                ->setShipAdd1($this->validarCadenaVacia($row["ShipAdd1"]))
-                ->setShipAdd2($this->validarCadenaVacia($row["ShipAdd2"]))
-                ->setShipAdd3($this->validarCadenaVacia($row["ShipAdd3"]))
-                ->setShipCity($this->validarCadenaVacia($row["ShipCity"]))
-                ->setShipState($this->validarCadenaVacia($row["ShipState"]))
-                ->setShipZip($row["ShipZip"])
-                ->setShipCountryCode($this->validarCadenaVacia($row["ShipContryCode"]))
-                ->setNif($this->validarCadenaVacia($row["NIF"]))
-                ->setConsignee($this->validarCadenaVacia($row["Consignee"]))
-                ->setAddress1($this->validarCadenaVacia($row["Address1"]))
-                ->setAddress2($this->validarCadenaVacia($row["Address2"]))
-                ->setAddress3($this->validarCadenaVacia($row["Address3"]))
-                ->setCity($this->validarCadenaVacia($row["City"]))
-                ->setState($this->validarCadenaVacia($row["State"]))
-                ->setZip($row["Zip"])
-                ->setCountryCode($this->validarCadenaVacia($row["CountryCode"]))
-                ->setEmail($this->validarCadenaVacia($row["Email"]))
-                ->setPhone($this->validarCadenaVacia($row["Phone"]))
-                ->setPieces($row["Pieces"])
-                ->setTotalWeight($row["TotalWeight"])
-                ->setWeightUOM($this->validarCadenaVacia($row["WeightUOM"]))
-                ->setTotalValue($this->validarCadenaVacia($row["TotalValue"]))
-                ->setCurrency($this->validarCadenaVacia($row["Currency"]))
-                ->setIncoterms($this->validarCadenaVacia($row["Incoterms"]))
-                ->setService($this->validarCadenaVacia($row["Service"]))
-                ->setItemDescription($this->validarCadenaVacia($row["ItemDescription"]))
-                ->setItemHsCode($row["ItemHSCode"])
-                ->setItemQuantity($row["ItemQuantity"])
-                ->setItemValue($row["ItemValue"])
-            ;
+            $io->progressStart(iterator_count($results));
 
-            $this->em->persist($postalDua);
+            foreach ($results as $row) {
 
-            $io->progressAdvance();
+                $postalDua = (new Postal())
+                    ->setTrackingNumber($this->validarCadenaVacia($row["TrackingNumber"]))
+                    ->setConocimientoAereo($this->validarCadenaVacia($row["ConocimientoAereo"]))
+                    ->setReference($this->validarCadenaVacia($row["Reference"]))
+                    ->setBagLabel($this->validarCadenaVacia($row["BagLabel"]))
+                    ->setOrigin($this->validarCadenaVacia($row["Origin"]))
+                    ->setDestination($this->validarCadenaVacia($row["Destination"]))
+                    ->setSumaria($this->validarCadenaVacia($row["Sumaria"]))
+                    ->setPartida($row["Partida"])
+                    ->setInternalAccountNumber($this->validarCadenaVacia( $row["InternalAccountNumber"]))
+                    ->setShipperName($this->validarCadenaVacia( $row["ShipperName"]))
+                    ->setShipAdd1($this->validarCadenaVacia($row["ShipAdd1"]))
+                    ->setShipAdd2($this->validarCadenaVacia($row["ShipAdd2"]))
+                    ->setShipAdd3($this->validarCadenaVacia($row["ShipAdd3"]))
+                    ->setShipCity($this->validarCadenaVacia($row["ShipCity"]))
+                    ->setShipState($this->validarCadenaVacia($row["ShipState"]))
+                    ->setShipZip($row["ShipZip"])
+                    ->setShipCountryCode($this->validarCadenaVacia($row["ShipContryCode"]))
+                    ->setNif($this->validarCadenaVacia($row["NIF"]))
+                    ->setConsignee($this->validarCadenaVacia($row["Consignee"]))
+                    ->setAddress1($this->validarCadenaVacia($row["Address1"]))
+                    ->setAddress2($this->validarCadenaVacia($row["Address2"]))
+                    ->setAddress3($this->validarCadenaVacia($row["Address3"]))
+                    ->setCity($this->validarCadenaVacia($row["City"]))
+                    ->setState($this->validarCadenaVacia($row["State"]))
+                    ->setZip($row["Zip"])
+                    ->setCountryCode($this->validarCadenaVacia($row["CountryCode"]))
+                    ->setEmail($this->validarCadenaVacia($row["Email"]))
+                    ->setPhone($this->validarCadenaVacia($row["Phone"]))
+                    ->setPieces($row["Pieces"])
+                    ->setTotalWeight($row["TotalWeight"])
+                    ->setWeightUOM($this->validarCadenaVacia($row["WeightUOM"]))
+                    ->setTotalValue($this->validarCadenaVacia($row["TotalValue"]))
+                    ->setCurrency($this->validarCadenaVacia($row["Currency"]))
+                    ->setIncoterms($this->validarCadenaVacia($row["Incoterms"]))
+                    ->setService($this->validarCadenaVacia($row["Service"]))
+                    ->setItemDescription($this->validarCadenaVacia($row["ItemDescription"]))
+                    ->setItemHsCode($row["ItemHSCode"])
+                    ->setItemQuantity($row["ItemQuantity"])
+                    ->setItemValue($row["ItemValue"])
+                ;
+
+                $this->em->persist($postalDua);
+
+                $io->progressAdvance();
+            } //fin de foreach
+
+            $this->em->flush();
+
+            $io->progressFinish();
+            $io->success('Comando Ejecutado con Exito!');
+            $logger->info('Success :  [OK] Command exited cleanly ');
+
         }
-
-        $this->em->flush();
-
-        $io->progressFinish();
-        $io->success('Comando Ejecutado con Exito!');
-    }
+        catch (Exception $e)
+        {
+            $logger->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()}");
+        }
+        finally
+        {
+            $logger->notice('The process was finally');
+        }
+    }// fin de execute
 
 
     /**
@@ -127,11 +154,21 @@ class CsvImportCommand extends Command
      * @param $valor
      * @return string
      */
-    public function validarCadenaVacia($valor){
-        if(trim($valor) == ''){
-            return 'NULL';
-        }else{
-            return $valor;
+    public function validarCadenaVacia($valor)
+    {
+        $logger = $this->getContainer()->get('logger');
+        try
+        {
+           // $logger->notice('The process was entered in with the pàrams: ' .CsvImportCommand::validarCadenaVacia($valor));
+            if(trim($valor) == '')
+                return 'NULL';
+            else
+                return $valor;
         }
+        catch (Exception $e)
+        {
+            $logger->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()}");
+        }
+
     }
 }
