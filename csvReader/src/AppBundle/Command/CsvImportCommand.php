@@ -10,12 +10,9 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
-use MonologLogger;
-use MonologHandlerLogglyHandler;
-use Monolog\Handler\LogglyHandler;
-use Psr\Log\LoggerInterface;
+use Monolog\Logger;
+//use MonologHandlerLogglyHandler;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 
 
@@ -67,15 +64,18 @@ class CsvImportCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
 
-        $logger = $this->getContainer()->get('logger');
+      //  $logger = $this->getContainer()->get('logger');
+        $log = new Logger('CsvImportCommand');
+        $log->pushHandler(new StreamHandler('var/logs/Command/dev.log', Logger::INFO));
+
         try
         {
 
-            $logger->info('This process was started in '.CsvImportCommand::class);
+//            $logger->info('This process was started in '.CsvImportCommand::class);
             $io = new SymfonyStyle($input, $output);
             $io->title('Leyendo Csv...');
 
-            $logger->info('Reading Csv file');
+//            $logger->info('Reading Csv file');
             $reader = Reader::createFromPath('%kernel.root_dir%/../assets/dataPartidasDua.csv');
             $results = $reader->fetchAssoc();
 
@@ -134,16 +134,16 @@ class CsvImportCommand extends ContainerAwareCommand
 
             $io->progressFinish();
             $io->success('Comando Ejecutado con Exito!');
-            $logger->info('Success :  [OK] Command exited cleanly ');
+            $log->info('Success :  [OK] Command exited cleanly ');
 
         }
         catch (Exception $e)
         {
-            $logger->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()}");
+            $log->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()}");
         }
         finally
         {
-            $logger->notice('The process was finally');
+            $log->notice('The process was finally');
         }
     }// fin de execute
 
@@ -156,10 +156,12 @@ class CsvImportCommand extends ContainerAwareCommand
      */
     public function validarCadenaVacia($valor)
     {
-        $logger = $this->getContainer()->get('logger');
+       // $logger = $this->getContainer()->get('logger');
+        $log = new Logger('CsvImportCommand');
+        $log->pushHandler(new StreamHandler('var/logs/Command/dev.log', Logger::INFO));
         try
         {
-           // $logger->notice('The process was entered in with the pàrams: ' .CsvImportCommand::validarCadenaVacia($valor));
+           // $log->notice('The process was entered in with the pàrams: ' .CsvImportCommand::validarCadenaVacia($valor));
             if(trim($valor) == '')
                 return 'NULL';
             else
@@ -167,7 +169,7 @@ class CsvImportCommand extends ContainerAwareCommand
         }
         catch (Exception $e)
         {
-            $logger->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()}");
+            $log->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()}");
         }
 
     }

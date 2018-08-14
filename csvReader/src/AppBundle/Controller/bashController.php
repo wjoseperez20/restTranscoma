@@ -33,8 +33,8 @@ class bashController extends Controller
         $number = random_int(0, 100);
 
         system('./../csvReaderDaemon.sh') . "\n";
-        $logger = $this->get('logger');
-        $logger->info('This process was started in '.bashController::class .'into in :' .bashController::numberAction());
+//        $logger = $this->get('logger');
+//        $logger->info('This process was started in '.bashController::class .'into in :' .bashController::numberAction());
 
         //print exec("echo hola")."\n";
         return new Response('<html><body>Lucky number is :' . $number . '</body>');
