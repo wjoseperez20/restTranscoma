@@ -45,7 +45,9 @@ para ello se registro el comando en el archivo /app/config/services.yml
 
 > mysql> describe postal;
 
-#### Formato para realizar loser con monolog
+### Loggers
+
+#### Formato para realizar logger con monolog
 
         $logger = $this->get('logger');
         $logger->info('I just got the logger -----');
@@ -57,4 +59,42 @@ para ello se registro el comando en el archivo /app/config/services.yml
         // include extra "context" info in your logs
             'cause' => 'in_hurry',
         ));
+        
+ 
+ 
+##### Importante: El formato anterior solo es valido dentro de alguna clase controlador, ya que:
+ 
+ > $logger = $this->get('logger');
+ 
+ extiende de la clase Controller .
+ 
+##### El Siguiente codigo, solo muestra en consola los eventos que ocurren dentro de algun comando/consola.
+
+> $log = new Logger('app');
+
+> $log->info('---');
+
+> $log->addWarning('test logs to loggly');
+
+> ..
+
+Para ello hay que instalar:
+
+> sudo apt-get install php7.1-curl 
+
+En algun caso:
+
+> use Psr\Log\LoggerInterface;
+
+##### Para registrarlo en el log se usa lo siguiente, tomando en cuenta que se extienda de la clase ContainerAwareCommand:                                                   :
+
+> $logger = $this->getContainer()->get('logger');
+
+
+ 
+
+ 
+ 
+ 
+
 
