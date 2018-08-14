@@ -75,7 +75,7 @@ class CsvImportCommand extends ContainerAwareCommand
             $io = new SymfonyStyle($input, $output);
             $io->title('Leyendo Csv...');
 
-//            $logger->info('Reading Csv file');
+            $log->info('Reading Csv file');
             $reader = Reader::createFromPath('%kernel.root_dir%/../assets/dataPartidasDua.csv');
             $results = $reader->fetchAssoc();
 
@@ -140,6 +140,7 @@ class CsvImportCommand extends ContainerAwareCommand
         catch (Exception $e)
         {
             $log->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()}");
+            throw $e;
         }
         finally
         {
@@ -153,6 +154,7 @@ class CsvImportCommand extends ContainerAwareCommand
      * en la base de datos
      * @param $valor
      * @return string
+     * @throws \Exception
      */
     public function validarCadenaVacia($valor)
     {
@@ -170,6 +172,10 @@ class CsvImportCommand extends ContainerAwareCommand
         catch (Exception $e)
         {
             $log->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()}");
+        }
+        finally
+        {
+            $log->notice('The process was finally into validarCadenaVacia' );
         }
 
     }
