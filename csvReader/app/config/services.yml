@@ -13,3 +13,16 @@ services:
         tags:
             -  { name: console.command }
 
+# app/config/services.yml
+
+    app.listener.command_exception:
+        class: AppBundle\EventListener\ConsoleExceptionListener
+        arguments: ['@logger']
+        tags:
+        - { name: kernel.event_listener, event: console.exception }
+
+        app.listener.command_error:
+            class: AppBundle\EventListener\ErrorLoggerListener
+            arguments: ['@logger']
+            tags:
+            - { name: kernel.event_listener, event: console.terminate }
