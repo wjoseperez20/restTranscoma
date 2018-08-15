@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Monolog\Handler\StreamHandler;
+use Psr\Log\LoggerInterface;
 
 /**
  * Class bashController
@@ -35,7 +36,7 @@ class bashController extends Controller
         system('./../csvReaderDaemon.sh') . "\n";
 //        $logger = $this->get('logger');
 //        $logger->info('This process was started in '.bashController::class .'into in :' .bashController::numberAction());
-
+        $this->get('app.listener.command_exception')->exampleMethod('kakkakaka');
         //print exec("echo hola")."\n";
         return new Response('<html><body>Lucky number is :' . $number . '</body>');
 

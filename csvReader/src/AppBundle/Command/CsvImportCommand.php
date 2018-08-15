@@ -175,6 +175,7 @@ class CsvImportCommand extends ContainerAwareCommand
         }
         finally
         {
+
             $log->notice('The process was finally into validarCadenaVacia' );
         }
 

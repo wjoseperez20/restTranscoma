@@ -19,10 +19,18 @@ services:
         class: AppBundle\EventListener\ConsoleExceptionListener
         arguments: ['@logger']
         tags:
-        - { name: kernel.event_listener, event: console.exception }
+        - { name: monolog.logger, event: console.exception ,channel: "my_channel"}
 
         app.listener.command_error:
             class: AppBundle\EventListener\ErrorLoggerListener
             arguments: ['@logger']
             tags:
             - { name: kernel.event_listener, event: console.terminate }
+
+
+        example_service:
+            class: AppBundle\Service\ExampleService
+            arguments:
+                - "@logger"
+#            tags:
+#              - {name: monolog.logger, channel: "my_channel" }

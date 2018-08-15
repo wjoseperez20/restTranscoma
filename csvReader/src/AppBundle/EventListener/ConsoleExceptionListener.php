@@ -36,5 +36,12 @@ class ConsoleExceptionListener
 
         $this->logger->error($message, array('exception' => $exception));
     }
+    public function exampleMethod($ourVar)
+    {
+        $this->logger->debug('probando debg detalle');
+        $this->logger->info('empezando logueo ejemplo ');
+        $this->logger->notice('normal pero eventos significativos', ['our_var'=>$ourVar]);
+
+    }
 
 }
