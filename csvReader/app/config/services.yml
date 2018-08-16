@@ -28,9 +28,9 @@ services:
             - { name: kernel.event_listener, event: console.terminate }
 
 
-        example_service:
-            class: AppBundle\Service\ExampleService
-            arguments:
-                - "@logger"
-#            tags:
-#              - {name: monolog.logger, channel: "my_channel" }
+#        example_service:
+#            class: AppBundle\Service\ExampleService
+#            arguments:
+#                - "@logger"
+##            tags:
+##              - {name: monolog.logger, channel: "my_channel" }
