@@ -99,6 +99,10 @@ En algun caso:
 >  		 
 >  */
 
+##### Preparando el servicio rest
+
+link: https://www.cloudways.com/blog/rest-api-in-symfony-3-1/
+
 
  
 
