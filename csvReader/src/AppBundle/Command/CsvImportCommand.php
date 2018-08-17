@@ -33,8 +33,9 @@ class CsvImportCommand extends Command
 	 * Constante para definir la ubicacion del documento
 	 * DUA que se encuentra en formato CSV
 	 */
-	const CSV_DIRECTORY ='%kernel.root_dir%/../assets/dataPartidasDua.csv';
 
+    /** Ruta absoluta */
+	const CSV_DIRECTORY ='/home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReader/assets/dataPartidasDua.csv';
 	/**
 	 * @var EntityManagerInterface
 	 */
@@ -79,6 +80,7 @@ class CsvImportCommand extends Command
 	{
 		parent::__construct();
 		$this->em = $em;
+
 	}
 
 	/**
@@ -91,7 +93,7 @@ class CsvImportCommand extends Command
 		$this
 			->setName('csv:import')
 			->setDescription('Importa un CSV, y lo guarda en Base de Datos');
-		$this->setLogger();
+
 	}
 
 	/**
@@ -105,6 +107,7 @@ class CsvImportCommand extends Command
 	{
 		try
 		{
+			$this->setLogger();
             //$this->logger->info('This process was started in '.CsvImportCommand::class);
 			$io = new SymfonyStyle($input, $output);
 			$io->title('Leyendo Csv...');
