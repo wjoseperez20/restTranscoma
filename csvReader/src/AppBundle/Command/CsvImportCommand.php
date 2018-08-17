@@ -34,7 +34,7 @@ class CsvImportCommand extends Command
 	 * DUA que se encuentra en formato CSV
 	 */
 
-    /** Ruta absoluta */
+    /** Ruta absoluta  */
 	const CSV_DIRECTORY ='/home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReader/assets/dataPartidasDua.csv';
 	/**
 	 * @var EntityManagerInterface
