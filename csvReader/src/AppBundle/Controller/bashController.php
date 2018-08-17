@@ -39,7 +39,7 @@ class bashController extends Controller
 		$handler = LoggerFactory::getStreamHandler(self::LOG_DIRECTORY);
 		$logger->pushHandler($handler);
 
-//        system('./../csvReaderDaemon.sh') . "\n";
+        // system('./../csvReaderDaemon.sh') . "\n";
 
 		$logger->info('This process was started in .bashController::class into in : .bashController::numberAction()');
 
