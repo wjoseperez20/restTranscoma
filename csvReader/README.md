@@ -90,6 +90,15 @@ En algun caso:
 
 > $logger = $this->getContainer()->get('logger');
 
+> /*
+
+>>  		 * para llamar al servicio de monolog ubicado en services.yml y config_dev
+
+> >		 * $this->get('app.listener.command_exception')->exampleMethod('kakkakaka');
+
+>  		 
+>  */
+
 
  
 
