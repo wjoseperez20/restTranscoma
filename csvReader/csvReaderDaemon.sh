@@ -2,10 +2,17 @@
 #!/bin/bash/env php
 
 echo "hola mundo"
-#php bin/console csv:import
+while true; do
 php ./../bin/console csv:import
+sleep 0.05
+done
 today=`date +%Y%m%d`
-echo $today
+echo today is: $today
+
+
+
+
+
 #while true; do
 #php ./../bin/console csv:import
 
