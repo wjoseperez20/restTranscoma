@@ -69,6 +69,7 @@ swiftmailer:
     password:  "%mailer_password%"
     spool:     { type: memory }
 
+### Configuracion para habilitar el servicio rest en symfony manejando el formato json
 
 # Nelmio CORS Configuration
 nelmio_cors:
