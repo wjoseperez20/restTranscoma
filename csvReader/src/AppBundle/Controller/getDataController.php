@@ -23,7 +23,7 @@ class getDataController extends FOSRestController
 	/**
 	 * Metodo que retorna todos los registros del documento
 	 * DuaPartidas.csv mediante Doctrine
-	 *
+	 * Ejemplo: http://localhost:8000/postal
 	 * @Rest\Get("/postal")
 	 */
 	public function getAction()
