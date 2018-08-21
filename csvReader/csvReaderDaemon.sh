@@ -1,17 +1,17 @@
 
-#!/bin/bash/env php
-
+##!/bin/bash/env php
+#!/bin/bash
 echo "hola mundo"
-while true; do
-php ./../bin/console csv:import
-sleep 0.05
-done
-today=`date +%Y%m%d`
-echo today is: $today
+#while true; do
 
+#sleep 0.05
 
+today=`date +%d/%m/%Y`
+hour=`date +"%H:%M:%S`
 
+echo "Hoy es el dia $today y  hora actual es: $hour"
 
+php /home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReader/bin/console csv:import
 
 #while true; do
 #php ./../bin/console csv:import
