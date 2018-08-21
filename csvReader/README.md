@@ -99,12 +99,51 @@ En algun caso:
 >  		 
 >  */
 
-##### Preparando el servicio rest
+##### Viernes 17/ago Preparando el servicio rest
 
 link: https://www.cloudways.com/blog/rest-api-in-symfony-3-1/
 
 
+ #### martes 21/agosto/2018
  
+ ### Creacion de tarea en cron usando el so Linux
+ 
+Comando utilizados:
+
+Para editar crontab y programar las tareas:
+
+>crontab -e  
+
+Ver lista de tareas:
+
+>crontab -l
+
+Reiniciar servicio en Ubuntu:
+
+> sudo service cron restart
+
+*stop-status
+
+Linea utilizada en cron tab modo de prueba escribiendo en un log ubicado en documentos:
+
+$ * * * * * /home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReader/csvReaderDaemon.sh >> /home/maggie/Documentos/prueba.log 2>&1
+
+Cada 10 minutos
+
+$> */10 * * * * /home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReader/csvReaderDaemon.sh >> /home/maggie/Documentos/prueba.log 2>&1
+
+REFERENCIAS:
+ 
+https://www.youtube.com/watch?v=1flpMHngRGI
+
+https://www.desarrollolibre.net/blog/linux/ejecutar-script-automaticamente-con-cron-en-linux#.W3wmDuhKi1s
+
+https://www.cyberciti.biz/faq/howto-linux-unix-start-restart-cron/
+
+https://symfony.com/legacy/doc/more-with-symfony/1_4/es/13-leveraging-the-power-of-the-command-line
+
+https://vabadus.es/blog/crear-tareas-programadas-en-symfony2-mediante-comandos-de-consola
+
 
  
  
