@@ -25,7 +25,8 @@ class bashController extends Controller
 	 * Constantes para esteblecer parametros de los loggers
 	 */
 	const CLASS_NAME = bashController::class;
-	const LOG_DIRECTORY = '../var/logs/Controller/dev.log';
+	//const LOG_DIRECTORY = '../var/logs/Controller/dev.log';
+	const LOG_DIRECTORY = '/home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReader/var/logs/Controller/dev.log';
 
 	/**
 	 * @return Response

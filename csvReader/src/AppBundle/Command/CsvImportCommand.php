@@ -27,7 +27,9 @@ class CsvImportCommand extends Command
 	 * Constantes para esteblecer parametros de los loggers
 	 */
 	const CLASS_NAME = CsvImportCommand::class;
-	const LOG_DIRECTORY = 'var/logs/Command/dev.log';
+
+	//const LOG_DIRECTORY = 'var/logs/Command/dev.log';
+	const LOG_DIRECTORY = '/home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReader/var/logs/Command/dev.log';
 
 	/**
 	 * Constante para definir la ubicacion del documento
@@ -36,6 +38,7 @@ class CsvImportCommand extends Command
 
     /** Ruta absoluta  */
 	const CSV_DIRECTORY ='/home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReader/assets/dataPartidasDua.csv';
+
 	/**
 	 * @var EntityManagerInterface
 	 */
