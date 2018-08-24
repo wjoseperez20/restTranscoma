@@ -49,6 +49,7 @@ class getDataController extends FOSRestController
 		$single_result = $this->getDoctrine()->getRepository('AppBundle:Postal')->find($id);
 		if ($single_result === null)
 		{
+			throw $this->createNotFoundException('Registro no encontrado con el id '.$id);
 			return new View("Registro no encontrado", Response::HTTP_NOT_FOUND);
 		}
 		return $single_result;
