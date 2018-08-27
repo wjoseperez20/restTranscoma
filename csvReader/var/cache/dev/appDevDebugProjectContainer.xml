@@ -19,6 +19,7 @@
       <parameter key="FOSRestBundle">FOS\RestBundle\FOSRestBundle</parameter>
       <parameter key="JMSSerializerBundle">JMS\SerializerBundle\JMSSerializerBundle</parameter>
       <parameter key="NelmioCorsBundle">Nelmio\CorsBundle\NelmioCorsBundle</parameter>
+      <parameter key="DoctrineMongoDBBundle">Doctrine\Bundle\MongoDBBundle\DoctrineMongoDBBundle</parameter>
       <parameter key="DebugBundle">Symfony\Bundle\DebugBundle\DebugBundle</parameter>
       <parameter key="WebProfilerBundle">Symfony\Bundle\WebProfilerBundle\WebProfilerBundle</parameter>
       <parameter key="SensioDistributionBundle">Sensio\Bundle\DistributionBundle\SensioDistributionBundle</parameter>
@@ -80,6 +81,11 @@
         <parameter key="path">/home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReader/vendor/nelmio/cors-bundle</parameter>
         <parameter key="namespace">Nelmio\CorsBundle</parameter>
       </parameter>
+      <parameter key="DoctrineMongoDBBundle" type="collection">
+        <parameter key="parent">null</parameter>
+        <parameter key="path">/home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReader/vendor/doctrine/mongodb-odm-bundle</parameter>
+        <parameter key="namespace">Doctrine\Bundle\MongoDBBundle</parameter>
+      </parameter>
       <parameter key="DebugBundle" type="collection">
         <parameter key="parent">null</parameter>
         <parameter key="path">/home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReader/vendor/symfony/symfony/src/Symfony/Bundle/DebugBundle</parameter>
@@ -113,6 +119,7 @@
     <parameter key="mailer_user">null</parameter>
     <parameter key="mailer_password">null</parameter>
     <parameter key="secret">ThisTokenIsNotSoSecretChangeIt</parameter>
+    <parameter key="mongodb_server">“mongodb://localhost:27017”</parameter>
     <parameter key="locale">en</parameter>
     <parameter key="fragment.renderer.hinclude.global_template">null</parameter>
     <parameter key="fragment.path">/_fragment</parameter>
@@ -387,7 +394,7 @@
     <parameter key="jms_serializer.datetime_handler.class">JMS\Serializer\Handler\DateHandler</parameter>
     <parameter key="jms_serializer.array_collection_handler.class">JMS\Serializer\Handler\ArrayCollectionHandler</parameter>
     <parameter key="jms_serializer.php_collection_handler.class">JMS\Serializer\Handler\PhpCollectionHandler</parameter>
-    <parameter key="jms_serializer.form_error_handler.class">FOS\RestBundle\Serializer\Normalizer\FormErrorHandler</parameter>
+    <parameter key="jms_serializer.form_error_handler.class">JMS\Serializer\Handler\FormErrorHandler</parameter>
     <parameter key="jms_serializer.constraint_violation_handler.class">JMS\Serializer\Handler\ConstraintViolationHandler</parameter>
     <parameter key="jms_serializer.doctrine_proxy_subscriber.class">JMS\Serializer\EventDispatcher\Subscriber\DoctrineProxySubscriber</parameter>
     <parameter key="jms_serializer.stopwatch_subscriber.class">JMS\SerializerBundle\Serializer\StopwatchEventSubscriber</parameter>
@@ -419,6 +426,60 @@
     <parameter key="nelmio_cors.cors_listener.class">Nelmio\CorsBundle\EventListener\CorsListener</parameter>
     <parameter key="nelmio_cors.options_resolver.class">Nelmio\CorsBundle\Options\Resolver</parameter>
     <parameter key="nelmio_cors.options_provider.config.class">Nelmio\CorsBundle\Options\ConfigProvider</parameter>
+    <parameter key="doctrine_mongodb.odm.connection.class">Doctrine\MongoDB\Connection</parameter>
+    <parameter key="doctrine_mongodb.odm.configuration.class">Doctrine\ODM\MongoDB\Configuration</parameter>
+    <parameter key="doctrine_mongodb.odm.document_manager.class">Doctrine\ODM\MongoDB\DocumentManager</parameter>
+    <parameter key="doctrine_mongodb.odm.manager_configurator.class">Doctrine\Bundle\MongoDBBundle\ManagerConfigurator</parameter>
+    <parameter key="doctrine_mongodb.odm.logger.class">Doctrine\Bundle\MongoDBBundle\Logger\Logger</parameter>
+    <parameter key="doctrine_mongodb.odm.logger.aggregate.class">Doctrine\Bundle\MongoDBBundle\Logger\AggregateLogger</parameter>
+    <parameter key="doctrine_mongodb.odm.data_collector.standard.class">Doctrine\Bundle\MongoDBBundle\DataCollector\StandardDataCollector</parameter>
+    <parameter key="doctrine_mongodb.odm.data_collector.pretty.class">Doctrine\Bundle\MongoDBBundle\DataCollector\PrettyDataCollector</parameter>
+    <parameter key="doctrine_mongodb.odm.event_manager.class">Symfony\Bridge\Doctrine\ContainerAwareEventManager</parameter>
+    <parameter key="doctrine_odm.mongodb.validator_initializer.class">Symfony\Bridge\Doctrine\Validator\DoctrineInitializer</parameter>
+    <parameter key="doctrine_odm.mongodb.validator.unique.class">Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntityValidator</parameter>
+    <parameter key="doctrine_mongodb.odm.class">Doctrine\Bundle\MongoDBBundle\ManagerRegistry</parameter>
+    <parameter key="doctrine_mongodb.odm.security.user.provider.class">Symfony\Bridge\Doctrine\Security\User\EntityUserProvider</parameter>
+    <parameter key="doctrine_mongodb.odm.proxy_cache_warmer.class">Doctrine\Bundle\MongoDBBundle\CacheWarmer\ProxyCacheWarmer</parameter>
+    <parameter key="doctrine_mongodb.odm.hydrator_cache_warmer.class">Doctrine\Bundle\MongoDBBundle\CacheWarmer\HydratorCacheWarmer</parameter>
+    <parameter key="doctrine_mongodb.odm.persistent_collection_cache_warmer.class">Doctrine\Bundle\MongoDBBundle\CacheWarmer\PersistentCollectionCacheWarmer</parameter>
+    <parameter key="doctrine_mongodb.odm.cache.array.class">Doctrine\Common\Cache\ArrayCache</parameter>
+    <parameter key="doctrine_mongodb.odm.cache.apc.class">Doctrine\Common\Cache\ApcCache</parameter>
+    <parameter key="doctrine_mongodb.odm.cache.apcu.class">Doctrine\Common\Cache\ApcuCache</parameter>
+    <parameter key="doctrine_mongodb.odm.cache.memcache.class">Doctrine\Common\Cache\MemcacheCache</parameter>
+    <parameter key="doctrine_mongodb.odm.cache.memcache_host">localhost</parameter>
+    <parameter key="doctrine_mongodb.odm.cache.memcache_port">11211</parameter>
+    <parameter key="doctrine_mongodb.odm.cache.memcache_instance.class">Memcache</parameter>
+    <parameter key="doctrine_mongodb.odm.cache.xcache.class">Doctrine\Common\Cache\XcacheCache</parameter>
+    <parameter key="doctrine_mongodb.odm.metadata.driver_chain.class">Doctrine\Common\Persistence\Mapping\Driver\MappingDriverChain</parameter>
+    <parameter key="doctrine_mongodb.odm.metadata.annotation.class">Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver</parameter>
+    <parameter key="doctrine_mongodb.odm.metadata.xml.class">Doctrine\Bundle\MongoDBBundle\Mapping\Driver\XmlDriver</parameter>
+    <parameter key="doctrine_mongodb.odm.metadata.yml.class">Doctrine\Bundle\MongoDBBundle\Mapping\Driver\YamlDriver</parameter>
+    <parameter key="doctrine_mongodb.odm.mapping_dirs" type="collection"/>
+    <parameter key="doctrine_mongodb.odm.xml_mapping_dirs" type="collection"/>
+    <parameter key="doctrine_mongodb.odm.yml_mapping_dirs" type="collection"/>
+    <parameter key="doctrine_mongodb.odm.document_dirs" type="collection"/>
+    <parameter key="doctrine_mongodb.odm.fixtures_dirs" type="collection"/>
+    <parameter key="doctrine_mongodb.odm.logger.batch_insert_threshold">4</parameter>
+    <parameter key="doctrine_mongodb.odm.listeners.resolve_target_document.class">Doctrine\ODM\MongoDB\Tools\ResolveTargetDocumentListener</parameter>
+    <parameter key="doctrine_mongodb.odm.default_connection">default</parameter>
+    <parameter key="doctrine_mongodb.odm.default_document_manager">default</parameter>
+    <parameter key="doctrine_mongodb.odm.proxy_namespace">MongoDBODMProxies</parameter>
+    <parameter key="doctrine_mongodb.odm.proxy_dir">/home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReader/var/cache/dev/doctrine/odm/mongodb/Proxies</parameter>
+    <parameter key="doctrine_mongodb.odm.auto_generate_proxy_classes">0</parameter>
+    <parameter key="doctrine_mongodb.odm.hydrator_namespace">Hydrators</parameter>
+    <parameter key="doctrine_mongodb.odm.hydrator_dir">/home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReader/var/cache/dev/doctrine/odm/mongodb/Hydrators</parameter>
+    <parameter key="doctrine_mongodb.odm.auto_generate_hydrator_classes">0</parameter>
+    <parameter key="doctrine_mongodb.odm.default_commit_options" type="collection"/>
+    <parameter key="doctrine_mongodb.odm.persistent_collection_dir">/home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReader/var/cache/dev/doctrine/odm/mongodb/PersistentCollections</parameter>
+    <parameter key="doctrine_mongodb.odm.persistent_collection_namespace">PersistentCollections</parameter>
+    <parameter key="doctrine_mongodb.odm.auto_generate_persistent_collection_classes">0</parameter>
+    <parameter key="doctrine_mongodb.odm.fixture_loader">Symfony\Bridge\Doctrine\DataFixtures\ContainerAwareLoader</parameter>
+    <parameter key="doctrine_mongodb.odm.connections" type="collection">
+      <parameter key="default">doctrine_mongodb.odm.default_connection</parameter>
+    </parameter>
+    <parameter key="doctrine_mongodb.odm.document_managers" type="collection">
+      <parameter key="default">doctrine_mongodb.odm.default_document_manager</parameter>
+    </parameter>
     <parameter key="web_profiler.debug_toolbar.position">bottom</parameter>
     <parameter key="web_profiler.debug_toolbar.intercept_redirects">false</parameter>
     <parameter key="web_profiler.debug_toolbar.mode">2</parameter>
@@ -479,6 +540,10 @@
         <parameter>dump</parameter>
         <parameter>@Debug/Profiler/dump.html.twig</parameter>
       </parameter>
+      <parameter key="doctrine_mongodb.odm.data_collector.pretty" type="collection">
+        <parameter>mongodb</parameter>
+        <parameter>@DoctrineMongoDB/Collector/mongodb.html.twig</parameter>
+      </parameter>
       <parameter key="data_collector.config" type="collection">
         <parameter>config</parameter>
         <parameter>@WebProfiler/Collector/config.html.twig</parameter>
@@ -510,6 +575,19 @@
       <parameter>doctrine.query_sql_command</parameter>
       <parameter>doctrine.schema_update_command</parameter>
       <parameter>doctrine.schema_validate_command</parameter>
+      <parameter>doctrine\bundle\mongodbbundle\command\clearmetadatacachedoctrineodmcommand</parameter>
+      <parameter>doctrine\bundle\mongodbbundle\command\createschemadoctrineodmcommand</parameter>
+      <parameter>doctrine\bundle\mongodbbundle\command\dropschemadoctrineodmcommand</parameter>
+      <parameter>doctrine\bundle\mongodbbundle\command\generatedocumentsdoctrineodmcommand</parameter>
+      <parameter>doctrine\bundle\mongodbbundle\command\generatehydratorsdoctrineodmcommand</parameter>
+      <parameter>doctrine\bundle\mongodbbundle\command\generateproxiesdoctrineodmcommand</parameter>
+      <parameter>doctrine\bundle\mongodbbundle\command\generaterepositoriesdoctrineodmcommand</parameter>
+      <parameter>doctrine\bundle\mongodbbundle\command\infodoctrineodmcommand</parameter>
+      <parameter>doctrine\bundle\mongodbbundle\command\loaddatafixturesdoctrineodmcommand</parameter>
+      <parameter>doctrine\bundle\mongodbbundle\command\querydoctrineodmcommand</parameter>
+      <parameter>doctrine\bundle\mongodbbundle\command\sharddoctrineodmcommand</parameter>
+      <parameter>doctrine\bundle\mongodbbundle\command\tailcursordoctrineodmcommand</parameter>
+      <parameter>doctrine\bundle\mongodbbundle\command\updateschemadoctrineodmcommand</parameter>
       <parameter>sensio_distribution.security_checker.command</parameter>
     </parameter>
   </parameters>
@@ -552,6 +630,24 @@
     <service id="cache_warmer" class="Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerAggregate">
       <argument type="collection">
         <argument type="service">
+          <service class="Doctrine\Bundle\MongoDBBundle\CacheWarmer\ProxyCacheWarmer" public="false">
+            <tag name="kernel.cache_warmer" priority="25"/>
+            <argument type="service" id="service_container"/>
+          </service>
+        </argument>
+        <argument type="service">
+          <service class="Doctrine\Bundle\MongoDBBundle\CacheWarmer\HydratorCacheWarmer" public="false">
+            <tag name="kernel.cache_warmer" priority="25"/>
+            <argument type="service" id="service_container"/>
+          </service>
+        </argument>
+        <argument type="service">
+          <service class="Doctrine\Bundle\MongoDBBundle\CacheWarmer\PersistentCollectionCacheWarmer" public="false">
+            <tag name="kernel.cache_warmer" priority="25"/>
+            <argument type="service" id="service_container"/>
+          </service>
+        </argument>
+        <argument type="service">
           <service class="Symfony\Bundle\FrameworkBundle\CacheWarmer\TemplatePathsCacheWarmer" public="false">
             <tag name="kernel.cache_warmer" priority="20"/>
             <argument type="service">
@@ -582,7 +678,7 @@
                 <tag name="cache.pool" clearer="cache.default_clearer"/>
                 <argument>M-QiAkjU+U</argument>
                 <argument>0</argument>
-                <argument>GDMnlnoq-wXW8y6YUlNiCl</argument>
+                <argument>zEaAKesC+6yXJ+k3FZc+q9</argument>
                 <argument>/home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReader/var/cache/dev/pools</argument>
                 <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
                 <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
@@ -765,7 +861,7 @@
       <tag name="cache.pool" clearer="cache.default_clearer"/>
       <argument>GzHLh6b7KM</argument>
       <argument>0</argument>
-      <argument>GDMnlnoq-wXW8y6YUlNiCl</argument>
+      <argument>zEaAKesC+6yXJ+k3FZc+q9</argument>
       <argument>/home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReader/var/cache/dev/pools</argument>
       <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
@@ -775,7 +871,7 @@
       <tag name="cache.pool" clearer="cache.default_clearer"/>
       <argument>yLtyuwzhBe</argument>
       <argument>0</argument>
-      <argument>GDMnlnoq-wXW8y6YUlNiCl</argument>
+      <argument>zEaAKesC+6yXJ+k3FZc+q9</argument>
       <argument>/home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReader/var/cache/dev/pools</argument>
       <argument type="service" id="monolog.logger.cache" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
@@ -1065,6 +1161,7 @@
               <argument key="Symfony\Component\Form\Extension\Core\Type\FormType">form.type.form</argument>
               <argument key="Symfony\Component\Form\Extension\Core\Type\ChoiceType">form.type.choice</argument>
               <argument key="Symfony\Bridge\Doctrine\Form\Type\EntityType">form.type.entity</argument>
+              <argument key="Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType">form.type.mongodb_document</argument>
             </argument>
             <argument type="collection">
               <argument key="Symfony\Component\Form\Extension\Core\Type\FormType" type="collection">
@@ -1084,6 +1181,7 @@
             <argument type="collection">
               <argument>form.type_guesser.validator</argument>
               <argument>form.type_guesser.doctrine</argument>
+              <argument>form.type_guesser.doctrine.mongodb</argument>
             </argument>
           </service>
         </argument>
@@ -1288,7 +1386,8 @@
               <argument key="security.validator.user_password">security.validator.user_password</argument>
               <argument key="Symfony\Component\Security\Core\Validator\Constraints\UserPasswordValidator">security.validator.user_password</argument>
               <argument key="doctrine.orm.validator.unique">doctrine.orm.validator.unique</argument>
-              <argument key="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntityValidator">doctrine.orm.validator.unique</argument>
+              <argument key="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntityValidator">doctrine_odm.mongodb.validator.unique</argument>
+              <argument key="doctrine_odm.mongodb.unique">doctrine_odm.mongodb.validator.unique</argument>
             </argument>
           </service>
         </argument>
@@ -1313,6 +1412,7 @@
       <call method="addObjectInitializers">
         <argument type="collection">
           <argument type="service" id="doctrine.orm.validator_initializer"/>
+          <argument type="service" id="doctrine_odm.mongodb.validator_initializer"/>
         </argument>
       </call>
       <factory class="Symfony\Component\Validator\Validation" method="createValidatorBuilder"/>
@@ -1435,6 +1535,9 @@
       </call>
       <call method="add">
         <argument type="service" id="data_collector.dump"/>
+      </call>
+      <call method="add">
+        <argument type="service" id="doctrine_mongodb.odm.data_collector.pretty"/>
       </call>
       <call method="add">
         <argument type="service">
@@ -1878,7 +1981,7 @@
       <argument type="collection">
         <argument type="service">
           <service class="Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider" public="false">
-            <argument>5b8411937ae932.03976201</argument>
+            <argument>5b84455dd55dd6.94988809</argument>
           </service>
         </argument>
       </argument>
@@ -2026,7 +2129,7 @@
         <argument type="service">
           <service class="Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener" public="false">
             <argument type="service" id="security.token_storage"/>
-            <argument>5b8411937ae932.03976201</argument>
+            <argument>5b84455dd55dd6.94988809</argument>
             <argument type="service" id="monolog.logger.security" on-invalid="null"/>
             <argument type="service" id="security.authentication.manager"/>
           </service>
@@ -3083,34 +3186,6 @@
               <argument>serializeMap</argument>
             </argument>
           </argument>
-          <argument key="Symfony\Component\Form\Form" type="collection">
-            <argument key="xml" type="collection">
-              <argument>jms_serializer.form_error_handler</argument>
-              <argument>serializeFormToxml</argument>
-            </argument>
-            <argument key="json" type="collection">
-              <argument>jms_serializer.form_error_handler</argument>
-              <argument>serializeFormTojson</argument>
-            </argument>
-            <argument key="yml" type="collection">
-              <argument>jms_serializer.form_error_handler</argument>
-              <argument>serializeFormToyml</argument>
-            </argument>
-          </argument>
-          <argument key="Symfony\Component\Form\FormError" type="collection">
-            <argument key="xml" type="collection">
-              <argument>jms_serializer.form_error_handler</argument>
-              <argument>serializeFormErrorToxml</argument>
-            </argument>
-            <argument key="json" type="collection">
-              <argument>jms_serializer.form_error_handler</argument>
-              <argument>serializeFormErrorTojson</argument>
-            </argument>
-            <argument key="yml" type="collection">
-              <argument>jms_serializer.form_error_handler</argument>
-              <argument>serializeFormErrorToyml</argument>
-            </argument>
-          </argument>
           <argument key="Symfony\Component\Validator\ConstraintViolationList" type="collection">
             <argument key="xml" type="collection">
               <argument>jms_serializer.constraint_violation_handler</argument>
@@ -3139,6 +3214,34 @@
               <argument>serializeViolationToyml</argument>
             </argument>
           </argument>
+          <argument key="Symfony\Component\Form\Form" type="collection">
+            <argument key="xml" type="collection">
+              <argument>fos_rest.serializer.form_error_handler</argument>
+              <argument>serializeFormToxml</argument>
+            </argument>
+            <argument key="json" type="collection">
+              <argument>fos_rest.serializer.form_error_handler</argument>
+              <argument>serializeFormTojson</argument>
+            </argument>
+            <argument key="yml" type="collection">
+              <argument>fos_rest.serializer.form_error_handler</argument>
+              <argument>serializeFormToyml</argument>
+            </argument>
+          </argument>
+          <argument key="Symfony\Component\Form\FormError" type="collection">
+            <argument key="xml" type="collection">
+              <argument>fos_rest.serializer.form_error_handler</argument>
+              <argument>serializeFormErrorToxml</argument>
+            </argument>
+            <argument key="json" type="collection">
+              <argument>fos_rest.serializer.form_error_handler</argument>
+              <argument>serializeFormErrorTojson</argument>
+            </argument>
+            <argument key="yml" type="collection">
+              <argument>fos_rest.serializer.form_error_handler</argument>
+              <argument>serializeFormErrorToyml</argument>
+            </argument>
+          </argument>
         </argument>
       </argument>
     </service>
@@ -3154,11 +3257,6 @@
     </service>
     <service id="jms_serializer.php_collection_handler" class="JMS\Serializer\Handler\PhpCollectionHandler">
       <tag name="jms_serializer.subscribing_handler"/>
-    </service>
-    <service id="jms_serializer.form_error_handler" class="FOS\RestBundle\Serializer\Normalizer\FormErrorHandler">
-      <tag name="jms_serializer.subscribing_handler"/>
-      <argument type="service" id="translator" on-invalid="null"/>
-      <argument>validators</argument>
     </service>
     <service id="jms_serializer.constraint_violation_handler" class="JMS\Serializer\Handler\ConstraintViolationHandler">
       <tag name="jms_serializer.subscribing_handler"/>
@@ -3250,6 +3348,192 @@
         <argument key="forced_allow_origin_value">null</argument>
       </argument>
     </service>
+    <service id="doctrine\bundle\mongodbbundle\command\clearmetadatacachedoctrineodmcommand" class="Doctrine\Bundle\MongoDBBundle\Command\ClearMetadataCacheDoctrineODMCommand">
+      <tag name="console.command"/>
+    </service>
+    <service id="doctrine\bundle\mongodbbundle\command\createschemadoctrineodmcommand" class="Doctrine\Bundle\MongoDBBundle\Command\CreateSchemaDoctrineODMCommand">
+      <tag name="console.command"/>
+    </service>
+    <service id="doctrine\bundle\mongodbbundle\command\dropschemadoctrineodmcommand" class="Doctrine\Bundle\MongoDBBundle\Command\DropSchemaDoctrineODMCommand">
+      <tag name="console.command"/>
+    </service>
+    <service id="doctrine\bundle\mongodbbundle\command\generatedocumentsdoctrineodmcommand" class="Doctrine\Bundle\MongoDBBundle\Command\GenerateDocumentsDoctrineODMCommand">
+      <tag name="console.command"/>
+    </service>
+    <service id="doctrine\bundle\mongodbbundle\command\generatehydratorsdoctrineodmcommand" class="Doctrine\Bundle\MongoDBBundle\Command\GenerateHydratorsDoctrineODMCommand">
+      <tag name="console.command"/>
+    </service>
+    <service id="doctrine\bundle\mongodbbundle\command\generateproxiesdoctrineodmcommand" class="Doctrine\Bundle\MongoDBBundle\Command\GenerateProxiesDoctrineODMCommand">
+      <tag name="console.command"/>
+    </service>
+    <service id="doctrine\bundle\mongodbbundle\command\generaterepositoriesdoctrineodmcommand" class="Doctrine\Bundle\MongoDBBundle\Command\GenerateRepositoriesDoctrineODMCommand">
+      <tag name="console.command"/>
+    </service>
+    <service id="doctrine\bundle\mongodbbundle\command\infodoctrineodmcommand" class="Doctrine\Bundle\MongoDBBundle\Command\InfoDoctrineODMCommand">
+      <tag name="console.command"/>
+    </service>
+    <service id="doctrine\bundle\mongodbbundle\command\loaddatafixturesdoctrineodmcommand" class="Doctrine\Bundle\MongoDBBundle\Command\LoadDataFixturesDoctrineODMCommand">
+      <tag name="console.command"/>
+    </service>
+    <service id="doctrine\bundle\mongodbbundle\command\querydoctrineodmcommand" class="Doctrine\Bundle\MongoDBBundle\Command\QueryDoctrineODMCommand">
+      <tag name="console.command"/>
+    </service>
+    <service id="doctrine\bundle\mongodbbundle\command\sharddoctrineodmcommand" class="Doctrine\Bundle\MongoDBBundle\Command\ShardDoctrineODMCommand">
+      <tag name="console.command"/>
+    </service>
+    <service id="doctrine\bundle\mongodbbundle\command\tailcursordoctrineodmcommand" class="Doctrine\Bundle\MongoDBBundle\Command\TailCursorDoctrineODMCommand">
+      <tag name="console.command"/>
+    </service>
+    <service id="doctrine\bundle\mongodbbundle\command\updateschemadoctrineodmcommand" class="Doctrine\Bundle\MongoDBBundle\Command\UpdateSchemaDoctrineODMCommand">
+      <tag name="console.command"/>
+    </service>
+    <service id="form.type.mongodb_document" class="Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType">
+      <tag name="form.type" alias="document"/>
+      <argument type="service" id="doctrine_mongodb"/>
+    </service>
+    <service id="form.type_guesser.doctrine.mongodb" class="Doctrine\Bundle\MongoDBBundle\Form\DoctrineMongoDBTypeGuesser">
+      <tag name="form.type_guesser"/>
+      <argument type="service" id="doctrine_mongodb"/>
+    </service>
+    <service id="doctrine_mongodb.odm.metadata.chain" class="Doctrine\Common\Persistence\Mapping\Driver\MappingDriverChain"/>
+    <service id="doctrine_mongodb.odm.metadata.annotation" class="Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver">
+      <argument type="service" id="annotation_reader"/>
+      <argument type="collection"/>
+    </service>
+    <service id="doctrine_mongodb.odm.metadata.xml" class="Doctrine\Bundle\MongoDBBundle\Mapping\Driver\XmlDriver">
+      <argument type="collection"/>
+    </service>
+    <service id="doctrine_mongodb.odm.metadata.yml" class="Doctrine\Bundle\MongoDBBundle\Mapping\Driver\YamlDriver">
+      <argument type="collection"/>
+    </service>
+    <service id="doctrine_mongodb.odm.cache.array" class="Doctrine\Common\Cache\ArrayCache"/>
+    <service id="doctrine_mongodb.odm.data_collector.pretty" class="Doctrine\Bundle\MongoDBBundle\DataCollector\PrettyDataCollector" public="false">
+      <tag name="data_collector" id="mongodb" template="@DoctrineMongoDB/Collector/mongodb.html.twig"/>
+      <call method="setBatchInsertThreshold">
+        <argument>4</argument>
+      </call>
+    </service>
+    <service id="doctrine_odm.mongodb.validator.unique" class="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntityValidator">
+      <tag name="validator.constraint_validator" alias="doctrine_odm.mongodb.unique"/>
+      <argument type="service" id="doctrine_mongodb"/>
+    </service>
+    <service id="doctrine_odm.mongodb.validator_initializer" class="Symfony\Bridge\Doctrine\Validator\DoctrineInitializer">
+      <tag name="validator.initializer"/>
+      <argument type="service" id="doctrine_mongodb"/>
+    </service>
+    <service id="doctrine_mongodb" class="Doctrine\Bundle\MongoDBBundle\ManagerRegistry">
+      <argument>MongoDB</argument>
+      <argument type="collection">
+        <argument key="default">doctrine_mongodb.odm.default_connection</argument>
+      </argument>
+      <argument type="collection">
+        <argument key="default">doctrine_mongodb.odm.default_document_manager</argument>
+      </argument>
+      <argument>default</argument>
+      <argument>default</argument>
+      <argument>Doctrine\ODM\MongoDB\Proxy\Proxy</argument>
+      <argument type="service" id="service_container"/>
+    </service>
+    <service id="doctrine_mongodb.odm.default_connection" class="Doctrine\MongoDB\Connection">
+      <argument>“mongodb://localhost:27017”</argument>
+      <argument type="collection"/>
+      <argument type="service" id="doctrine_mongodb.odm.default_configuration"/>
+      <argument type="service" id="doctrine_mongodb.odm.event_manager"/>
+      <argument type="collection"/>
+    </service>
+    <service id="doctrine_mongodb.odm.default_configuration" class="Doctrine\ODM\MongoDB\Configuration">
+      <call method="setDocumentNamespaces">
+        <argument type="collection"/>
+      </call>
+      <call method="setMetadataCacheImpl">
+        <argument type="service">
+          <service class="Doctrine\Common\Cache\ArrayCache" public="false">
+            <call method="setNamespace">
+              <argument>sf_mongodb_default_d2cdfcb57c658296f6255c13664656a3be31d2462ac4b91c0925603294aa488b</argument>
+            </call>
+          </service>
+        </argument>
+      </call>
+      <call method="setMetadataDriverImpl">
+        <argument type="service">
+          <service class="Doctrine\Common\Persistence\Mapping\Driver\MappingDriverChain" public="false"/>
+        </argument>
+      </call>
+      <call method="setProxyDir">
+        <argument>/home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReader/var/cache/dev/doctrine/odm/mongodb/Proxies</argument>
+      </call>
+      <call method="setProxyNamespace">
+        <argument>MongoDBODMProxies</argument>
+      </call>
+      <call method="setAutoGenerateProxyClasses">
+        <argument>0</argument>
+      </call>
+      <call method="setHydratorDir">
+        <argument>/home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReader/var/cache/dev/doctrine/odm/mongodb/Hydrators</argument>
+      </call>
+      <call method="setHydratorNamespace">
+        <argument>Hydrators</argument>
+      </call>
+      <call method="setAutoGenerateHydratorClasses">
+        <argument>0</argument>
+      </call>
+      <call method="setDefaultDB">
+        <argument>test_database</argument>
+      </call>
+      <call method="setDefaultCommitOptions">
+        <argument type="collection"/>
+      </call>
+      <call method="setRetryConnect">
+        <argument>0</argument>
+      </call>
+      <call method="setRetryQuery">
+        <argument>0</argument>
+      </call>
+      <call method="setDefaultRepositoryClassName">
+        <argument>Doctrine\ODM\MongoDB\DocumentRepository</argument>
+      </call>
+      <call method="setPersistentCollectionDir">
+        <argument>/home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReader/var/cache/dev/doctrine/odm/mongodb/PersistentCollections</argument>
+      </call>
+      <call method="setPersistentCollectionNamespace">
+        <argument>PersistentCollections</argument>
+      </call>
+      <call method="setAutoGeneratePersistentCollectionClasses">
+        <argument>0</argument>
+      </call>
+      <call method="setLoggerCallable">
+        <argument type="collection">
+          <argument type="service">
+            <service class="Doctrine\Bundle\MongoDBBundle\Logger\AggregateLogger" public="false">
+              <argument type="collection">
+                <argument type="service">
+                  <service class="Doctrine\Bundle\MongoDBBundle\Logger\Logger" public="false">
+                    <tag name="monolog.logger" channel="doctrine"/>
+                    <argument type="service" id="monolog.logger.doctrine" on-invalid="null"/>
+                    <call method="setBatchInsertThreshold">
+                      <argument>4</argument>
+                    </call>
+                  </service>
+                </argument>
+                <argument type="service" id="doctrine_mongodb.odm.data_collector.pretty"/>
+              </argument>
+            </service>
+          </argument>
+          <argument>logQuery</argument>
+        </argument>
+      </call>
+    </service>
+    <service id="doctrine_mongodb.odm.default_manager_configurator" class="Doctrine\Bundle\MongoDBBundle\ManagerConfigurator">
+      <argument type="collection"/>
+    </service>
+    <service id="doctrine_mongodb.odm.default_document_manager" class="Doctrine\ODM\MongoDB\DocumentManager">
+      <tag name="doctrine_mongodb.odm.document_manager"/>
+      <argument type="service" id="doctrine_mongodb.odm.default_connection"/>
+      <argument type="service" id="doctrine_mongodb.odm.default_configuration"/>
+      <argument type="service" id="doctrine_mongodb.odm.event_manager"/>
+      <factory class="Doctrine\ODM\MongoDB\DocumentManager" method="create"/>
+      <configurator service="doctrine_mongodb.odm.default_manager_configurator" method="configure"/>
+    </service>
     <service id="data_collector.dump" class="Symfony\Component\HttpKernel\DataCollector\DumpDataCollector">
       <tag name="data_collector" id="dump" template="@Debug/Profiler/dump.html.twig" priority="240"/>
       <argument type="service" id="debug.stopwatch" on-invalid="ignore"/>
@@ -3336,6 +3620,10 @@
         <argument key="data_collector.dump" type="collection">
           <argument>dump</argument>
           <argument>@Debug/Profiler/dump.html.twig</argument>
+        </argument>
+        <argument key="doctrine_mongodb.odm.data_collector.pretty" type="collection">
+          <argument>mongodb</argument>
+          <argument>@DoctrineMongoDB/Collector/mongodb.html.twig</argument>
         </argument>
         <argument key="data_collector.config" type="collection">
           <argument>config</argument>
@@ -3503,6 +3791,15 @@
       </call>
     </service>
     <service id="monolog.handler.null_internal" class="Monolog\Handler\NullHandler"/>
+    <service id="fos_rest.serializer.form_error_handler" class="FOS\RestBundle\Serializer\Normalizer\FormErrorHandler">
+      <tag name="jms_serializer.subscribing_handler"/>
+      <argument type="service">
+        <service class="JMS\Serializer\Handler\FormErrorHandler" public="false">
+          <argument type="service" id="translator" on-invalid="null"/>
+          <argument>validators</argument>
+        </service>
+      </argument>
+    </service>
     <service id="session.storage.filesystem" class="Symfony\Component\HttpFoundation\Session\Storage\MockFileSessionStorage">
       <argument>/home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReader/var/cache/dev/sessions</argument>
       <argument>MOCKSESSID</argument>
@@ -3828,6 +4125,9 @@
         <service class="JMS\Serializer\Accessor\DefaultAccessorStrategy" public="false"/>
       </argument>
     </service>
+    <service id="doctrine_mongodb.odm.event_manager" class="Symfony\Bridge\Doctrine\ContainerAwareEventManager">
+      <argument type="service" id="service_container"/>
+    </service>
     <service id="twig.loader" class="Symfony\Bundle\TwigBundle\Loader\FilesystemLoader">
       <tag name="twig.loader"/>
       <argument type="service" id="templating.locator"/>
@@ -3852,6 +4152,10 @@
       <call method="addPath">
         <argument>/home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReader/vendor/doctrine/doctrine-bundle/Resources/views</argument>
         <argument>Doctrine</argument>
+      </call>
+      <call method="addPath">
+        <argument>/home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReader/vendor/doctrine/mongodb-odm-bundle/Resources/views</argument>
+        <argument>DoctrineMongoDB</argument>
       </call>
       <call method="addPath">
         <argument>/home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReader/vendor/symfony/symfony/src/Symfony/Bundle/DebugBundle/Resources/views</argument>
@@ -3891,6 +4195,10 @@
     <service id="fos_rest.router" alias="router"/>
     <service id="fos_rest.templating" alias="templating"/>
     <service id="fos_rest.view_handler" alias="fos\restbundle\view\viewhandlerinterface"/>
+    <service id="doctrine_mongodb.odm.cache" alias="doctrine_mongodb.odm.cache.array"/>
+    <service id="doctrine_mongodb.odm.metadata.annotation_reader" alias="annotation_reader"/>
+    <service id="doctrine_mongodb.odm.document_manager" alias="doctrine_mongodb.odm.default_document_manager"/>
+    <service id="doctrine.odm.mongodb.document_manager" alias="doctrine_mongodb.odm.default_document_manager"/>
     <service id="console.command.appbundle_command_csvimportcommand" alias="console_command.csv_import"/>
     <service id="console.command.doctrine_bundle_doctrinecachebundle_command_containscommand" alias="doctrine_cache.contains_command"/>
     <service id="console.command.doctrine_bundle_doctrinecachebundle_command_deletecommand" alias="doctrine_cache.delete_command"/>
@@ -3916,7 +4224,21 @@
     <service id="console.command.doctrine_bundle_doctrinebundle_command_proxy_runsqldoctrinecommand" alias="doctrine.query_sql_command"/>
     <service id="console.command.doctrine_bundle_doctrinebundle_command_proxy_updateschemadoctrinecommand" alias="doctrine.schema_update_command"/>
     <service id="console.command.doctrine_bundle_doctrinebundle_command_proxy_validateschemacommand" alias="doctrine.schema_validate_command"/>
+    <service id="console.command.doctrine_bundle_mongodbbundle_command_clearmetadatacachedoctrineodmcommand" alias="doctrine\bundle\mongodbbundle\command\clearmetadatacachedoctrineodmcommand"/>
+    <service id="console.command.doctrine_bundle_mongodbbundle_command_createschemadoctrineodmcommand" alias="doctrine\bundle\mongodbbundle\command\createschemadoctrineodmcommand"/>
+    <service id="console.command.doctrine_bundle_mongodbbundle_command_dropschemadoctrineodmcommand" alias="doctrine\bundle\mongodbbundle\command\dropschemadoctrineodmcommand"/>
+    <service id="console.command.doctrine_bundle_mongodbbundle_command_generatedocumentsdoctrineodmcommand" alias="doctrine\bundle\mongodbbundle\command\generatedocumentsdoctrineodmcommand"/>
+    <service id="console.command.doctrine_bundle_mongodbbundle_command_generatehydratorsdoctrineodmcommand" alias="doctrine\bundle\mongodbbundle\command\generatehydratorsdoctrineodmcommand"/>
+    <service id="console.command.doctrine_bundle_mongodbbundle_command_generateproxiesdoctrineodmcommand" alias="doctrine\bundle\mongodbbundle\command\generateproxiesdoctrineodmcommand"/>
+    <service id="console.command.doctrine_bundle_mongodbbundle_command_generaterepositoriesdoctrineodmcommand" alias="doctrine\bundle\mongodbbundle\command\generaterepositoriesdoctrineodmcommand"/>
+    <service id="console.command.doctrine_bundle_mongodbbundle_command_infodoctrineodmcommand" alias="doctrine\bundle\mongodbbundle\command\infodoctrineodmcommand"/>
+    <service id="console.command.doctrine_bundle_mongodbbundle_command_loaddatafixturesdoctrineodmcommand" alias="doctrine\bundle\mongodbbundle\command\loaddatafixturesdoctrineodmcommand"/>
+    <service id="console.command.doctrine_bundle_mongodbbundle_command_querydoctrineodmcommand" alias="doctrine\bundle\mongodbbundle\command\querydoctrineodmcommand"/>
+    <service id="console.command.doctrine_bundle_mongodbbundle_command_sharddoctrineodmcommand" alias="doctrine\bundle\mongodbbundle\command\sharddoctrineodmcommand"/>
+    <service id="console.command.doctrine_bundle_mongodbbundle_command_tailcursordoctrineodmcommand" alias="doctrine\bundle\mongodbbundle\command\tailcursordoctrineodmcommand"/>
+    <service id="console.command.doctrine_bundle_mongodbbundle_command_updateschemadoctrineodmcommand" alias="doctrine\bundle\mongodbbundle\command\updateschemadoctrineodmcommand"/>
     <service id="console.command.sensiolabs_security_command_securitycheckercommand" alias="sensio_distribution.security_checker.command"/>
+    <service id="jms_serializer.form_error_handler" alias="fos_rest.serializer.form_error_handler"/>
     <service id="fos_rest.serializer.jms_handler_registry" alias="jms_serializer.handler_registry"/>
   </services>
 </container>
