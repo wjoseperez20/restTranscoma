@@ -10,4 +10,5 @@ parameters:
     mailer_user: null
     mailer_password: null
     secret: ThisTokenIsNotSoSecretChangeIt
-    mongodb_server: '“mongodb://localhost:27017”'
+    # Puerto del servidor de mongodb"
+    mongodb_server: "mongodb://localhost:27017"
