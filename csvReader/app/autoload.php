@@ -17,5 +17,5 @@ AnnotationRegistry::registerLoader([$loader, 'loadClass']);
 return $loader;
 
 
-
+AnnotationDriver::registerAnnotationClasses();
 
