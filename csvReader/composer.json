@@ -31,7 +31,8 @@
         "league/csv": "^8.0",
         "friendsofsymfony/rest-bundle": "^2.3",
         "jms/serializer-bundle": "^2.4",
-        "nelmio/cors-bundle": "^1.5"
+        "nelmio/cors-bundle": "^1.5",
+        "alcaeus/mongo-php-adapter": "^1.1"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
