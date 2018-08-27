@@ -122,7 +122,7 @@ Reiniciar servicio en Ubuntu:
 
 > sudo service cron restart
 
-*stop-status
+>                   *stop-status
 
 Linea utilizada en cron tab modo de prueba escribiendo en un log ubicado en documentos:
 
@@ -144,9 +144,23 @@ https://symfony.com/legacy/doc/more-with-symfony/1_4/es/13-leveraging-the-power-
 
 https://vabadus.es/blog/crear-tareas-programadas-en-symfony2-mediante-comandos-de-consola
 
+#### lunes 27/agosto
 
- 
- 
- 
+Instalando mongoDb en Linux Ubuntu:
 
+Pasos
+
+1: http://php.net/manual/es/mongodb.installation.manual.php
+
+2: https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/
+
+3: https://medium.com/@robertodev/how-to-install-symfony3-with-mongodb-5ce5baaee4e7
+ 
+y siguiendo la documentacion oficial de symfony siguiendo el ejemplo propuesto:
+
+4: http://symfony.com/doc/current/bundles/DoctrineMongoDBBundle/index.html
+ 
+Querys de mongodb
+
+https://docs.mongodb.com/manual/tutorial/query-documents/
 
