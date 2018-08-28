@@ -10,8 +10,7 @@ namespace AppBundle\Document;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 /**
- * Class Product
- * @package AppBundle\Document
+ *
  * @MongoDB\Document
  */
 class Product
