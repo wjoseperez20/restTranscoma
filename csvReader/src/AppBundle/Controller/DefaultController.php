@@ -43,22 +43,22 @@ class DefaultController extends Controller
         ]);
     }
 
-	/**
-	 * @Route("crear", name="crearPage")
-	 */
-	public function createAction()
-	{
-		$product = new Product();
-		$product->setName('probandoi probando');
-		$product->setPrice('19.99');
-
-		$dm = $this->get('doctrine_mongodb')->getManager();
-		$dm->persist($product);
-		$dm->flush();
-
-		return new Response('Created product id '.$product->getId());
-
-	}
+//	/**
+//	 * @Route("crear", name="crearPage")
+//	 */
+//	public function createAction()
+//	{
+//		$product = new Product();
+//		$product->setName('probandoi probando');
+//		$product->setPrice('19.99');
+//
+//		$dm = $this->get('doctrine_mongodb')->getManager();
+//		$dm->persist($product);
+//		$dm->flush();
+//
+//		return new Response('Created product id '.$product->getId());
+//
+//	}
 
 
 //	/**
