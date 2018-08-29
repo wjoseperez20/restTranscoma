@@ -84,25 +84,25 @@ class DefaultController extends Controller
 //		return new View('Created product id ',Response::HTTP_OK);
 //	}
 
-/*=========================================================================*/
-
-	/** Metodo que retorna un documento desde la clase
-	 * o coleccion Product mediante el parametro id
-	 * Ejemplo:  http://localhost:8000/ver/id
-	 * @Rest\Get("/ver/{id}")
-	 */
-	public function showAction($id)
-	{
-		$product = $this->get('doctrine_mongodb')
-			->getRepository('AppBundle:Product')
-			->find($id);
-
-		if (!$product)
-		{
-			throw $this->createNotFoundException('No product found for id '.$id);
-		}
-		return $product;
-	}
+///*=========================================================================*/
+//
+//	/** Metodo que retorna un documento desde la clase
+//	 * o coleccion Product mediante el parametro id
+//	 * Ejemplo:  http://localhost:8000/ver/id
+//	 * @Rest\Get("/ver/{id}")
+//	 */
+//	public function showAction($id)
+//	{
+//		$product = $this->get('doctrine_mongodb')
+//			->getRepository('AppBundle:Product')
+//			->find($id);
+//
+//		if (!$product)
+//		{
+//			throw $this->createNotFoundException('No product found for id '.$id);
+//		}
+//		return $product;
+//	}
 
 	/**
 	 * @Route("insertar", name="insertarCsv")
