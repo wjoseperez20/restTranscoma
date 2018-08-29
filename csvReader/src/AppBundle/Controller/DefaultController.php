@@ -37,23 +37,6 @@ class DefaultController extends Controller
         ]);
     }
 
-//	/**
-//	 * @Route("crear", name="crearPage")
-//	 */
-//	public function createAction()
-//	{
-//		$product = new Product();
-//		$product->setName('probandoi probando');
-//		$product->setPrice('19.99');
-//
-//		$dm = $this->get('doctrine_mongodb')->getManager();
-//		$dm->persist($product);
-//		$dm->flush();
-//
-//		return new Response('Created product id '.$product->getId());
-//
-//	}
-
 
 //	/**
 //	 * @Rest\Post("/user/")
@@ -79,24 +62,7 @@ class DefaultController extends Controller
 //	}
 
 ///*=========================================================================*/
-//
-//	/** Metodo que retorna un documento desde la clase
-//	 * o coleccion Product mediante el parametro id
-//	 * Ejemplo:  http://localhost:8000/ver/id
-//	 * @Rest\Get("/ver/{id}")
-//	 */
-//	public function showAction($id)
-//	{
-//		$product = $this->get('doctrine_mongodb')
-//			->getRepository('AppBundle:Product')
-//			->find($id);
-//
-//		if (!$product)
-//		{
-//			throw $this->createNotFoundException('No product found for id '.$id);
-//		}
-//		return $product;
-//	}
+
 
 	/**
 	 * Funcion que lee el documento DuaPartidasCsv y guarda todos los registros dentro
@@ -219,4 +185,62 @@ class DefaultController extends Controller
 		}
 
 	}// fin validarCadenaVacia
+
+
+	/**
+	 * metodo que retorna todos registro del documento DataPartidasDua
+	 * ejemplo: http://localhost:8000/consultar
+	 *  @Rest\Get("/consultar/")
+	 * @return View|null|object
+	 * @throws \Exception
+	 */
+	public function queryAction()
+	{
+
+		$logger = LoggerFactory::getLogger(self::CLASS_NAME);
+		$handler = LoggerFactory::getStreamHandler(self::LOG_DIRECTORY);
+		$logger->pushHandler($handler);
+		try
+		{
+			$csv = $this->get('doctrine_mongodb')
+				->getRepository('AppBundle:PostalDua')
+				->findAll();
+			if (!$csv)
+			{
+				throw $this->createNotFoundException('No records found. This is empty');
+			}
+			return $csv;
+		}
+		catch (\Exception $e)
+		{
+			$logger->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()}");
+			return new Response("Registro no encontrado ". $e, Response::HTTP_NOT_FOUND);
+			throw $e;
+		}
+	}// fin de queryAction
+
+
+	/**
+	 * metodo que retorna un registro del documento DataPartidasDua por id.
+	 * desde mongodb
+	 * ejemplo: http://localhost:8000/consultar
+	 *  @Rest\Get("/consultar/{id}")
+	 * @return View|null|object
+	 * @throws \Exception
+	 */
+	public function querySpecificAction($id)
+	{
+		$logger = LoggerFactory::getLogger(self::CLASS_NAME);
+		$handler = LoggerFactory::getStreamHandler(self::LOG_DIRECTORY);
+		$logger->pushHandler($handler);
+		$csv = $this->get('doctrine_mongodb')
+			->getRepository('AppBundle:PostalDua')
+			->find($id);
+
+		if (!$csv)
+		{
+			throw $this->createNotFoundException('No records found. This is empty');
+		}
+		return $csv;
+	}// fin de QuerySpecificAction
 }
