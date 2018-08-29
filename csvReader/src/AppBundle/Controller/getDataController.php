@@ -8,21 +8,18 @@
 
 namespace AppBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\View\View;
-use AppBundle\Entity\Postal;
+
 
 class getDataController extends FOSRestController
 {
 
 	/**
 	 * Metodo que retorna todos los registros del documento
-	 * DuaPartidas.csv mediante Doctrine
+	 * DuaPartidas.csv mediante Doctrine desde mysql
 	 * Ejemplo:  http://localhost:8000/postal
 	 * @Rest\Get("/postal")
 	 */
