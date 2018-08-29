@@ -10,7 +10,6 @@ namespace AppBundle\Controller;
 
 use Factory\LoggerFactory;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -32,39 +31,36 @@ class bashController extends Controller
 	 * @return Response
 	 * @Route("Lucky/number")
 	 * @throws \Exception
+	 * Genera numeros aleatorios y ejecuta el .sh
 	 */
 	public function numberAction()
 	{
+		$logger = LoggerFactory::getLogger(self::CLASS_NAME);
+		$handler = LoggerFactory::getStreamHandler(self::LOG_DIRECTORY);
+		$logger->pushHandler($handler);
 		try
 		{
 			$number = random_int(0, 100);
-			$logger = LoggerFactory::getLogger(self::CLASS_NAME);
-			$handler = LoggerFactory::getStreamHandler(self::LOG_DIRECTORY);
-			$logger->pushHandler($handler);
 
 			system('./../csvReaderDaemon.sh') . "\n";
 
-			$logger->info('This process was started in .bashController::class into in : .bashController::numberAction()');
+			//$logger->info('This process was started in .bashController::class into in : .bashController::numberAction()');
 
 			//print exec("echo hola")."\n";
 			return new Response('<html><body>Lucky number is :' . $number .	' .</body>');
 		}
-		catch (RuntimeException $ee)
+		catch (\RuntimeException $ee)
 		{
-			return new Response(" Tiempo de ejecucion excedido ". $ee, Response::HTTP_REQUEST_TIMEOUT);
 			$logger->error("({$ee->getCode()}) Message: '{$ee->getMessage()}' in file: '{$ee->getFile()}' in line: {$ee->getLine()}");
+			return new Response(" Tiempo de ejecucion excedido ". $ee, Response::HTTP_REQUEST_TIMEOUT);
 			throw $ee;
 		}
-		catch (Exception $e)
+		catch (\Exception $e)
 		{
-			return new Response("Registro no encontrado ". $e, Response::HTTP_NOT_FOUND);
 			$logger->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()}");
+			return new Response("Registro no encontrado ". $e, Response::HTTP_NOT_FOUND);
 			throw $e;
 		}
+	}// fin de numberAction
 
-
-
-	}
-
-
-}
+}//fin de la clase
