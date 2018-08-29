@@ -164,3 +164,9 @@ Querys de mongodb
 
 https://docs.mongodb.com/manual/tutorial/query-documents/
 
+#### Miercoles 29/ago/2018
+
+Url de insercion en la base de datos mongodb
+
+http://localhost:8000/insertar
+
