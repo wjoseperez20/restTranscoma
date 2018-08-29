@@ -233,14 +233,22 @@ class DefaultController extends Controller
 		$logger = LoggerFactory::getLogger(self::CLASS_NAME);
 		$handler = LoggerFactory::getStreamHandler(self::LOG_DIRECTORY);
 		$logger->pushHandler($handler);
-		$csv = $this->get('doctrine_mongodb')
-			->getRepository('AppBundle:PostalDua')
-			->find($id);
-
-		if (!$csv)
+		try
 		{
-			throw $this->createNotFoundException('No records found. This is empty');
+			$csv = $this->get('doctrine_mongodb')
+				->getRepository('AppBundle:PostalDua')
+				->find($id);
+
+			if (!$csv) {
+				throw $this->createNotFoundException('No records found. This is empty');
+			}
+			return $csv;
 		}
-		return $csv;
+		catch (\Exception $e)
+		{
+			$logger->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()}");
+			return new Response("Registro no encontrado ". $e, Response::HTTP_NOT_FOUND);
+			throw $e;
+		}
 	}// fin de QuerySpecificAction
 }
