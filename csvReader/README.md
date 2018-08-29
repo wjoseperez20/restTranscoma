@@ -164,9 +164,18 @@ Querys de mongodb
 
 https://docs.mongodb.com/manual/tutorial/query-documents/
 
-#### Miercoles 29/ago/2018
+#### Miercoles 29/ago/2018  MongoDB
 
 Url de insercion en la base de datos mongodb
 
 http://localhost:8000/insertar
 
+Consulta en la base de datos:
+
+Consulta los registros del documento por id:
+
+    http://localhost:8000/consultar/5b86e0edf7f1b31b8b0e22c7
+  
+Consulta todos los registros
+
+    http://localhost:8000/consultar/
