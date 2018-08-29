@@ -4,15 +4,14 @@ namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use AppBundle\Document\PostalDua;
 use Factory\LoggerFactory;
-use Symfony\Component\Console\Style\SymfonyStyle;
 use League\Csv\Reader;
-//use AppBundle\Entity\Postal;
+use FOS\RestBundle\View\View;
+
 
 class DefaultController extends Controller
 {
@@ -21,15 +20,10 @@ class DefaultController extends Controller
 	 * Constantes para esteblecer parametros de los loggers
 	 */
 	const CLASS_NAME = DefaultController::class;
-	//const LOG_DIRECTORY = '../var/logs/Controller/dev.log';
-	const LOG_DIRECTORY = '/home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReader/var/logs/Controller/dev.log';
+
 	/** Ruta absoluta  */
+	const LOG_DIRECTORY = '/home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReader/var/logs/Controller/dev.log';
 	const CSV_DIRECTORY ='/home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReader/assets/dataPartidasDua.csv';
-
-
-	/**
-	 * Inicia los atributos para el registro de los Loggers
-	 */
 
 
 	/**
@@ -105,6 +99,9 @@ class DefaultController extends Controller
 //	}
 
 	/**
+	 * Funcion que lee el documento DuaPartidasCsv y guarda todos los registros dentro
+	 * de la base de datos mongodb.
+	 * Retorna un response con el estado de la insercion
 	 * @Route("insertar", name="insertarCsv")
 	 * @throws \Exception
 	 */
@@ -116,18 +113,17 @@ class DefaultController extends Controller
 
 		try
 		{
-		//	$this->setLogger();
+			//$this->setLogger();
 			//$this->logger->info('This process was started in '.CsvImportCommand::class);
-	//		$io = new SymfonyStyle($input, $output);
-	//		$io->title('Leyendo Csv...');
+			//$io = new SymfonyStyle($input, $output);
+			//$io->title('Leyendo Csv...');
 			$postalDua=null;
 			$logger->info('Reading Csv file');
 			$reader = Reader::createFromPath(self::CSV_DIRECTORY);
 			$results = $reader->fetchAssoc();
-
 			$dm = $this->get('doctrine_mongodb')->getManager();
 
-	//		$io->progressStart(iterator_count($results));
+			//$io->progressStart(iterator_count($results));
 
 			foreach ($results as $row)
 			{
@@ -173,26 +169,28 @@ class DefaultController extends Controller
 					->setItemValue($row["ItemValue"]);
 
 				$dm->persist($postalDua);
-			//	$io->progressAdvance();
+				//$io->progressAdvance();
 			} //fin de foreach
 
 			$dm->flush();
-	//		$io->progressFinish();
-	//		$io->success('Comando Ejecutado con Exito!');
-			$logger->info('Success :  [OK] Command exited cleanly into CsvImportCommand::execute()');
-			return $postalDua;
+			//$io->progressFinish();
+			//$io->success('Comando Ejecutado con Exito!');
+			$logger->info('Success :  [OK] Command exited cleanly into CsvImportCommand::insertAction');
+			return new View('Success :  [OK] Command exited cleanly into CsvImportCommand::insertAction',Response::HTTP_OK);
 
 		}
 		catch (\Exception $e)
 		{
 			$logger->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()}");
 			throw $e;
+			return new View('Unsuccessful insertion into CsvImportCommand::execute(). The exception is:'.$e,Response::HTTP_INTERNAL_SERVER_ERROR);
 		}
 		finally
 		{
 			$logger->info('The process was finally into DefaultController::class');
 		}
 	}
+
 
 	/**
 	 * Valida si el valor dentro del documento es vacio, escribe null
@@ -208,7 +206,6 @@ class DefaultController extends Controller
 		$logger->pushHandler($handler);
 		try
 		{
-			// $log->debug('The process was entered in with the pàrams: ' .CsvImportCommand::validarCadenaVacia($valor));
 			if (trim($valor) == '')
 				return 'NULL';
 			else
