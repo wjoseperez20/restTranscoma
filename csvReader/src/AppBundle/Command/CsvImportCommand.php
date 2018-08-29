@@ -34,9 +34,8 @@ class CsvImportCommand extends Command
 	/**
 	 * Constante para definir la ubicacion del documento
 	 * DUA que se encuentra en formato CSV
+	 * Ruta absoluta
 	 */
-
-    /** Ruta absoluta  */
 	const CSV_DIRECTORY ='/home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReader/assets/dataPartidasDua.csv';
 
 	/**
@@ -50,11 +49,12 @@ class CsvImportCommand extends Command
 	private $logger;
 
 	/**
-	 * @var handler
+	 * @var $handler
 	 */
 	private $handler;
 
 	/**
+	 * Metodo que establece o inicializa los campos para el registro de los logger
 	 * @throws \Exception
 	 */
 	public function setLogger()
@@ -87,7 +87,7 @@ class CsvImportCommand extends Command
 	}
 
 	/**
-	 * Configure
+	 * Configure para definir el comando csv:import
 	 * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
 	 * @throws \Exception
 	 */
@@ -96,14 +96,12 @@ class CsvImportCommand extends Command
 		$this
 			->setName('csv:import')
 			->setDescription('Importa un CSV, y lo guarda en Base de Datos');
-
 	}
 
 	/**
 	 * @param InputInterface $input
 	 * @param OutputInterface $output
 	 * @return void
-	 * @throws \Doctrine\ORM\NonUniqueResultException
 	 * @throws \Exception
 	 */
 	protected function execute(InputInterface $input, OutputInterface $output)
@@ -174,7 +172,7 @@ class CsvImportCommand extends Command
 			$this->logger->info('Success :  [OK] Command exited cleanly into CsvImportCommand::execute()');
 
 		}
-		catch (Exception $e)
+		catch (\Exception $e)
 		{
 			$this->logger->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()}");
 			throw $e;
@@ -203,16 +201,11 @@ class CsvImportCommand extends Command
 			else
 				return $valor;
 		}
-		catch (Exception $e)
+		catch (\Exception $e)
 		{
 			$this->logger
 				->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()}");
 			throw $e;
 		}
-		finally
-		{
-			//   $this->logger->debug('The process was finally into validarCadenaVacia' );
-		}
-
 	}// fin validarCadenaVacia
 }
