@@ -13,6 +13,11 @@ web_profiler:
 
 monolog:
     handlers:
+#        my_channel:
+#            type: stream
+#            path: "%kernel.logs_dir%/%kernel.environment%-my_channel.log"
+#            level: debug
+#            channels: [my_channel]
         main:
             type: stream
             path: '%kernel.logs_dir%/%kernel.environment%.log'
