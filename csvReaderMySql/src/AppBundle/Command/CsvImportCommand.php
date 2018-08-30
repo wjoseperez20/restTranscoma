@@ -27,7 +27,7 @@ class CsvImportCommand extends Command
 	const CLASS_NAME = CsvImportCommand::class;
 
 	//const LOG_DIRECTORY = 'var/logs/Command/dev.log';
-	const LOG_DIRECTORY = '/home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReaderMysql/var/logs/Command/dev.log';
+	const LOG_DIRECTORY = '/home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReaderMySql/var/logs/Command/dev.log';
 
 	/**
 	 * Constante para definir la ubicacion del documento
