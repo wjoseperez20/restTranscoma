@@ -69,7 +69,7 @@ swiftmailer:
 sensio_framework_extra:
    router:
         annotations: false
-
+#Configuracion del servicio rest
 # Nelmio CORS Configuration
 nelmio_cors:
     defaults:
@@ -80,6 +80,18 @@ nelmio_cors:
         max_age: 3600
         hosts: []
         origin_regex: false
+
+# FOSRest Configuration
+fos_rest:
+    body_listener: true
+    format_listener:
+        rules:
+        - { path: '^/', priorities: ['json'], fallback_format: json, prefer_extension: false }
+    param_fetcher_listener: true
+    view:
+        view_response_listener: 'force'
+        formats:
+            json: true
 
 # app/config/config.yml
 #Configuracion de mongo db
