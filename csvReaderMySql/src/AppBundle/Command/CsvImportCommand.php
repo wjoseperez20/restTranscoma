@@ -4,18 +4,18 @@ namespace AppBundle\Command;
 
 use AppBundle\Entity\Postal;
 use Doctrine\ORM\EntityManagerInterface;
-use Factory\LoggerFactory3;
+use AppBundle\Factory\LoggerFactory;
 use League\Csv\Reader;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Monolog\Handler\StreamHandler;
+
 use Monolog\Logger;
 //use MonologHandlerLogglyHandler;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-
+use AppBundle\LoggerFactory2;
 
 /**
  * Class CsvImportCommand
@@ -29,14 +29,14 @@ class CsvImportCommand extends Command
 	const CLASS_NAME = CsvImportCommand::class;
 
 	//const LOG_DIRECTORY = 'var/logs/Command/dev.log';
-	const LOG_DIRECTORY = '/home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReader/var/logs/Command/dev.log';
+	const LOG_DIRECTORY = '/home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReaderMysql/var/logs/Command/dev.log';
 
 	/**
 	 * Constante para definir la ubicacion del documento
 	 * DUA que se encuentra en formato CSV
 	 * Ruta absoluta
 	 */
-	const CSV_DIRECTORY ='/home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReader/assets/dataPartidasDua.csv';
+	const CSV_DIRECTORY ='/home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReaderMySql/assets/dataPartidasDua.csv';
 
 	/**
 	 * @var EntityManagerInterface
@@ -61,8 +61,8 @@ class CsvImportCommand extends Command
 	{
 		try
 		{
-			$this->logger = LoggerFactory3::getLogger(self::CLASS_NAME);
-			$this->handler = LoggerFactory3::getStreamHandler(self::LOG_DIRECTORY);
+			$this->logger = LoggerFactory::getLogger(self::CLASS_NAME);
+			$this->handler = LoggerFactory::getStreamHandler(self::LOG_DIRECTORY);
 			$this->logger->pushHandler($this->handler);
 		}
 		catch (Exception $e)
@@ -99,6 +99,7 @@ class CsvImportCommand extends Command
 	}
 
 	/**
+	 * Metodo que ejecuta el comando php bin/console csv:import desde la consola
 	 * @param InputInterface $input
 	 * @param OutputInterface $output
 	 * @return void
