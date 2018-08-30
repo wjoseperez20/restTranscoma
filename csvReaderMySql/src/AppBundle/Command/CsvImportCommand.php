@@ -15,7 +15,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Monolog\Logger;
 //use MonologHandlerLogglyHandler;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use AppBundle\LoggerFactory2;
+
 
 /**
  * Class CsvImportCommand
