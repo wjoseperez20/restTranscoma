@@ -7,4 +7,4 @@ hour=`date +%H:%M:%S`
 
 echo "en el dia $today y la hora actual es: $hour"
 
-php /home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReader/bin/console csv:import
+php /home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReaderMySql/bin/console csv:import
