@@ -216,7 +216,7 @@ class DefaultController extends FOSRestController
         catch (\Exception $e)
         {
             $logger->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()}");
-            return new Response("Registro no encontrado ". $e, Response::HTTP_NOT_FOUND);
+            return new View("Registro no encontrado ". $e, Response::HTTP_NOT_FOUND);
            // throw $e;
         }
     }// fin de queryAction
@@ -249,7 +249,7 @@ class DefaultController extends FOSRestController
         catch (\Exception $e)
         {
             $logger->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()}");
-            return new Response("Registro no encontrado ". $e, Response::HTTP_NOT_FOUND);
+            return new View("Registro no encontrado ". $e, Response::HTTP_NOT_FOUND);
            // throw $e;
         }
     }// fin de QuerySpecificAction
