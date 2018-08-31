@@ -59,7 +59,7 @@ class getDataController extends FOSRestController
 	 * metodo que retorna un registro del documento DataPartidasDua por id.
 	 * ejemplo: http://localhost:8000/consultar/38000
 	 * @Rest\Get("/consultar/{id}")
-	 * @param $idw
+	 * @param $id
 	 * @return View|null|object
 	 * @throws \Exception
 	 */
