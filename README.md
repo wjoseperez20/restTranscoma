@@ -188,6 +188,8 @@ Consulta todos los registros
 
 Se esta utilizando rutas absolutas para el registro de los logs, tanto para las funciones dentro de los controladores como la de los comandos.
 
+Para ejecutar el cron con el script se debe indicar la ruta con la ubicacion de "bin/console" del proyecto.
+
 De igual forma se utiliza ruta absoluta para la lectura del documento Dua, ya que si se utiliza rutas relativas, el documento no podra ser leido
 
 desde cualquier otra ubicacion.
