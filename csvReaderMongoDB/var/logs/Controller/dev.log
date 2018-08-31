@@ -44,3 +44,6 @@
 [2018-08-30 20:25:58] AppBundle\Controller\DefaultController.INFO: Reading Csv file [] []
 [2018-08-30 20:25:59] AppBundle\Controller\DefaultController.INFO: Success :  [OK] Command exited cleanly into CsvImportCommand::insertAction [] []
 [2018-08-30 20:25:59] AppBundle\Controller\DefaultController.INFO: The process was finally into DefaultController::class [] []
+[2018-08-31 19:19:54] AppBundle\Controller\DefaultController.ERROR: (0) Message: 'No records found. ' in file: '/home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReaderMongoDB/vendor/symfony/symfony/src/Symfony/Bundle/FrameworkBundle/Controller/ControllerTrait.php' in line: 354 [] []
+[2018-08-31 19:20:04] AppBundle\Controller\DefaultController.ERROR: (0) Message: 'No records found. ' in file: '/home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReaderMongoDB/vendor/symfony/symfony/src/Symfony/Bundle/FrameworkBundle/Controller/ControllerTrait.php' in line: 354 [] []
+[2018-08-31 19:20:12] AppBundle\Controller\DefaultController.ERROR: (0) Message: 'No records found. ' in file: '/home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReaderMongoDB/vendor/symfony/symfony/src/Symfony/Bundle/FrameworkBundle/Controller/ControllerTrait.php' in line: 354 [] []
