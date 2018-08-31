@@ -74,6 +74,7 @@ class GetDataController extends FOSRestController
      * @Rest\Get("/consultar/{id}")
      * @return View|null|object
      * @throws \Exception
+     * @param $id
      */
     public function querySpecificAction($id)
     {
