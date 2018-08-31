@@ -182,3 +182,12 @@ Consulta los registros del documento por id:
 Consulta todos los registros
 
     http://localhost:8000/consultar/
+
+
+#### Nota
+
+Se esta utilizando rutas absolutas para el registro de los logs, tanto para las funciones dentro de los controladores como la de los comandos.
+
+De igual forma se utiliza ruta absoluta para la lectura del documento Dua, ya que si se utiliza rutas relativas, el documento no podra ser leido
+
+desde cualquier otra ubicacion.
