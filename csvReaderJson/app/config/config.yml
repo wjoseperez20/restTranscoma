@@ -92,16 +92,16 @@ fos_rest:
         view_response_listener: 'force'
         formats:
             json: true
-
-# app/config/config.yml
-#Configuracion de mongo db
-doctrine_mongodb:
-    connections:
-        default:
-            server: "%mongodb_server%"
-            options: {}
-    #default_database: test_database
-    default_database: csvReaderDua
-    document_managers:
-        default:
-            auto_mapping: true
+#
+## app/config/config.yml
+##Configuracion de mongo db
+#doctrine_mongodb:
+#    connections:
+#        default:
+#            server: "%mongodb_server%"
+#            options: {}
+#    #default_database: test_database
+#    default_database: csvReaderDua
+#    document_managers:
+#        default:
+#            auto_mapping: true
