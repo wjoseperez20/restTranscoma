@@ -16,6 +16,11 @@ use AppBundle\Factory\LoggerFactory;
 use League\Csv\Reader;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\Controller\FOSRestController;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+
 
 
 class InsertDataController extends FOSRestController
@@ -46,6 +51,10 @@ class InsertDataController extends FOSRestController
 
         try
         {
+            $encoders = array(new JsonEncoder());
+            $normalizers = array(new ObjectNormalizer());
+            $serializer = new Serializer($normalizers, $encoders);
+
             //$this->setLogger();
             //$this->logger->info('This process was started in '.CsvImportCommand::class);
             //$io = new SymfonyStyle($input, $output);
@@ -54,7 +63,7 @@ class InsertDataController extends FOSRestController
             $logger->info('Reading Csv file');
             $reader = Reader::createFromPath(self::CSV_DIRECTORY);
             $results = $reader->fetchAssoc();
-            $dm = $this->get('doctrine_mongodb')->getManager();
+            //$dm = $this->get('doctrine_mongodb')->getManager();
 
             //$io->progressStart(iterator_count($results));
 
@@ -100,15 +109,22 @@ class InsertDataController extends FOSRestController
                     ->setItemHsCode($row["ItemHSCode"])
                     ->setItemQuantity($row["ItemQuantity"])
                     ->setItemValue($row["ItemValue"]);
+                $jsonContent = $serializer->serialize($postalDua, 'json');
+                echo $jsonContent;
+//                $jsonContentD =$serializer->deserialize($jsonContent,'json');
+//               echo 33333333333333333333333333333333333333333333333333333333;
+//                echo $jsonContentD;
 
-                $dm->persist($postalDua);
+               // return new View('probando json'.$jsonContent,Response::HTTP_OK);
+              // return $postalDua;
+                // $dm->persist($postalDua);
                 //$io->progressAdvance();
             } //fin de foreach
 
-            $dm->flush();
+         //   $dm->flush();
             //$io->progressFinish();
             //$io->success('Comando Ejecutado con Exito!');
-            $logger->info('Success :  [OK] Command exited cleanly into CsvImportCommand::insertAction');
+        //    $logger->info('Success :  [OK] Command exited cleanly into CsvImportCommand::insertAction');
             return new View('Success :  [OK] Command exited cleanly into CsvImportCommand::insertAction',Response::HTTP_OK);
 
         }
