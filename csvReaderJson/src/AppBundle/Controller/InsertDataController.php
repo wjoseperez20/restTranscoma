@@ -116,8 +116,8 @@ class InsertDataController extends FOSRestController
 
 //             Llamando a la funcion peticion_post pero se queda pegado
 
-//             $this->peticion_post($jsonContent);
-
+//             $this->peticion_postAction($jsonContent);
+//
                // return new View('probando json'.$jsonContent,Response::HTTP_OK);
               // return $postalDua;
                 // $dm->persist($postalDua);
