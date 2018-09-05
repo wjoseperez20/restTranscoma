@@ -178,7 +178,7 @@ class InsertDataController extends FOSRestController
      * @Route("verificar", name="verificar")
      * @throws \Exception
      */
-    public function peticion_post($envio='s'){
+    public function peticion_postAction($envio='s'){
 
 
 
