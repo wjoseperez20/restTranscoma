@@ -110,8 +110,8 @@ class InsertDataController extends FOSRestController
                     ->setItemHsCode($row["ItemHSCode"])
                     ->setItemQuantity($row["ItemQuantity"])
                     ->setItemValue($row["ItemValue"]);
-                $jsonContent = $serializer->serialize($postalDua, 'json');
-                echo $jsonContent;
+//                $jsonContent = $serializer->serialize($postalDua, 'json');
+//                echo $jsonContent;
 //                $jsonContentD =$serializer->deserialize($jsonContent,'json');
 //               echo 33333333333333333333333333333333333333333333333333333333;
 //                echo $jsonContentD;
@@ -172,14 +172,16 @@ class InsertDataController extends FOSRestController
 
 
     /**
-     *
+     * Retorna un response con el estado de la insercion
+     * @Route("verificar", name="verificar")
+     * @throws \Exception
      */
     public function peticion_post(){
 
 
 
-        $url = "https://www.servicioprueba.com/request";
-
+        $url = "http://httpbin.org/post";
+//        $url = "http://localhost:8001/user/";
         $conexion = curl_init();
 
         $envio = "datos que se envian"; // --- Puede ser un xml, un json, etc.
@@ -218,8 +220,8 @@ class InsertDataController extends FOSRestController
 
 
 curl_close($conexion);
-
-}
+        echo $respuesta;
+        return new View(' probando metodo '.$respuesta,Response::HTTP_OK);}
 }
 
 
