@@ -110,11 +110,13 @@ class InsertDataController extends FOSRestController
                     ->setItemHsCode($row["ItemHSCode"])
                     ->setItemQuantity($row["ItemQuantity"])
                     ->setItemValue($row["ItemValue"]);
-//                $jsonContent = $serializer->serialize($postalDua, 'json');
+                $jsonContent = $serializer->serialize($postalDua, 'json');
 //                echo $jsonContent;
 //                $jsonContentD =$serializer->deserialize($jsonContent,'json');
-//               echo 33333333333333333333333333333333333333333333333333333333;
-//                echo $jsonContentD;
+
+//             Llamando a la funcion peticion_post pero se queda pegado
+
+//             $this->peticion_post($jsonContent);
 
                // return new View('probando json'.$jsonContent,Response::HTTP_OK);
               // return $postalDua;
@@ -176,7 +178,7 @@ class InsertDataController extends FOSRestController
      * @Route("verificar", name="verificar")
      * @throws \Exception
      */
-    public function peticion_post(){
+    public function peticion_post($envio='s'){
 
 
 
@@ -184,7 +186,7 @@ class InsertDataController extends FOSRestController
 //        $url = "http://localhost:8001/user/";
         $conexion = curl_init();
 
-        $envio = "datos que se envian"; // --- Puede ser un xml, un json, etc.
+//        $envio = "datos que se envian"; // --- Puede ser un xml, un json, etc.
 
 
 
