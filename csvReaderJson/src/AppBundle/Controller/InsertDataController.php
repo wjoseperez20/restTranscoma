@@ -9,6 +9,7 @@
 namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Dotenv\Dotenv;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\Annotations as Rest;
@@ -21,7 +22,6 @@ use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-
 
 
 class InsertDataController extends FOSRestController
@@ -46,8 +46,13 @@ class InsertDataController extends FOSRestController
      */
     public function insertAction()
     {
+        /* Carga de variables de entorno desde el archivo.env*/
+        $dotenv = new Dotenv();
+        $dotenv->load('/home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReaderJson/.env');
+        $log_directory= getenv('LOG_DIRECTORY');
+        $csv_directory= getenv('CSV_DIRECTORY');
         $logger = LoggerFactory::getLogger(self::CLASS_NAME);
-        $handler = LoggerFactory::getStreamHandler(self::LOG_DIRECTORY);
+        $handler = LoggerFactory::getStreamHandler($log_directory);
         $logger->pushHandler($handler);
 
         try
@@ -66,7 +71,7 @@ class InsertDataController extends FOSRestController
             //$io->title('Leyendo Csv...');
             $postalDua=null;
             $logger->info('Reading Csv file');
-            $reader = Reader::createFromPath(self::CSV_DIRECTORY);
+            $reader = Reader::createFromPath($csv_directory);
             $results = $reader->fetchAssoc();
 
             //$dm = $this->get('doctrine_mongodb')->getManager();
