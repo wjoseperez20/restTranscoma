@@ -52,6 +52,7 @@ class InsertDataController extends FOSRestController
 
         try
         {
+            /*Codifica un objeto en Json para este caso*/
             $encoders = array(new JsonEncoder());
             $normalizers = array(new ObjectNormalizer());
             $serializer = new Serializer($normalizers, $encoders);
@@ -64,8 +65,8 @@ class InsertDataController extends FOSRestController
             $logger->info('Reading Csv file');
             $reader = Reader::createFromPath(self::CSV_DIRECTORY);
             $results = $reader->fetchAssoc();
-            //$dm = $this->get('doctrine_mongodb')->getManager();
 
+            //$dm = $this->get('doctrine_mongodb')->getManager();
             //$io->progressStart(iterator_count($results));
 
             foreach ($results as $row)
@@ -111,23 +112,21 @@ class InsertDataController extends FOSRestController
                     ->setItemQuantity($row["ItemQuantity"])
                     ->setItemValue($row["ItemValue"]);
                 $jsonContent = $serializer->serialize($postalDua, 'json');
-//                echo $jsonContent;
-//                $jsonContentD =$serializer->deserialize($jsonContent,'json');
 
-//             Llamando a la funcion peticion_post pero se queda pegado
+                //$jsonContentD =$serializer->deserialize($jsonContent,'json');
 
-//             $this->peticion_postAction($jsonContent);
-//
-               // return new View('probando json'.$jsonContent,Response::HTTP_OK);
-              // return $postalDua;
-                // $dm->persist($postalDua);
+                //Llamando a la funcion peticion_post pero se queda pegado
+                $this->peticion_postAction($jsonContent);
+
+                //$dm->persist($postalDua);
                 //$io->progressAdvance();
+
             } //fin de foreach
 
-         //   $dm->flush();
+            //$dm->flush();
             //$io->progressFinish();
             //$io->success('Comando Ejecutado con Exito!');
-        //    $logger->info('Success :  [OK] Command exited cleanly into CsvImportCommand::insertAction');
+            //$logger->info('Success :  [OK] Command exited cleanly into CsvImportCommand::insertAction');
             return new View('Success :  [OK] Command exited cleanly into CsvImportCommand::insertAction',Response::HTTP_OK);
 
         }
@@ -139,7 +138,7 @@ class InsertDataController extends FOSRestController
         }
         finally
         {
-            $logger->info('The process was finally into DefaultController::class');
+            $logger->info('The process was finally into InsertDataController::class');
         }
     }
 
@@ -174,57 +173,68 @@ class InsertDataController extends FOSRestController
 
 
     /**
-     * Retorna un response con el estado de la insercion
+     * realiza una peticion post hacia una url especificada, y con el parametro en formato json
      * @Route("verificar", name="verificar")
      * @throws \Exception
      */
-    public function peticion_postAction($envio='s'){
+    public function peticion_postAction($envio='{"id": 2000,"tracking_number": "PQ48K20476017570107300Z",
+    "conocimiento_aereo": "20180620FDX5245772500908957","reference": "83390767643","bag_label": "LS1002315891"}')
+    {
 
-
-
+        $logger = LoggerFactory::getLogger(self::CLASS_NAME);
+        $handler = LoggerFactory::getStreamHandler(self::LOG_DIRECTORY);
+        $logger->pushHandler($handler);
+        /*url de prueba para peticiones post
+        Esta url permite probar peticiones post donde se visualiza el formato json y los datos de entrada en un cuerpo
+        que lo muestra en html. En el campo donde dice json se muestra cada elemento leido del documento en formato json
+        */
         $url = "http://httpbin.org/post";
-//        $url = "http://localhost:8001/user/";
-        $conexion = curl_init();
+        //$url = "http://localhost:8002/user/";
 
-//        $envio = "datos que se envian"; // --- Puede ser un xml, un json, etc.
+        try
+        {
+            // --- inicia la conexion inicializando el objeto curl
+            $conexion = curl_init();
 
+            //$envio = "datos que se envian"; // --- Puede ser un xml, un json, etc.
 
+            curl_setopt($conexion, CURLOPT_URL,$url);
 
-        curl_setopt($conexion, CURLOPT_URL,$url);
+            // --- Datos que se van a enviar por POST.
+            curl_setopt($conexion, CURLOPT_POSTFIELDS,$envio);
 
-// --- Datos que se van a enviar por POST.
+            // --- Cabecera incluyendo la longitud de los datos de envio.
+            curl_setopt($conexion, CURLOPT_HTTPHEADER,array('Content-Type: application/json', 'Content-Length: '.strlen($envio)));
 
-        curl_setopt($conexion, CURLOPT_POSTFIELDS,$envio);
+            // --- Petición POST.
+            curl_setopt($conexion, CURLOPT_POST, 1);
 
-// --- Cabecera incluyendo la longitud de los datos de envio.
+            // --- HTTPGET a false porque no se trata de una petición GET.
+            curl_setopt($conexion, CURLOPT_HTTPGET, FALSE);
 
-        curl_setopt($conexion, CURLOPT_HTTPHEADER,array('Content-Type: application/json', 'Content-Length: '.strlen($envio)));
+            // -- HEADER a false.
+            curl_setopt($conexion, CURLOPT_HEADER, FALSE);
 
-// --- Petición POST.
+            // --- Respuesta.
+            $respuesta=curl_exec($conexion);
 
-        curl_setopt($conexion, CURLOPT_POST, 1);
+            //$logger->info('la respuesta es '.$respuesta);
 
-// --- HTTPGET a false porque no se trata de una petición GET.
+            // -- Cerrando conexion
+            curl_close($conexion);
 
-        curl_setopt($conexion, CURLOPT_HTTPGET, FALSE);
+            return new View(' probando metodo '.$respuesta,Response::HTTP_OK);
+        }
+        catch (\Exception $e)
+        {
+            $logger
+                ->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()}");
+            throw $e;
+        }
 
-// -- HEADER a false.
+    }// fin de metodo postAction
 
-        curl_setopt($conexion, CURLOPT_HEADER, FALSE);
-
-
-
-// --- Respuesta.
-
-        $respuesta=curl_exec($conexion);
-
-
-
-
-curl_close($conexion);
-        echo $respuesta;
-        return new View(' probando metodo '.$respuesta,Response::HTTP_OK);}
-}
+}// fin de InsertDataController
 
 
 
