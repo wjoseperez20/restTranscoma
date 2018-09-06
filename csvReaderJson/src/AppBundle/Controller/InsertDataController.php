@@ -57,6 +57,9 @@ class InsertDataController extends FOSRestController
             $normalizers = array(new ObjectNormalizer());
             $serializer = new Serializer($normalizers, $encoders);
 
+            /*Marcando el tiempo inicial para la lectura del documento*/
+            $tiempo_inicial = microtime(true); //true es para que sea calculado en segundos
+
             //$this->setLogger();
             //$this->logger->info('This process was started in '.CsvImportCommand::class);
             //$io = new SymfonyStyle($input, $output);
@@ -123,6 +126,11 @@ class InsertDataController extends FOSRestController
 
             } //fin de foreach
 
+            /*marcando el tiempo actual luego de haber terminado el programa*/
+            $tiempo_final = microtime(true);
+            /* Mostrado en segundos*/
+            $tiempo_transcurrido= $tiempo_final-$tiempo_inicial;
+            $logger->info('Success : Tardo en realizar la lectura : '.$tiempo_transcurrido.' seg. into InsertDataController::insertAction');
             //$dm->flush();
             //$io->progressFinish();
             //$io->success('Comando Ejecutado con Exito!');
