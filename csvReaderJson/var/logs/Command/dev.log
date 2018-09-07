@@ -77,3 +77,7 @@
 [2018-08-31 19:19:20] AppBundle\Command\CsvImportCommand.INFO: Reading Csv file [] []
 [2018-08-31 19:19:21] AppBundle\Command\CsvImportCommand.INFO: Success :  [OK] Command exited cleanly into CsvImportCommand::insertAction [] []
 [2018-08-31 19:19:21] AppBundle\Command\CsvImportCommand.INFO: The process was finally into CsvImportCommand::execute() [] []
+[2018-09-07 15:40:15] AppBundle\Command\CsvImportCommand.INFO: This process was started in AppBundle\Command\CsvImportCommand [] []
+[2018-09-07 15:40:15] AppBundle\Command\CsvImportCommand.INFO: Reading Csv file [] []
+[2018-09-07 15:40:15] AppBundle\Command\CsvImportCommand.ERROR: (0) Message: 'You have requested a non-existent service "doctrine_mongodb".' in file: '/home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReaderJson/vendor/symfony/symfony/src/Symfony/Component/DependencyInjection/Container.php' in line: 348 [] []
+[2018-09-07 15:40:15] AppBundle\Command\CsvImportCommand.INFO: The process was finally into CsvImportCommand::execute() [] []
