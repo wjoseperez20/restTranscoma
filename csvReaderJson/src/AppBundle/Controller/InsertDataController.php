@@ -14,7 +14,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use AppBundle\Document\PostalDua;
+
+/* importacion de la fabrica*/
 use AppBundle\Factory\LoggerFactory;
+use AppBundle\Factory\DotenvFactory;
+
 use League\Csv\Reader;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\Controller\FOSRestController;
@@ -27,19 +31,19 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 class InsertDataController extends FOSRestController
 {
 
+
     /**
      * Constantes para esteblecer parametros de los loggers
      */
     const CLASS_NAME = DefaultController::class;
 
-    /** Ruta absoluta  */
-    const LOG_DIRECTORY = '/home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReaderJson/var/logs/Controller/dev.log';
-    const CSV_DIRECTORY ='/home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReaderJson/assets/dataPartidasDua.csv';
+//    /** Ruta absoluta  */
+//    const LOG_DIRECTORY = '/home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReaderJson/var/logs/Controller/dev.log';
+//    const CSV_DIRECTORY ='/home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReaderJson/assets/dataPartidasDua.csv';
 
 
     /**
-     * Funcion que lee el documento DuaPartidasCsv y guarda todos los registros dentro
-     * de la base de datos mongodb.
+     * Funcion que lee el documento DuaPartidasCsv
      * Retorna un response con el estado de la insercion
      * @Route("insertar", name="insertarCsv")
      * @throws \Exception
@@ -47,8 +51,11 @@ class InsertDataController extends FOSRestController
     public function insertAction()
     {
         /* Carga de variables de entorno desde el archivo.env*/
-        $dotenv = new Dotenv();
+        $dotenv = DotenvFactory::getDotEnv();
+
+        /*indicando el archivo .env mediante ruta absoluta*/
         $dotenv->load('/home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReaderJson/.env');
+
         $log_directory= getenv('LOG_DIRECTORY');
         $csv_directory= getenv('CSV_DIRECTORY');
         $logger = LoggerFactory::getLogger(self::CLASS_NAME);
@@ -65,17 +72,10 @@ class InsertDataController extends FOSRestController
             /*Marcando el tiempo inicial para la lectura del documento*/
             $tiempo_inicial = microtime(true); //true es para que sea calculado en segundos
 
-            //$this->setLogger();
-            //$this->logger->info('This process was started in '.CsvImportCommand::class);
-            //$io = new SymfonyStyle($input, $output);
-            //$io->title('Leyendo Csv...');
             $postalDua=null;
             $logger->info('Reading Csv file');
             $reader = Reader::createFromPath($csv_directory);
             $results = $reader->fetchAssoc();
-
-            //$dm = $this->get('doctrine_mongodb')->getManager();
-            //$io->progressStart(iterator_count($results));
 
             foreach ($results as $row)
             {
@@ -123,23 +123,23 @@ class InsertDataController extends FOSRestController
 
                 //$jsonContentD =$serializer->deserialize($jsonContent,'json');
 
-                //Llamando a la funcion peticion_post pero se queda pegado
+                //Llamando a la funcion peticion_post
                 $this->peticion_postAction($jsonContent);
-
-                //$dm->persist($postalDua);
-                //$io->progressAdvance();
 
             } //fin de foreach
 
             /*marcando el tiempo actual luego de haber terminado el programa*/
             $tiempo_final = microtime(true);
+
             /* Mostrado en segundos*/
             $tiempo_transcurrido= $tiempo_final-$tiempo_inicial;
-            $logger->info('Success : Tardo en realizar la lectura : '.$tiempo_transcurrido.' seg. into InsertDataController::insertAction');
-            //$dm->flush();
-            //$io->progressFinish();
-            //$io->success('Comando Ejecutado con Exito!');
-            //$logger->info('Success :  [OK] Command exited cleanly into CsvImportCommand::insertAction');
+
+            /* tiempo en minutos*/
+            $tiempo_transcurrido_min= $tiempo_transcurrido/60;
+
+            $logger->info('Success : Tardo en realizar la lectura : '.$tiempo_transcurrido.' seg. equivalente a 
+            '.$tiempo_transcurrido_min.' minutos. into InsertDataController::insertAction');
+
             return new View('Success :  [OK] Command exited cleanly into CsvImportCommand::insertAction',Response::HTTP_OK);
 
         }
@@ -165,8 +165,9 @@ class InsertDataController extends FOSRestController
      */
     public function validarCadenaVacia($valor)
     {
+        $log_directory= getenv('LOG_DIRECTORY');
         $logger = LoggerFactory::getLogger(self::CLASS_NAME);
-        $handler = LoggerFactory::getStreamHandler(self::LOG_DIRECTORY);
+        $handler = LoggerFactory::getStreamHandler($log_directory);
         $logger->pushHandler($handler);
         try
         {
@@ -188,18 +189,21 @@ class InsertDataController extends FOSRestController
     /**
      * realiza una peticion post hacia una url especificada, y con el parametro en formato json
      * @Route("verificar", name="verificar")
+     * @param string $envio
+     * @return View
      * @throws \Exception
      */
     public function peticion_postAction($envio='{"id": 2000,"tracking_number": "PQ48K20476017570107300Z",
     "conocimiento_aereo": "20180620FDX5245772500908957","reference": "83390767643","bag_label": "LS1002315891"}')
     {
-
+        $log_directory= getenv('LOG_DIRECTORY');
         $logger = LoggerFactory::getLogger(self::CLASS_NAME);
-        $handler = LoggerFactory::getStreamHandler(self::LOG_DIRECTORY);
+        $handler = LoggerFactory::getStreamHandler($log_directory);
         $logger->pushHandler($handler);
+
         /*url de prueba para peticiones post
         Esta url permite probar peticiones post donde se visualiza el formato json y los datos de entrada en un cuerpo
-        que lo muestra en html. En el campo donde dice json se muestra cada elemento leido del documento en formato json
+        que muestra su retorno en html. En el campo donde dice json se muestra cada elemento leido del documento en formato json
         */
         $url = "http://httpbin.org/post";
         //$url = "http://localhost:8002/user/";
