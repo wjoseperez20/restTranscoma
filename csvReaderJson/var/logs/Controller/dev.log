@@ -128,3 +128,6 @@
 [2018-09-07 14:52:51] AppBundle\Controller\DefaultController.INFO: Reading Csv file [] []
 [2018-09-07 15:06:59] AppBundle\Controller\DefaultController.INFO: Success : Tardo en realizar la lectura : 848.02908301353 seg. into InsertDataController::insertAction [] []
 [2018-09-07 15:06:59] AppBundle\Controller\DefaultController.INFO: The process was finally into InsertDataController::class [] []
+[2018-09-07 16:10:29] AppBundle\Controller\DefaultController.INFO: Reading Csv file [] []
+[2018-09-07 16:22:46] AppBundle\Controller\DefaultController.INFO: Success : Tardo en realizar la lectura : 736.2638399601 seg. equivalente a              12.271063999335 minutos. into InsertDataController::insertAction [] []
+[2018-09-07 16:22:46] AppBundle\Controller\DefaultController.INFO: The process was finally into InsertDataController::class [] []
