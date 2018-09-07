@@ -21,11 +21,8 @@
     },
     "require": {
         "php": ">=5.5.9",
-        "alcaeus/mongo-php-adapter": "^1.1",
         "curl/curl": "^1.9",
         "doctrine/doctrine-bundle": "^1.6",
-        "doctrine/mongodb-odm": "^1.2",
-        "doctrine/mongodb-odm-bundle": "^3.4",
         "doctrine/orm": "^2.5",
         "friendsofsymfony/rest-bundle": "^2.4",
         "incenteev/composer-parameter-handler": "^2.0",
