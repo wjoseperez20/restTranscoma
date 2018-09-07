@@ -137,8 +137,7 @@ class InsertDataController extends FOSRestController
             /* tiempo en minutos*/
             $tiempo_transcurrido_min= $tiempo_transcurrido/60;
 
-            $logger->info('Success : Tardo en realizar la lectura : '.$tiempo_transcurrido.' seg. equivalente a 
-            '.$tiempo_transcurrido_min.' minutos. into InsertDataController::insertAction');
+            $logger->info('Success : Tardo en realizar la lectura : '.$tiempo_transcurrido.' seg. equivalente a '.$tiempo_transcurrido_min.' minutos. into InsertDataController::insertAction');
 
             return new View('Success :  [OK] Command exited cleanly into CsvImportCommand::insertAction',Response::HTTP_OK);
 
