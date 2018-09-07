@@ -14,7 +14,7 @@ use AppBundle\Controller\postDataController;
 class ControllerFactory
 {
     /**
-     * Returna la instancia de la carga de las variables de entorno
+     * Returna la instancia de la clase postController
      * @return postDataController
      */
     public static function getPostDataController()
