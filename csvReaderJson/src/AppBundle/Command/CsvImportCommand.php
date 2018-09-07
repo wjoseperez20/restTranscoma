@@ -188,7 +188,6 @@ class CsvImportCommand extends ContainerAwareCommand
                     ->setItemValue($row[getenv('COLUMNA39')]);
 
                 $jsonContent = $serializer->serialize($duaImport, 'json');
-
                 $this->envio_post->peticion_postAction($jsonContent);
                 $io->progressAdvance();
             }
