@@ -35,10 +35,9 @@ class BashController extends Controller
 	public function ejecutarBashAction()
 	{
         $dotenv = DotenvFactory::getDotEnv();
-
+//        require './';
         /*indicando el archivo .env mediante ruta absoluta*/
-        $dotenv->load('/home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReaderJson/.env');
-
+        $dotenv->load(__DIR__.'/../../../.env');
         $log_directory= getenv('LOG_DIRECTORY');
         $logger = LoggerFactory::getLogger(self::CLASS_NAME);
         $handler = LoggerFactory::getStreamHandler($log_directory);

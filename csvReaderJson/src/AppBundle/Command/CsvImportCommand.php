@@ -74,7 +74,7 @@ class CsvImportCommand extends ContainerAwareCommand
 		try
 		{
             $dotenv = DotenvFactory::getDotEnv();
-            $dotenv->load('/home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReaderJson/.env');
+            $dotenv->load(__DIR__.'/../../../.env');
 
             $this->log_directory= getenv('LOG_DIRECTORY_COMMAND');
             $this->csv_directory= getenv('CSV_DIRECTORY');

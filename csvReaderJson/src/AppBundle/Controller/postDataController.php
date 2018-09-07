@@ -39,8 +39,7 @@ class postDataController extends FOSRestController
         $dotenv = DotenvFactory::getDotEnv();
 
         /*indicando el archivo .env mediante ruta absoluta*/
-        $dotenv->load('/home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReaderJson/.env');
-
+        $dotenv->load(__DIR__.'/../../../.env');
         $logger = LoggerFactory::getLogger(self::CLASS_NAME);
         $handler = LoggerFactory::getStreamHandler(getenv('LOG_DIRECTORY'));
         $logger->pushHandler($handler);
