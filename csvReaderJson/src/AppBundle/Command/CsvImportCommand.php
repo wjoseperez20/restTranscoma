@@ -4,7 +4,7 @@ namespace AppBundle\Command;
 
 
 use Doctrine\ORM\EntityManagerInterface;
-use AppBundle\Factory\LoggerFactory;
+
 use League\Csv\Reader;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Config\Definition\Exception\Exception;
@@ -14,6 +14,16 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Monolog\Logger;
 use AppBundle\Document\PostalDua;
+
+/* importacion de la fabrica*/
+use AppBundle\Factory\DotenvFactory;
+use AppBundle\Factory\LoggerFactory;
+use AppBundle\Factory\ControllerFactory;
+
+/* para serializar objetos*/
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 
 /**
@@ -52,6 +62,21 @@ class CsvImportCommand extends ContainerAwareCommand
 	 */
 	private $handler;
 
+    /**
+     * @var
+     */
+	private $log_directory;
+
+    /**
+     * @var
+     */
+	private $csv_directory;
+
+    /**
+     * @var
+     */
+	private $envio_post;
+
 	/**
 	 * Metodo que establece o inicializa los campos para el registro de los logger
 	 * @throws \Exception
@@ -60,8 +85,20 @@ class CsvImportCommand extends ContainerAwareCommand
 	{
 		try
 		{
+            /* Carga de variables de entorno desde el archivo.env*/
+            $dotenv = DotenvFactory::getDotEnv();
+
+            /*indicando el archivo .env mediante ruta absoluta*/
+            $dotenv->load('/home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReaderJson/.env');
+
+            $this->log_directory= getenv('LOG_DIRECTORY_COMMAND');
+            $this->csv_directory= getenv('CSV_DIRECTORY');
+
+            $this->envio_post=ControllerFactory::getPostDataController();
+
+		    /*instanciando los loggers*/
 			$this->logger = LoggerFactory::getLogger(self::CLASS_NAME);
-			$this->handler = LoggerFactory::getStreamHandler(self::LOG_DIRECTORY);
+			$this->handler = LoggerFactory::getStreamHandler($this->log_directory);
 			$this->logger->pushHandler($this->handler);
 		}
 		catch (Exception $e)
@@ -70,6 +107,7 @@ class CsvImportCommand extends ContainerAwareCommand
 			throw $e;
 		}
 	}
+
 
 	/**
 	 * CsvImportCommand constructor.
@@ -109,17 +147,28 @@ class CsvImportCommand extends ContainerAwareCommand
         {
             $this->setLogger();
             $this->logger->info('This process was started in '.CsvImportCommand::class);
+            $this->envio_post=ControllerFactory::getPostDataController();
             $io = new SymfonyStyle($input, $output);
+
+            /*Codifica un objeto en Json para este caso*/
+            $encoders = array(new JsonEncoder());
+            $normalizers = array(new ObjectNormalizer());
+            $serializer = new Serializer($normalizers, $encoders);
+
             $io->title('Leyendo Csv...');
             $postalDua=null;
             $this->logger->info('Reading Csv file');
-            $reader = Reader::createFromPath(self::CSV_DIRECTORY);
+            $reader = Reader::createFromPath($this->csv_directory);
             $results = $reader->fetchAssoc();
 
             /*Obtener el repositorio de doctrine mongodb ubicado dentro de config.yml*/
-            $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
+           // $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
 
             $io->progressStart(iterator_count($results));
+
+            /*Marcando el tiempo inicial para la lectura del documento*/
+            $tiempo_inicial = microtime(true); //true es para que sea calculado en segundos
+
 
             foreach ($results as $row)
             {
@@ -164,14 +213,31 @@ class CsvImportCommand extends ContainerAwareCommand
                     ->setItemQuantity($row["ItemQuantity"])
                     ->setItemValue($row["ItemValue"]);
 
-                $dm->persist($postalDua);
+                $jsonContent = $serializer->serialize($postalDua, 'json');
+
+                //$jsonContentD =$serializer->deserialize($jsonContent,'json');
+
+                //Llamando a la funcion peticion_post
+                $this->envio_post->peticion_postAction($jsonContent);
+                //$dm->persist($postalDua);
+
                 $io->progressAdvance();
             } //fin de foreach
 
-            $dm->flush();
+          //  $dm->flush();
             $io->progressFinish();
             $io->success('Comando Ejecutado con Exito!');
-            $this->logger->info('Success :  [OK] Command exited cleanly into CsvImportCommand::insertAction');
+
+            /*marcando el tiempo actual luego de haber terminado el programa*/
+            $tiempo_final = microtime(true);
+
+            /* Mostrado en segundos*/
+            $tiempo_transcurrido= $tiempo_final-$tiempo_inicial;
+
+            /* tiempo en minutos*/
+            $tiempo_transcurrido_min= $tiempo_transcurrido/60;
+
+            $this->logger->info('Success : Tardo en realizar la lectura : '.$tiempo_transcurrido.' seg. equivalente a '.$tiempo_transcurrido_min.' minutos. into CsvImportCommand::insertAction');
 
 		}
 		catch (\Exception $e)
