@@ -19,25 +19,12 @@ use FOS\RestBundle\View\View;
 use AppBundle\Factory\LoggerFactory;
 use AppBundle\Factory\DotenvFactory;
 
-
 class postDataController extends FOSRestController
 {
     /**
      * Constantes para esteblecer parametros de los loggers
      */
     const CLASS_NAME = postDataController::class;
-
-    /**
-     * metodo para probar las peticiones post entrantes
-     * @Rest\Post("/user/")
-     */
-    public function postAction(Request $request)
-    {
-        echo $request;
-
-        return new View("User Added Successfully", Response::HTTP_OK);
-    } // fin de postAction
-
 
     /**
      * realiza una peticion post hacia una url especificada, con el parametro en formato json
@@ -47,32 +34,23 @@ class postDataController extends FOSRestController
      * @throws \Exception
      */
     public function peticion_postAction($envio='{"id": 2000,"tracking_number": "PQ48K20476017570107300Z",
-    "conocimiento_aereo": "20180620FDX5245772500908957","reference": "83390767643","bag_label": "LS1002315891"}')
+    "conocimiento_aereo": "20180620FDX5245772500908957"}')
     {
-        /* Carga de variables de entorno desde el archivo.env*/
         $dotenv = DotenvFactory::getDotEnv();
 
         /*indicando el archivo .env mediante ruta absoluta*/
         $dotenv->load('/home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReaderJson/.env');
-        $log_directory= getenv('LOG_DIRECTORY');
+
         $logger = LoggerFactory::getLogger(self::CLASS_NAME);
-        $handler = LoggerFactory::getStreamHandler($log_directory);
+        $handler = LoggerFactory::getStreamHandler(getenv('LOG_DIRECTORY'));
         $logger->pushHandler($handler);
 
-        /*url de prueba para peticiones post
-        Esta url permite probar peticiones post donde se visualiza el formato json y los datos de entrada en un cuerpo
-        que muestra su retorno en html. En el campo donde dice json se muestra cada elemento leido del documento en formato json
-        */
+        /*Url de prueba para peticiones post*/
         $url = "http://httpbin.org/post";
-        //$url = "http://localhost:8002/user/";
-
         try
         {
             // --- inicia la conexion inicializando el objeto curl
             $conexion = curl_init();
-
-            //$envio = "datos que se envian"; // --- Puede ser un xml, un json, etc.
-
             curl_setopt($conexion, CURLOPT_URL,$url);
 
             // --- Datos que se van a enviar por POST.
@@ -90,12 +68,8 @@ class postDataController extends FOSRestController
             // -- HEADER a false.
             curl_setopt($conexion, CURLOPT_HEADER, FALSE);
 
-            // --- Respuesta.
             $respuesta=curl_exec($conexion);
 
-            //$logger->info('la respuesta es '.$respuesta);
-
-            // -- Cerrando conexion
             curl_close($conexion);
 
             return new View(' probando metodo '.$respuesta,Response::HTTP_OK);
@@ -106,7 +80,5 @@ class postDataController extends FOSRestController
                 ->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()}");
             throw $e;
         }
-
-    }// fin de metodo postAction
-
+    }
 }
