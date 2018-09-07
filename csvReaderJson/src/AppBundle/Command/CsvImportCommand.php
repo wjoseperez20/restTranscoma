@@ -214,8 +214,8 @@ class CsvImportCommand extends ContainerAwareCommand
 	}
 
 	/**
-	 * Valida si el valor dentro del documento es vacio, escribe null
-	 * en la base de datos, de lo contrario retorna su valor
+	 * Valida si el valor dentro del documento es vacio, escribe null,
+	 * de lo contrario retorna su valor
 	 * @param $valor
 	 * @return string
 	 * @throws \Exception
