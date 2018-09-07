@@ -1,292 +1,288 @@
 <?php
 
 namespace AppBundle\Document;
-use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 
 /**
  * Postal
- *@MongoDB\Document
  */
-class PostalDua
+class DuaImport
 {
+
     /**
-     *
-     * @MongoDB\Id
+     * @var
      */
     private $id;
 
     /**
      * @var string
      *
-     * @MongoDB\Field( type="string"  )
      */
     private $trackingNumber;
 
     /**
      * @var string
      *
-     * @MongoDB\Field(  type="string"  )
+     *
      */
     private $conocimientoAereo;
 
     /**
      * @var string
      *
-     * @MongoDB\Field(  type="string"  )
+     *
      */
     private $reference;
 
     /**
      * @var string
      *
-     * @MongoDB\Field(  type="string"  )
+     *
      */
     private $bagLabel;
 
     /**
      * @var string
      *
-     * @MongoDB\Field(  type="string"  )
+     *
      */
     private $origin;
 
     /**
      * @var string
      *
-     * @MongoDB\Field( type="string"  )
+     *
      */
     private $destination;
 
     /**
      * @var string
      *
-     * @MongoDB\Field( type="string"  )
+     *
      */
     private $sumaria;
 
     /**
      * @var int
      *
-     * @MongoDB\Field( type="int")
+     *
      */
     private $partida;
 
     /**
      * @var string
      *
-     * @MongoDB\Field(  type="string"  )
+     *
      */
     private $internalAccountNumber;
 
     /**
      * @var string
      *
-     * @MongoDB\Field(  type="string"  )
+     *
      */
     private $shipperName;
 
     /**
      * @var string
      *
-     * @MongoDB\Field( type="string"  )
+     *
      */
     private $shipAdd1;
 
     /**
      * @var string
      *
-     * @MongoDB\Field( type="string"  )
+     *
      */
     private $shipAdd2;
 
     /**
      * @var string
      *
-     * @MongoDB\Field(  type="string"  )
+     *
      */
     private $shipAdd3;
 
     /**
      * @var string
      *
-     * @MongoDB\Field(type="string" )
+     *
      */
     private $shipCity;
 
     /**
      * @var string
      *
-     * @MongoDB\Field(  type="string"  )
+     *
      */
     private $shipState;
 
     /**
      * @var int
      *
-     * @MongoDB\Field( type="int")
+     *
      */
     private $shipZip;
 
     /**
      * @var string
      *
-     * @MongoDB\Field(  type="string"  )
+     *
      */
     private $shipCountryCode;
 
     /**
      * @var string
      *
-     * @MongoDB\Field(  type="string"  )
+     *
      */
     private $nif;
 
     /**
      * @var string
      *
-     * @MongoDB\Field( type="string"  )
+     *
      */
     private $consignee;
 
     /**
      * @var string
      *
-     * @MongoDB\Field(  type="string"  )
+     *
      */
     private $address1;
 
     /**
      * @var string
      *
-     * @MongoDB\Field(  type="string"  )
+     *
      */
     private $address2;
 
     /**
      * @var string
      *
-     * @MongoDB\Field(  type="string"  )
+     *
      */
     private $address3;
 
     /**
      * @var string
      *
-     * @MongoDB\Field(  type="string"  )
+     *
      */
     private $city;
 
     /**
      * @var string
      *
-     * @MongoDB\Field(  type="string"  )
+     *
      */
     private $state;
 
     /**
      * @var int
      *
-     * @MongoDB\Field( type="int")
+     *
      */
     private $zip;
 
     /**
      * @var string
      *
-     * @MongoDB\Field(  type="string"  )
+     *
      */
     private $countryCode;
 
     /**
      * @var string
      *
-     * @MongoDB\Field(  type="string"  )
+     *
      */
     private $email;
 
     /**
      * @var string
      *
-     * @MongoDB\Field(  type="string"  )
+     *
      */
     private $phone;
 
     /**
      * @var int
      *
-     * @MongoDB\Field( type="int")
+     *
      */
     private $pieces;
 
     /**
      * @var float
      *
-     * @MongoDB\Field( type="float")
+     * 
      */
     private $totalWeight;
 
     /**
      * @var string
      *
-     * @MongoDB\Field( type="string")
+     *
      */
     private $weightUOM;
 
-    // @MongoDB\Field(name="totalValue", type="float", scale=2)
     /**
      * @var float
      *
-     * @MongoDB\Field( type="string" )
+     *
      */
     private $totalValue;
 
     /**
      * @var string
      *
-     * @MongoDB\Field( type="string")
+     *
      */
     private $currency;
 
     /**
      * @var string
      *
-     * @MongoDB\Field( type="string")
+     *
      */
     private $incoterms;
 
     /**
      * @var string
      *
-     * @MongoDB\Field( type="string")
+     *
      */
     private $service;
 
     /**
      * @var string
      *
-     * @MongoDB\Field( type="string")
+     *
      */
     private $itemDescription;
 
     /**
      * @var int
      *
-     * @MongoDB\Field( type="int")
+     *
      */
     private $itemHsCode;
 
     /**
      * @var int
      *
-     * @MongoDB\Field( type="int")
+     *
      */
     private $itemQuantity;
 
     /**
      * @var float
      *
-     * @MongoDB\Field( type="float")
+     * 
      */
     private $itemValue;
 
@@ -1050,5 +1046,4 @@ class PostalDua
 
         return $this;
     }
-
 }
