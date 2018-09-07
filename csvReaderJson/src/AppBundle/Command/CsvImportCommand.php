@@ -13,7 +13,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Monolog\Logger;
-use AppBundle\Document\PostalDua;
+use AppBundle\Document\DuaImport;
 
 /* importacion de la fabrica*/
 use AppBundle\Factory\DotenvFactory;
@@ -32,9 +32,7 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
  */
 class CsvImportCommand extends ContainerAwareCommand
 {
-	/**
-	 * Constantes para esteblecer parametros de los loggers
-	 */
+
 	const CLASS_NAME = CsvImportCommand::class;
 
 	/**
@@ -75,15 +73,11 @@ class CsvImportCommand extends ContainerAwareCommand
 	{
 		try
 		{
-            /* Carga de variables de entorno desde el archivo.env*/
             $dotenv = DotenvFactory::getDotEnv();
-
-            /*indicando el archivo .env mediante ruta absoluta*/
             $dotenv->load('/home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReaderJson/.env');
 
             $this->log_directory= getenv('LOG_DIRECTORY_COMMAND');
             $this->csv_directory= getenv('CSV_DIRECTORY');
-
             $this->envio_post=ControllerFactory::getPostDataController();
 
 		    /*instanciando los loggers*/
@@ -91,13 +85,12 @@ class CsvImportCommand extends ContainerAwareCommand
 			$this->handler = LoggerFactory::getStreamHandler($this->log_directory);
 			$this->logger->pushHandler($this->handler);
 		}
-		catch (Exception $e)
+		catch (\Exception $e)
 		{
 			$this->logger->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()}");
 			throw $e;
 		}
 	}
-
 
 	/**
 	 * CsvImportCommand constructor.
@@ -139,7 +132,6 @@ class CsvImportCommand extends ContainerAwareCommand
             $this->envio_post=ControllerFactory::getPostDataController();
             $io = new SymfonyStyle($input, $output);
 
-            /*Codifica un objeto en Json para este caso*/
             $encoders = array(new JsonEncoder());
             $normalizers = array(new ObjectNormalizer());
             $serializer = new Serializer($normalizers, $encoders);
@@ -149,15 +141,12 @@ class CsvImportCommand extends ContainerAwareCommand
             $this->logger->info('Reading Csv file');
             $reader = Reader::createFromPath($this->csv_directory);
             $results = $reader->fetchAssoc();
-
             $io->progressStart(iterator_count($results));
-
-            /*Marcando el tiempo inicial para la lectura del documento*/
             $tiempo_inicial = microtime(true); //true es para que sea calculado en segundos
 
             foreach ($results as $row)
             {
-                $postalDua = (new PostalDua())
+                $duaImport = (new DuaImport())
                     ->setTrackingNumber($this->validarCadenaVacia($row[getenv('COLUMNA1')]))
                     ->setConocimientoAereo($this->validarCadenaVacia($row[getenv('COLUMNA2')]))
                     ->setReference($this->validarCadenaVacia($row[getenv('COLUMNA3')]))
@@ -198,24 +187,17 @@ class CsvImportCommand extends ContainerAwareCommand
                     ->setItemQuantity($row[getenv('COLUMNA38')])
                     ->setItemValue($row[getenv('COLUMNA39')]);
 
-                $jsonContent = $serializer->serialize($postalDua, 'json');
+                $jsonContent = $serializer->serialize($duaImport, 'json');
 
-                //Llamando a la funcion peticion_post
                 $this->envio_post->peticion_postAction($jsonContent);
                 $io->progressAdvance();
-
-            } //fin de foreach
+            }
 
             $io->progressFinish();
             $io->success('Comando Ejecutado con Exito!');
 
-            /*marcando el tiempo actual luego de haber terminado el programa*/
             $tiempo_final = microtime(true);
-
-            /* Mostrado en segundos*/
             $tiempo_transcurrido= $tiempo_final-$tiempo_inicial;
-
-            /* tiempo en minutos*/
             $tiempo_transcurrido_min= $tiempo_transcurrido/60;
 
             $this->logger->info('Success : Tardo en realizar la lectura : '.$tiempo_transcurrido.' seg. equivalente a '.$tiempo_transcurrido_min.' minutos. into CsvImportCommand::insertAction');
@@ -230,8 +212,7 @@ class CsvImportCommand extends ContainerAwareCommand
 		{
 			$this->logger->info('The process was finally into CsvImportCommand::execute()');
 		}
-	}// fin de execute
-
+	}
 
 	/**
 	 * Valida si el valor dentro del documento es vacio, escribe null
@@ -244,7 +225,6 @@ class CsvImportCommand extends ContainerAwareCommand
 	{
 		try
 		{
-			// $log->debug('The process was entered in with the pàrams: ' .CsvImportCommand::validarCadenaVacia($valor));
 			if (trim($valor) == '')
 				return 'NULL';
 			else
@@ -256,5 +236,5 @@ class CsvImportCommand extends ContainerAwareCommand
 				->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()}");
 			throw $e;
 		}
-	}// fin validarCadenaVacia
+	}
 }
