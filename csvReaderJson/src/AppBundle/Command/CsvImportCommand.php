@@ -37,16 +37,6 @@ class CsvImportCommand extends ContainerAwareCommand
 	 */
 	const CLASS_NAME = CsvImportCommand::class;
 
-	//const LOG_DIRECTORY = 'var/logs/Command/dev.log';
-	const LOG_DIRECTORY = '/home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReaderJson/var/logs/Command/dev.log';
-
-	/**
-	 * Constante para definir la ubicacion del documento
-	 * DUA que se encuentra en formato CSV
-	 * Ruta absoluta
-	 */
-	const CSV_DIRECTORY ='/home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReaderJson/assets/dataPartidasDua.csv';
-
 	/**
 	 * @var EntityManagerInterface
 	 */
@@ -120,7 +110,6 @@ class CsvImportCommand extends ContainerAwareCommand
 	{
 		parent::__construct();
 		$this->em = $em;
-
 	}
 
 	/**
@@ -161,14 +150,10 @@ class CsvImportCommand extends ContainerAwareCommand
             $reader = Reader::createFromPath($this->csv_directory);
             $results = $reader->fetchAssoc();
 
-            /*Obtener el repositorio de doctrine mongodb ubicado dentro de config.yml*/
-           // $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
-
             $io->progressStart(iterator_count($results));
 
             /*Marcando el tiempo inicial para la lectura del documento*/
             $tiempo_inicial = microtime(true); //true es para que sea calculado en segundos
-
 
             foreach ($results as $row)
             {
@@ -215,16 +200,12 @@ class CsvImportCommand extends ContainerAwareCommand
 
                 $jsonContent = $serializer->serialize($postalDua, 'json');
 
-                //$jsonContentD =$serializer->deserialize($jsonContent,'json');
-
                 //Llamando a la funcion peticion_post
                 $this->envio_post->peticion_postAction($jsonContent);
-                //$dm->persist($postalDua);
-
                 $io->progressAdvance();
+
             } //fin de foreach
 
-          //  $dm->flush();
             $io->progressFinish();
             $io->success('Comando Ejecutado con Exito!');
 
