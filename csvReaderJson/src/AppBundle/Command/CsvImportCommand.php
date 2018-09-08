@@ -188,7 +188,11 @@ class CsvImportCommand extends ContainerAwareCommand
                     ->setItemValue($row[getenv('COLUMNA39')]);
 
                 $jsonContent = $serializer->serialize($duaImport, 'json');
+
                 $this->envio_post->peticion_postAction($jsonContent);
+                $output->writeln(sprintf("\033\143"));
+                $output->writeln(sprintf("\033\143"));
+                $output->writeln(sprintf('Processing file reading Csv'));
                 $io->progressAdvance();
             }
 
