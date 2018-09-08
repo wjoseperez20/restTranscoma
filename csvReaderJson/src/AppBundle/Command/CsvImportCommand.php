@@ -196,10 +196,9 @@ class CsvImportCommand extends ContainerAwareCommand
             $io->success('Command Executed with Success!');
 
             $tiempo_final = microtime(true);
-            $tiempo_transcurrido= $tiempo_final-$tiempo_inicial;
-            $tiempo_transcurrido_min= $tiempo_transcurrido/60;
+            $tiempo_transcurrido= ($tiempo_final-$tiempo_inicial)/60;
 
-            $this->logger->info('Success : Reading time : '.$tiempo_transcurrido_min.' min. into CsvImportCommand::insertAction');
+            $this->logger->info('Success : Reading time : '.$tiempo_transcurrido.' min. into CsvImportCommand::insertAction');
 
 		}
 		catch (\Exception $e)
