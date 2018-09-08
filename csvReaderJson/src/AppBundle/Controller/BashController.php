@@ -51,12 +51,12 @@ class BashController extends Controller
 		catch (\RuntimeException $ee)
 		{
 			$logger->error("({$ee->getCode()}) Message: '{$ee->getMessage()}' in file: '{$ee->getFile()}' in line: {$ee->getLine()}");
-			return new Response(" Tiempo de ejecucion excedido ". $ee, Response::HTTP_REQUEST_TIMEOUT);
+			return new Response(" Execution time exceeded ". $ee, Response::HTTP_REQUEST_TIMEOUT);
 		}
 		catch (\Exception $e)
 		{
 			$logger->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()}");
-			return new Response("No se pudo ejecutar el script ". $e, Response::HTTP_NOT_FOUND);
+			return new Response("The script could not be executed ". $e, Response::HTTP_NOT_FOUND);
 		}
 	}
 }
