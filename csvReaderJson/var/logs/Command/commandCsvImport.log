@@ -1,0 +1,2 @@
+[2018-09-09 00:01:29] AppBundle\Command\CsvImportCommand.INFO: This process was started in AppBundle\Command\CsvImportCommand [] []
+[2018-09-09 00:01:29] AppBundle\Command\CsvImportCommand.INFO: Reading .Csv file [] []
