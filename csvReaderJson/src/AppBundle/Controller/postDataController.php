@@ -44,7 +44,7 @@ class postDataController extends FOSRestController
         $logger->pushHandler($handler);
 
         /*Url de prueba para peticiones post*/
-        $url = "http://httpbin.org/post";
+        $url = getenv('URL_POST');
 
         try
         {
