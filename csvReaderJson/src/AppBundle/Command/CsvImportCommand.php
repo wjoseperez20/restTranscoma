@@ -114,7 +114,7 @@ class CsvImportCommand extends ContainerAwareCommand
 	{
 		$this
 			->setName('csv:import')
-			->setDescription('Importa un CSV, y lo guarda en Base de Datos');
+			->setDescription('Reads from the .csv and sends it as json');
 	}
 
 	/**
@@ -136,9 +136,9 @@ class CsvImportCommand extends ContainerAwareCommand
             $normalizers = array(new ObjectNormalizer());
             $serializer = new Serializer($normalizers, $encoders);
 
-            $io->title('Leyendo Csv...');
+            $io->title('Reading .csv ...');
             $postalDua=null;
-            $this->logger->info('Reading Csv file');
+            $this->logger->info('Reading .Csv file');
             $reader = Reader::createFromPath($this->csv_directory);
             $results = $reader->fetchAssoc();
             $io->progressStart(iterator_count($results));
@@ -193,13 +193,13 @@ class CsvImportCommand extends ContainerAwareCommand
             }
 
             $io->progressFinish();
-            $io->success('Comando Ejecutado con Exito!');
+            $io->success('Command Executed with Success!');
 
             $tiempo_final = microtime(true);
             $tiempo_transcurrido= $tiempo_final-$tiempo_inicial;
             $tiempo_transcurrido_min= $tiempo_transcurrido/60;
 
-            $this->logger->info('Success : Tardo en realizar la lectura : '.$tiempo_transcurrido.' seg. equivalente a '.$tiempo_transcurrido_min.' minutos. into CsvImportCommand::insertAction');
+            $this->logger->info('Success : Reading time : '.$tiempo_transcurrido_min.' min. into CsvImportCommand::insertAction');
 
 		}
 		catch (\Exception $e)

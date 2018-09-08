@@ -1,5 +1,5 @@
 {
-    "name": "maggie/csvreadermongodb",
+    "name": "transcoma/csvreaderjson",
     "license": "proprietary",
     "type": "project",
     "autoload": {

@@ -33,8 +33,7 @@ class postDataController extends FOSRestController
      * @return View
      * @throws \Exception
      */
-    public function peticion_postAction($envio='{"id": 2000,"tracking_number": "PQ48K20476017570107300Z",
-    "conocimiento_aereo": "20180620FDX5245772500908957"}')
+    public function peticion_postAction($envio)
     {
         $dotenv = DotenvFactory::getDotEnv();
 
@@ -46,10 +45,12 @@ class postDataController extends FOSRestController
 
         /*Url de prueba para peticiones post*/
         $url = "http://httpbin.org/post";
+
         try
         {
             // --- inicia la conexion inicializando el objeto curl
             $conexion = curl_init();
+
             curl_setopt($conexion, CURLOPT_URL,$url);
 
             // --- Datos que se van a enviar por POST.
@@ -71,7 +72,7 @@ class postDataController extends FOSRestController
 
             curl_close($conexion);
 
-            return new View(' probando metodo '.$respuesta,Response::HTTP_OK);
+            return new View($respuesta,Response::HTTP_OK);
         }
         catch (\Exception $e)
         {
