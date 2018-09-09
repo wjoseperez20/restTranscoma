@@ -11,7 +11,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Symfony\Component\Finder\Finder;
 use Monolog\Logger;
 use AppBundle\Document\DuaImport;
@@ -74,7 +73,8 @@ class CsvImportCommand extends ContainerAwareCommand
      */
     public function setLogger()
     {
-        try {
+        try
+        {
             $dotenv = DotenvFactory::getDotEnv();
             $dotenv->load(__DIR__ . '/../../../.env');
 
@@ -86,7 +86,9 @@ class CsvImportCommand extends ContainerAwareCommand
             $this->logger = LoggerFactory::getLogger(self::CLASS_NAME);
             $this->handler = LoggerFactory::getStreamHandler($this->log_directory);
             $this->logger->pushHandler($this->handler);
-        } catch (\Exception $e) {
+        }
+        catch (\Exception $e)
+        {
             $this->logger->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()}");
             throw $e;
         }
@@ -125,7 +127,8 @@ class CsvImportCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        try {
+        try
+        {
             $this->setLogger();
             $this->logger->info('This process was started in ' . CsvImportCommand::class);
             $this->envio_post = ControllerFactory::getPostDataController();
@@ -139,7 +142,8 @@ class CsvImportCommand extends ContainerAwareCommand
             $normalizers = array(new ObjectNormalizer());
             $serializer = new Serializer($normalizers, $encoders);
 
-            foreach ($finder as $file) {
+            foreach ($finder as $file)
+            {
                 $io->title('Reading .csv ...');
                 $postalDua = null;
                 $this->logger->info('Reading ' . $file->getFilename() . 'file');
@@ -148,7 +152,8 @@ class CsvImportCommand extends ContainerAwareCommand
                 $io->progressStart(iterator_count($results));
                 $tiempo_inicial = microtime(true); //true es para que sea calculado en segundos
 
-                foreach ($results as $row) {
+                foreach ($results as $row)
+                {
                     $duaImport = (new DuaImport())
                         ->setTrackingNumber($this->validarCadenaVacia($row[getenv('COLUMNA1')]))
                         ->setConocimientoAereo($this->validarCadenaVacia($row[getenv('COLUMNA2')]))
@@ -219,6 +224,7 @@ class CsvImportCommand extends ContainerAwareCommand
             $this->logger->info('The process was finally into CsvImportCommand::execute()');
         }
     }
+
     /**
      * Valida si el valor dentro del documento es vacio, escribe null,
      * de lo contrario retorna su valor
