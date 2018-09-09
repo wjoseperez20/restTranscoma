@@ -68,3 +68,42 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+### Configuracion para habilitar el servicio rest en symfony manejando el formato json
+
+# Nelmio CORS Configuration
+nelmio_cors:
+    defaults:
+        allow_credentials: false
+        allow_origin: ['*']
+        allow_headers: ['*']
+        allow_methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
+        max_age: 3600
+        hosts: []
+        origin_regex: false
+
+# FOSRest Configuration
+fos_rest:
+    body_listener: true
+    format_listener:
+        rules:
+        - { path: '^/', priorities: ['json'], fallback_format: json, prefer_extension: false }
+    param_fetcher_listener: true
+    view:
+        view_response_listener: 'force'
+        formats:
+            json: true
+
+
+# app/config/config.yml
+#Configuracion de mongo db
+doctrine_mongodb:
+    connections:
+        default:
+            server: "%mongodb_server%"
+            options: {}
+    #default_database: test_database
+    default_database: csvReaderDua
+    document_managers:
+        default:
+            auto_mapping: true

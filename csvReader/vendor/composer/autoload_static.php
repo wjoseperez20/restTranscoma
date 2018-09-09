@@ -7,6 +7,8 @@ namespace Composer\Autoload;
 class ComposerStaticInit88247ca98591de51238eba3297b8d316
 {
     public static $files = array (
+        '3a37ebac017bc098e9a86b35401e7a68' => __DIR__ . '/..' . '/mongodb/mongodb/src/functions.php',
+        '06dd8487319ccd8403765f5b8c9f2d61' => __DIR__ . '/..' . '/alcaeus/mongo-php-adapter/lib/Mongo/functions.php',
         '92c8763cd6170fce6fcfe7e26b4e8c10' => __DIR__ . '/..' . '/symfony/phpunit-bridge/bootstrap.php',
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
@@ -49,17 +51,31 @@ class ComposerStaticInit88247ca98591de51238eba3297b8d316
             'Psr\\Log\\' => 8,
             'Psr\\Cache\\' => 10,
         ),
+        'N' => 
+        array (
+            'Nelmio\\CorsBundle\\' => 18,
+            'Negotiation\\' => 12,
+        ),
         'M' => 
         array (
             'Monolog\\' => 8,
+            'MongoDB\\' => 8,
         ),
         'L' => 
         array (
             'League\\Csv\\' => 11,
         ),
+        'J' => 
+        array (
+            'JMS\\SerializerBundle\\' => 21,
+        ),
         'I' => 
         array (
             'Incenteev\\ParameterHandler\\' => 27,
+        ),
+        'F' => 
+        array (
+            'FOS\\RestBundle\\' => 15,
         ),
         'D' => 
         array (
@@ -69,12 +85,17 @@ class ComposerStaticInit88247ca98591de51238eba3297b8d316
             'Doctrine\\Common\\Cache\\' => 22,
             'Doctrine\\Common\\Annotations\\' => 28,
             'Doctrine\\Common\\' => 16,
+            'Doctrine\\Bundle\\MongoDBBundle\\' => 30,
             'Doctrine\\Bundle\\DoctrineCacheBundle\\' => 36,
             'Doctrine\\Bundle\\DoctrineBundle\\' => 31,
         ),
         'C' => 
         array (
             'Composer\\CaBundle\\' => 18,
+        ),
+        'A' => 
+        array (
+            'Alcaeus\\MongoDbAdapter\\' => 23,
         ),
     );
 
@@ -167,17 +188,37 @@ class ComposerStaticInit88247ca98591de51238eba3297b8d316
         array (
             0 => __DIR__ . '/..' . '/psr/cache/src',
         ),
+        'Nelmio\\CorsBundle\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/nelmio/cors-bundle',
+        ),
+        'Negotiation\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/willdurand/negotiation/src/Negotiation',
+        ),
         'Monolog\\' => 
         array (
             0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
+        ),
+        'MongoDB\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/mongodb/mongodb/src',
         ),
         'League\\Csv\\' => 
         array (
             0 => __DIR__ . '/..' . '/league/csv/src',
         ),
+        'JMS\\SerializerBundle\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/jms/serializer-bundle',
+        ),
         'Incenteev\\ParameterHandler\\' => 
         array (
             0 => __DIR__ . '/..' . '/incenteev/composer-parameter-handler',
+        ),
+        'FOS\\RestBundle\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/friendsofsymfony/rest-bundle',
         ),
         'Doctrine\\ORM\\' => 
         array (
@@ -206,6 +247,10 @@ class ComposerStaticInit88247ca98591de51238eba3297b8d316
             2 => __DIR__ . '/..' . '/doctrine/persistence/lib/Doctrine/Common',
             3 => __DIR__ . '/..' . '/doctrine/reflection/lib/Doctrine/Common',
         ),
+        'Doctrine\\Bundle\\MongoDBBundle\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/doctrine/mongodb-odm-bundle',
+        ),
         'Doctrine\\Bundle\\DoctrineCacheBundle\\' => 
         array (
             0 => __DIR__ . '/..' . '/doctrine/doctrine-cache-bundle',
@@ -217,6 +262,10 @@ class ComposerStaticInit88247ca98591de51238eba3297b8d316
         'Composer\\CaBundle\\' => 
         array (
             0 => __DIR__ . '/..' . '/composer/ca-bundle/src',
+        ),
+        'Alcaeus\\MongoDbAdapter\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/alcaeus/mongo-php-adapter/lib/Alcaeus/MongoDbAdapter',
         ),
     );
 
@@ -239,8 +288,53 @@ class ComposerStaticInit88247ca98591de51238eba3297b8d316
                 0 => __DIR__ . '/..' . '/sensiolabs/security-checker',
             ),
         ),
+        'P' => 
+        array (
+            'PhpOption\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/phpoption/phpoption/src',
+            ),
+            'PhpCollection' => 
+            array (
+                0 => __DIR__ . '/..' . '/phpcollection/phpcollection/src',
+            ),
+        ),
+        'M' => 
+        array (
+            'Mongo' => 
+            array (
+                0 => __DIR__ . '/..' . '/alcaeus/mongo-php-adapter/lib/Mongo',
+            ),
+            'Metadata\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/jms/metadata/src',
+            ),
+        ),
+        'J' => 
+        array (
+            'JsonpCallbackValidator' => 
+            array (
+                0 => __DIR__ . '/..' . '/willdurand/jsonp-callback-validator/src',
+            ),
+            'JMS\\Serializer' => 
+            array (
+                0 => __DIR__ . '/..' . '/jms/serializer/src',
+            ),
+            'JMS\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/jms/parser-lib/src',
+            ),
+        ),
         'D' => 
         array (
+            'Doctrine\\ODM\\MongoDB' => 
+            array (
+                0 => __DIR__ . '/..' . '/doctrine/mongodb-odm/lib',
+            ),
+            'Doctrine\\MongoDB' => 
+            array (
+                0 => __DIR__ . '/..' . '/doctrine/mongodb/lib',
+            ),
             'Doctrine\\DBAL\\' => 
             array (
                 0 => __DIR__ . '/..' . '/doctrine/dbal/lib',

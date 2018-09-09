@@ -33,6 +33,7 @@ class appDevDebugProjectContainer extends Container
         $this->methodMap = array(
             'annotation_reader' => 'getAnnotationReaderService',
             'annotations.reader' => 'getAnnotations_ReaderService',
+            'app.listener.command_exception' => 'getApp_Listener_CommandExceptionService',
             'assets.context' => 'getAssets_ContextService',
             'assets.packages' => 'getAssets_PackagesService',
             'cache.annotations' => 'getCache_AnnotationsService',
@@ -89,6 +90,19 @@ class appDevDebugProjectContainer extends Container
             'doctrine.schema_drop_command' => 'getDoctrine_SchemaDropCommandService',
             'doctrine.schema_update_command' => 'getDoctrine_SchemaUpdateCommandService',
             'doctrine.schema_validate_command' => 'getDoctrine_SchemaValidateCommandService',
+            'doctrine\\bundle\\mongodbbundle\\command\\clearmetadatacachedoctrineodmcommand' => 'getDoctrine_Bundle_Mongodbbundle_Command_ClearmetadatacachedoctrineodmcommandService',
+            'doctrine\\bundle\\mongodbbundle\\command\\createschemadoctrineodmcommand' => 'getDoctrine_Bundle_Mongodbbundle_Command_CreateschemadoctrineodmcommandService',
+            'doctrine\\bundle\\mongodbbundle\\command\\dropschemadoctrineodmcommand' => 'getDoctrine_Bundle_Mongodbbundle_Command_DropschemadoctrineodmcommandService',
+            'doctrine\\bundle\\mongodbbundle\\command\\generatedocumentsdoctrineodmcommand' => 'getDoctrine_Bundle_Mongodbbundle_Command_GeneratedocumentsdoctrineodmcommandService',
+            'doctrine\\bundle\\mongodbbundle\\command\\generatehydratorsdoctrineodmcommand' => 'getDoctrine_Bundle_Mongodbbundle_Command_GeneratehydratorsdoctrineodmcommandService',
+            'doctrine\\bundle\\mongodbbundle\\command\\generateproxiesdoctrineodmcommand' => 'getDoctrine_Bundle_Mongodbbundle_Command_GenerateproxiesdoctrineodmcommandService',
+            'doctrine\\bundle\\mongodbbundle\\command\\generaterepositoriesdoctrineodmcommand' => 'getDoctrine_Bundle_Mongodbbundle_Command_GeneraterepositoriesdoctrineodmcommandService',
+            'doctrine\\bundle\\mongodbbundle\\command\\infodoctrineodmcommand' => 'getDoctrine_Bundle_Mongodbbundle_Command_InfodoctrineodmcommandService',
+            'doctrine\\bundle\\mongodbbundle\\command\\loaddatafixturesdoctrineodmcommand' => 'getDoctrine_Bundle_Mongodbbundle_Command_LoaddatafixturesdoctrineodmcommandService',
+            'doctrine\\bundle\\mongodbbundle\\command\\querydoctrineodmcommand' => 'getDoctrine_Bundle_Mongodbbundle_Command_QuerydoctrineodmcommandService',
+            'doctrine\\bundle\\mongodbbundle\\command\\sharddoctrineodmcommand' => 'getDoctrine_Bundle_Mongodbbundle_Command_SharddoctrineodmcommandService',
+            'doctrine\\bundle\\mongodbbundle\\command\\tailcursordoctrineodmcommand' => 'getDoctrine_Bundle_Mongodbbundle_Command_TailcursordoctrineodmcommandService',
+            'doctrine\\bundle\\mongodbbundle\\command\\updateschemadoctrineodmcommand' => 'getDoctrine_Bundle_Mongodbbundle_Command_UpdateschemadoctrineodmcommandService',
             'doctrine_cache.contains_command' => 'getDoctrineCache_ContainsCommandService',
             'doctrine_cache.delete_command' => 'getDoctrineCache_DeleteCommandService',
             'doctrine_cache.flush_command' => 'getDoctrineCache_FlushCommandService',
@@ -96,6 +110,20 @@ class appDevDebugProjectContainer extends Container
             'doctrine_cache.providers.doctrine.orm.default_query_cache' => 'getDoctrineCache_Providers_Doctrine_Orm_DefaultQueryCacheService',
             'doctrine_cache.providers.doctrine.orm.default_result_cache' => 'getDoctrineCache_Providers_Doctrine_Orm_DefaultResultCacheService',
             'doctrine_cache.stats_command' => 'getDoctrineCache_StatsCommandService',
+            'doctrine_mongodb' => 'getDoctrineMongodbService',
+            'doctrine_mongodb.odm.cache.array' => 'getDoctrineMongodb_Odm_Cache_ArrayService',
+            'doctrine_mongodb.odm.data_collector.pretty' => 'getDoctrineMongodb_Odm_DataCollector_PrettyService',
+            'doctrine_mongodb.odm.default_configuration' => 'getDoctrineMongodb_Odm_DefaultConfigurationService',
+            'doctrine_mongodb.odm.default_connection' => 'getDoctrineMongodb_Odm_DefaultConnectionService',
+            'doctrine_mongodb.odm.default_document_manager' => 'getDoctrineMongodb_Odm_DefaultDocumentManagerService',
+            'doctrine_mongodb.odm.default_manager_configurator' => 'getDoctrineMongodb_Odm_DefaultManagerConfiguratorService',
+            'doctrine_mongodb.odm.event_manager' => 'getDoctrineMongodb_Odm_EventManagerService',
+            'doctrine_mongodb.odm.metadata.annotation' => 'getDoctrineMongodb_Odm_Metadata_AnnotationService',
+            'doctrine_mongodb.odm.metadata.chain' => 'getDoctrineMongodb_Odm_Metadata_ChainService',
+            'doctrine_mongodb.odm.metadata.xml' => 'getDoctrineMongodb_Odm_Metadata_XmlService',
+            'doctrine_mongodb.odm.metadata.yml' => 'getDoctrineMongodb_Odm_Metadata_YmlService',
+            'doctrine_odm.mongodb.validator.unique' => 'getDoctrineOdm_Mongodb_Validator_UniqueService',
+            'doctrine_odm.mongodb.validator_initializer' => 'getDoctrineOdm_Mongodb_ValidatorInitializerService',
             'file_locator' => 'getFileLocatorService',
             'filesystem' => 'getFilesystemService',
             'form.factory' => 'getForm_FactoryService',
@@ -120,6 +148,7 @@ class appDevDebugProjectContainer extends Container
             'form.type.language' => 'getForm_Type_LanguageService',
             'form.type.locale' => 'getForm_Type_LocaleService',
             'form.type.money' => 'getForm_Type_MoneyService',
+            'form.type.mongodb_document' => 'getForm_Type_MongodbDocumentService',
             'form.type.number' => 'getForm_Type_NumberService',
             'form.type.password' => 'getForm_Type_PasswordService',
             'form.type.percent' => 'getForm_Type_PercentService',
@@ -142,7 +171,26 @@ class appDevDebugProjectContainer extends Container
             'form.type_extension.submit.validator' => 'getForm_TypeExtension_Submit_ValidatorService',
             'form.type_extension.upload.validator' => 'getForm_TypeExtension_Upload_ValidatorService',
             'form.type_guesser.doctrine' => 'getForm_TypeGuesser_DoctrineService',
+            'form.type_guesser.doctrine.mongodb' => 'getForm_TypeGuesser_Doctrine_MongodbService',
             'form.type_guesser.validator' => 'getForm_TypeGuesser_ValidatorService',
+            'fos\\restbundle\\view\\viewhandlerinterface' => 'getFos_Restbundle_View_ViewhandlerinterfaceService',
+            'fos_rest.body_listener' => 'getFosRest_BodyListenerService',
+            'fos_rest.decoder.json' => 'getFosRest_Decoder_JsonService',
+            'fos_rest.decoder.jsontoform' => 'getFosRest_Decoder_JsontoformService',
+            'fos_rest.decoder.xml' => 'getFosRest_Decoder_XmlService',
+            'fos_rest.decoder_provider' => 'getFosRest_DecoderProviderService',
+            'fos_rest.format_listener' => 'getFosRest_FormatListenerService',
+            'fos_rest.format_negotiator' => 'getFosRest_FormatNegotiatorService',
+            'fos_rest.inflector' => 'getFosRest_InflectorService',
+            'fos_rest.normalizer.camel_keys' => 'getFosRest_Normalizer_CamelKeysService',
+            'fos_rest.normalizer.camel_keys_with_leading_underscore' => 'getFosRest_Normalizer_CamelKeysWithLeadingUnderscoreService',
+            'fos_rest.param_fetcher_listener' => 'getFosRest_ParamFetcherListenerService',
+            'fos_rest.request.param_fetcher' => 'getFosRest_Request_ParamFetcherService',
+            'fos_rest.request.param_fetcher.reader' => 'getFosRest_Request_ParamFetcher_ReaderService',
+            'fos_rest.serializer' => 'getFosRest_SerializerService',
+            'fos_rest.serializer.form_error_handler' => 'getFosRest_Serializer_FormErrorHandlerService',
+            'fos_rest.serializer.jms_handler_registry.inner' => 'getFosRest_Serializer_JmsHandlerRegistry_InnerService',
+            'fos_rest.view_response_listener' => 'getFosRest_ViewResponseListenerService',
             'fragment.handler' => 'getFragment_HandlerService',
             'fragment.listener' => 'getFragment_ListenerService',
             'fragment.renderer.esi' => 'getFragment_Renderer_EsiService',
@@ -150,16 +198,41 @@ class appDevDebugProjectContainer extends Container
             'fragment.renderer.inline' => 'getFragment_Renderer_InlineService',
             'fragment.renderer.ssi' => 'getFragment_Renderer_SsiService',
             'http_kernel' => 'getHttpKernelService',
+            'jms_serializer' => 'getJmsSerializerService',
+            'jms_serializer.accessor_strategy' => 'getJmsSerializer_AccessorStrategyService',
+            'jms_serializer.array_collection_handler' => 'getJmsSerializer_ArrayCollectionHandlerService',
+            'jms_serializer.constraint_violation_handler' => 'getJmsSerializer_ConstraintViolationHandlerService',
+            'jms_serializer.datetime_handler' => 'getJmsSerializer_DatetimeHandlerService',
+            'jms_serializer.deserialization_context_factory' => 'getJmsSerializer_DeserializationContextFactoryService',
+            'jms_serializer.doctrine_proxy_subscriber' => 'getJmsSerializer_DoctrineProxySubscriberService',
+            'jms_serializer.expression_evaluator' => 'getJmsSerializer_ExpressionEvaluatorService',
+            'jms_serializer.handler_registry' => 'getJmsSerializer_HandlerRegistryService',
+            'jms_serializer.json_deserialization_visitor' => 'getJmsSerializer_JsonDeserializationVisitorService',
+            'jms_serializer.json_serialization_visitor' => 'getJmsSerializer_JsonSerializationVisitorService',
+            'jms_serializer.metadata_driver' => 'getJmsSerializer_MetadataDriverService',
+            'jms_serializer.naming_strategy' => 'getJmsSerializer_NamingStrategyService',
+            'jms_serializer.object_constructor' => 'getJmsSerializer_ObjectConstructorService',
+            'jms_serializer.php_collection_handler' => 'getJmsSerializer_PhpCollectionHandlerService',
+            'jms_serializer.serialization_context_factory' => 'getJmsSerializer_SerializationContextFactoryService',
+            'jms_serializer.stopwatch_subscriber' => 'getJmsSerializer_StopwatchSubscriberService',
+            'jms_serializer.templating.helper.serializer' => 'getJmsSerializer_Templating_Helper_SerializerService',
+            'jms_serializer.twig_extension.serializer_runtime_helper' => 'getJmsSerializer_TwigExtension_SerializerRuntimeHelperService',
+            'jms_serializer.unserialize_object_constructor' => 'getJmsSerializer_UnserializeObjectConstructorService',
+            'jms_serializer.xml_deserialization_visitor' => 'getJmsSerializer_XmlDeserializationVisitorService',
+            'jms_serializer.xml_serialization_visitor' => 'getJmsSerializer_XmlSerializationVisitorService',
+            'jms_serializer.yaml_serialization_visitor' => 'getJmsSerializer_YamlSerializationVisitorService',
             'kernel' => 'getKernelService',
             'kernel.class_cache.cache_warmer' => 'getKernel_ClassCache_CacheWarmerService',
             'locale_listener' => 'getLocaleListenerService',
             'logger' => 'getLoggerService',
             'monolog.handler.console' => 'getMonolog_Handler_ConsoleService',
             'monolog.handler.main' => 'getMonolog_Handler_MainService',
+            'monolog.handler.my_channel' => 'getMonolog_Handler_MyChannelService',
             'monolog.handler.null_internal' => 'getMonolog_Handler_NullInternalService',
             'monolog.logger.cache' => 'getMonolog_Logger_CacheService',
             'monolog.logger.doctrine' => 'getMonolog_Logger_DoctrineService',
             'monolog.logger.event' => 'getMonolog_Logger_EventService',
+            'monolog.logger.my_channel' => 'getMonolog_Logger_MyChannelService',
             'monolog.logger.php' => 'getMonolog_Logger_PhpService',
             'monolog.logger.profiler' => 'getMonolog_Logger_ProfilerService',
             'monolog.logger.request' => 'getMonolog_Logger_RequestService',
@@ -168,6 +241,8 @@ class appDevDebugProjectContainer extends Container
             'monolog.logger.templating' => 'getMonolog_Logger_TemplatingService',
             'monolog.logger.translation' => 'getMonolog_Logger_TranslationService',
             'monolog.processor.psr_log_message' => 'getMonolog_Processor_PsrLogMessageService',
+            'nelmio_cors.cors_listener' => 'getNelmioCors_CorsListenerService',
+            'nelmio_cors.options_provider.config' => 'getNelmioCors_OptionsProvider_ConfigService',
             'profiler' => 'getProfilerService',
             'profiler_listener' => 'getProfilerListenerService',
             'property_accessor' => 'getPropertyAccessorService',
@@ -289,7 +364,11 @@ class appDevDebugProjectContainer extends Container
             'debug.log_processor' => true,
             'debug.security.access.decision_manager' => true,
             'doctrine.dbal.logger.profiling.default' => true,
+            'doctrine_mongodb.odm.data_collector.pretty' => true,
             'form.server_params' => true,
+            'fos_rest.request.param_fetcher.reader' => true,
+            'fos_rest.serializer.jms_handler_registry.inner' => true,
+            'jms_serializer.unserialize_object_constructor' => true,
             'monolog.processor.psr_log_message' => true,
             'router.request_context' => true,
             'security.authentication.manager' => true,
@@ -330,13 +409,36 @@ class appDevDebugProjectContainer extends Container
             'console.command.doctrine_bundle_doctrinecachebundle_command_deletecommand' => 'doctrine_cache.delete_command',
             'console.command.doctrine_bundle_doctrinecachebundle_command_flushcommand' => 'doctrine_cache.flush_command',
             'console.command.doctrine_bundle_doctrinecachebundle_command_statscommand' => 'doctrine_cache.stats_command',
+            'console.command.doctrine_bundle_mongodbbundle_command_clearmetadatacachedoctrineodmcommand' => 'doctrine\\bundle\\mongodbbundle\\command\\clearmetadatacachedoctrineodmcommand',
+            'console.command.doctrine_bundle_mongodbbundle_command_createschemadoctrineodmcommand' => 'doctrine\\bundle\\mongodbbundle\\command\\createschemadoctrineodmcommand',
+            'console.command.doctrine_bundle_mongodbbundle_command_dropschemadoctrineodmcommand' => 'doctrine\\bundle\\mongodbbundle\\command\\dropschemadoctrineodmcommand',
+            'console.command.doctrine_bundle_mongodbbundle_command_generatedocumentsdoctrineodmcommand' => 'doctrine\\bundle\\mongodbbundle\\command\\generatedocumentsdoctrineodmcommand',
+            'console.command.doctrine_bundle_mongodbbundle_command_generatehydratorsdoctrineodmcommand' => 'doctrine\\bundle\\mongodbbundle\\command\\generatehydratorsdoctrineodmcommand',
+            'console.command.doctrine_bundle_mongodbbundle_command_generateproxiesdoctrineodmcommand' => 'doctrine\\bundle\\mongodbbundle\\command\\generateproxiesdoctrineodmcommand',
+            'console.command.doctrine_bundle_mongodbbundle_command_generaterepositoriesdoctrineodmcommand' => 'doctrine\\bundle\\mongodbbundle\\command\\generaterepositoriesdoctrineodmcommand',
+            'console.command.doctrine_bundle_mongodbbundle_command_infodoctrineodmcommand' => 'doctrine\\bundle\\mongodbbundle\\command\\infodoctrineodmcommand',
+            'console.command.doctrine_bundle_mongodbbundle_command_loaddatafixturesdoctrineodmcommand' => 'doctrine\\bundle\\mongodbbundle\\command\\loaddatafixturesdoctrineodmcommand',
+            'console.command.doctrine_bundle_mongodbbundle_command_querydoctrineodmcommand' => 'doctrine\\bundle\\mongodbbundle\\command\\querydoctrineodmcommand',
+            'console.command.doctrine_bundle_mongodbbundle_command_sharddoctrineodmcommand' => 'doctrine\\bundle\\mongodbbundle\\command\\sharddoctrineodmcommand',
+            'console.command.doctrine_bundle_mongodbbundle_command_tailcursordoctrineodmcommand' => 'doctrine\\bundle\\mongodbbundle\\command\\tailcursordoctrineodmcommand',
+            'console.command.doctrine_bundle_mongodbbundle_command_updateschemadoctrineodmcommand' => 'doctrine\\bundle\\mongodbbundle\\command\\updateschemadoctrineodmcommand',
             'console.command.sensiolabs_security_command_securitycheckercommand' => 'sensio_distribution.security_checker.command',
             'database_connection' => 'doctrine.dbal.default_connection',
+            'doctrine.odm.mongodb.document_manager' => 'doctrine_mongodb.odm.default_document_manager',
             'doctrine.orm.default_metadata_cache' => 'doctrine_cache.providers.doctrine.orm.default_metadata_cache',
             'doctrine.orm.default_query_cache' => 'doctrine_cache.providers.doctrine.orm.default_query_cache',
             'doctrine.orm.default_result_cache' => 'doctrine_cache.providers.doctrine.orm.default_result_cache',
             'doctrine.orm.entity_manager' => 'doctrine.orm.default_entity_manager',
+            'doctrine_mongodb.odm.cache' => 'doctrine_mongodb.odm.cache.array',
+            'doctrine_mongodb.odm.document_manager' => 'doctrine_mongodb.odm.default_document_manager',
+            'doctrine_mongodb.odm.metadata.annotation_reader' => 'annotation_reader',
             'event_dispatcher' => 'debug.event_dispatcher',
+            'fos\\restbundle\\request\\paramfetcherinterface' => 'fos_rest.request.param_fetcher',
+            'fos_rest.router' => 'router',
+            'fos_rest.serializer.jms_handler_registry' => 'jms_serializer.handler_registry',
+            'fos_rest.templating' => 'templating',
+            'fos_rest.view_handler' => 'fos\\restbundle\\view\\viewhandlerinterface',
+            'jms_serializer.form_error_handler' => 'fos_rest.serializer.form_error_handler',
             'mailer' => 'swiftmailer.mailer.default',
             'session.storage' => 'session.storage.native',
             'swiftmailer.mailer' => 'swiftmailer.mailer.default',
@@ -371,6 +473,16 @@ class appDevDebugProjectContainer extends Container
     protected function getAnnotationReaderService()
     {
         return $this->services['annotation_reader'] = new \Doctrine\Common\Annotations\CachedReader(${($_ = isset($this->services['annotations.reader']) ? $this->services['annotations.reader'] : $this->getAnnotations_ReaderService()) && false ?: '_'}, new \Symfony\Component\Cache\DoctrineProvider(\Symfony\Component\Cache\Adapter\PhpArrayAdapter::create((__DIR__.'/annotations.php'), ${($_ = isset($this->services['cache.annotations']) ? $this->services['cache.annotations'] : $this->getCache_AnnotationsService()) && false ?: '_'})), true);
+    }
+
+    /**
+     * Gets the public 'app.listener.command_exception' shared service.
+     *
+     * @return \AppBundle\EventListener\ConsoleExceptionListener
+     */
+    protected function getApp_Listener_CommandExceptionService()
+    {
+        return $this->services['app.listener.command_exception'] = new \AppBundle\EventListener\ConsoleExceptionListener($this->get('monolog.logger.my_channel'));
     }
 
     /**
@@ -432,7 +544,7 @@ class appDevDebugProjectContainer extends Container
      */
     protected function getCache_SystemService()
     {
-        return $this->services['cache.system'] = \Symfony\Component\Cache\Adapter\AbstractAdapter::createSystemCache('GzHLh6b7KM', 0, '45jf7GpAyvXqlxKXc2Ia0w', (__DIR__.'/pools'), $this->get('monolog.logger.cache', ContainerInterface::NULL_ON_INVALID_REFERENCE));
+        return $this->services['cache.system'] = \Symfony\Component\Cache\Adapter\AbstractAdapter::createSystemCache('GzHLh6b7KM', 0, 'zEaAKesC+6yXJ+k3FZc+q9', (__DIR__.'/pools'), $this->get('monolog.logger.cache', ContainerInterface::NULL_ON_INVALID_REFERENCE));
     }
 
     /**
@@ -457,7 +569,7 @@ class appDevDebugProjectContainer extends Container
 
         $c = new \Symfony\Bundle\FrameworkBundle\CacheWarmer\TemplateFinder($a, $b, ($this->targetDirs[3].'/app/Resources'));
 
-        return $this->services['cache_warmer'] = new \Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerAggregate(array(0 => new \Symfony\Bundle\FrameworkBundle\CacheWarmer\TemplatePathsCacheWarmer($c, ${($_ = isset($this->services['templating.locator']) ? $this->services['templating.locator'] : $this->getTemplating_LocatorService()) && false ?: '_'}), 1 => $this->get('kernel.class_cache.cache_warmer'), 2 => new \Symfony\Bundle\FrameworkBundle\CacheWarmer\TranslationsCacheWarmer($this), 3 => new \Symfony\Bundle\FrameworkBundle\CacheWarmer\ValidatorCacheWarmer($this->get('validator.builder'), (__DIR__.'/validation.php'), \Symfony\Component\Cache\Adapter\AbstractAdapter::createSystemCache('M-QiAkjU+U', 0, '45jf7GpAyvXqlxKXc2Ia0w', (__DIR__.'/pools'), $this->get('monolog.logger.cache', ContainerInterface::NULL_ON_INVALID_REFERENCE))), 4 => new \Symfony\Bundle\FrameworkBundle\CacheWarmer\RouterCacheWarmer($this->get('router')), 5 => new \Symfony\Bundle\FrameworkBundle\CacheWarmer\AnnotationsCacheWarmer(${($_ = isset($this->services['annotations.reader']) ? $this->services['annotations.reader'] : $this->getAnnotations_ReaderService()) && false ?: '_'}, (__DIR__.'/annotations.php'), ${($_ = isset($this->services['cache.annotations']) ? $this->services['cache.annotations'] : $this->getCache_AnnotationsService()) && false ?: '_'}), 6 => new \Symfony\Bundle\TwigBundle\CacheWarmer\TemplateCacheCacheWarmer($this, $c, array()), 7 => new \Symfony\Bundle\TwigBundle\CacheWarmer\TemplateCacheWarmer($this, new \Symfony\Bundle\TwigBundle\TemplateIterator($a, ($this->targetDirs[3].'/app'), array())), 8 => new \Symfony\Bridge\Doctrine\CacheWarmer\ProxyCacheWarmer($this->get('doctrine'))));
+        return $this->services['cache_warmer'] = new \Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerAggregate(array(0 => new \Doctrine\Bundle\MongoDBBundle\CacheWarmer\ProxyCacheWarmer($this), 1 => new \Doctrine\Bundle\MongoDBBundle\CacheWarmer\HydratorCacheWarmer($this), 2 => new \Doctrine\Bundle\MongoDBBundle\CacheWarmer\PersistentCollectionCacheWarmer($this), 3 => new \Symfony\Bundle\FrameworkBundle\CacheWarmer\TemplatePathsCacheWarmer($c, ${($_ = isset($this->services['templating.locator']) ? $this->services['templating.locator'] : $this->getTemplating_LocatorService()) && false ?: '_'}), 4 => $this->get('kernel.class_cache.cache_warmer'), 5 => new \Symfony\Bundle\FrameworkBundle\CacheWarmer\TranslationsCacheWarmer($this), 6 => new \Symfony\Bundle\FrameworkBundle\CacheWarmer\ValidatorCacheWarmer($this->get('validator.builder'), (__DIR__.'/validation.php'), \Symfony\Component\Cache\Adapter\AbstractAdapter::createSystemCache('M-QiAkjU+U', 0, 'zEaAKesC+6yXJ+k3FZc+q9', (__DIR__.'/pools'), $this->get('monolog.logger.cache', ContainerInterface::NULL_ON_INVALID_REFERENCE))), 7 => new \Symfony\Bundle\FrameworkBundle\CacheWarmer\RouterCacheWarmer($this->get('router')), 8 => new \Symfony\Bundle\FrameworkBundle\CacheWarmer\AnnotationsCacheWarmer(${($_ = isset($this->services['annotations.reader']) ? $this->services['annotations.reader'] : $this->getAnnotations_ReaderService()) && false ?: '_'}, (__DIR__.'/annotations.php'), ${($_ = isset($this->services['cache.annotations']) ? $this->services['cache.annotations'] : $this->getCache_AnnotationsService()) && false ?: '_'}), 9 => new \Symfony\Bundle\TwigBundle\CacheWarmer\TemplateCacheCacheWarmer($this, $c, array()), 10 => new \Symfony\Bundle\TwigBundle\CacheWarmer\TemplateCacheWarmer($this, new \Symfony\Bundle\TwigBundle\TemplateIterator($a, ($this->targetDirs[3].'/app'), array())), 11 => new \Symfony\Bridge\Doctrine\CacheWarmer\ProxyCacheWarmer($this->get('doctrine'))));
     }
 
     /**
@@ -580,6 +692,10 @@ class appDevDebugProjectContainer extends Container
         $this->services['debug.event_dispatcher'] = $instance = new \Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher(new \Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher($this), $this->get('debug.stopwatch'), $this->get('monolog.logger.event', ContainerInterface::NULL_ON_INVALID_REFERENCE));
 
         $instance->addListenerService('kernel.controller', array(0 => 'data_collector.router', 1 => 'onKernelController'), 0);
+        $instance->addListenerService('kernel.request', array(0 => 'fos_rest.body_listener', 1 => 'onKernelRequest'), 10);
+        $instance->addListenerService('kernel.request', array(0 => 'fos_rest.format_listener', 1 => 'onKernelRequest'), 34);
+        $instance->addListenerService('kernel.controller', array(0 => 'fos_rest.param_fetcher_listener', 1 => 'onKernelController'), 5);
+        $instance->addListenerService('kernel.request', array(0 => 'nelmio_cors.cors_listener', 1 => 'onKernelRequest'), 250);
         $instance->addSubscriberService('response_listener', 'Symfony\\Component\\HttpKernel\\EventListener\\ResponseListener');
         $instance->addSubscriberService('streamed_response_listener', 'Symfony\\Component\\HttpKernel\\EventListener\\StreamedResponseListener');
         $instance->addSubscriberService('locale_listener', 'Symfony\\Component\\HttpKernel\\EventListener\\LocaleListener');
@@ -602,6 +718,7 @@ class appDevDebugProjectContainer extends Container
         $instance->addSubscriberService('sensio_framework_extra.view.listener', 'Sensio\\Bundle\\FrameworkExtraBundle\\EventListener\\TemplateListener');
         $instance->addSubscriberService('sensio_framework_extra.cache.listener', 'Sensio\\Bundle\\FrameworkExtraBundle\\EventListener\\HttpCacheListener');
         $instance->addSubscriberService('sensio_framework_extra.security.listener', 'Sensio\\Bundle\\FrameworkExtraBundle\\EventListener\\SecurityListener');
+        $instance->addSubscriberService('fos_rest.view_response_listener', 'FOS\\RestBundle\\EventListener\\ViewResponseListener');
         $instance->addSubscriberService('debug.dump_listener', 'Symfony\\Component\\HttpKernel\\EventListener\\DumpListener');
         $instance->addSubscriberService('web_profiler.debug_toolbar', 'Symfony\\Bundle\\WebProfilerBundle\\EventListener\\WebDebugToolbarListener');
 
@@ -745,7 +862,7 @@ class appDevDebugProjectContainer extends Container
         $c = new \Symfony\Bridge\Doctrine\ContainerAwareEventManager($this);
         $c->addEventListener(array(0 => 'loadClassMetadata'), $this->get('doctrine.orm.default_listeners.attach_entity_listeners'));
 
-        return $this->services['doctrine.dbal.default_connection'] = $this->get('doctrine.dbal.connection_factory')->createConnection(array('driver' => 'pdo_mysql', 'host' => '127.0.0.1', 'port' => 3306, 'dbname' => 'csvReader', 'user' => 'wjoseperez', 'password' => '3squ3l3t0', 'charset' => 'UTF8', 'driverOptions' => array(), 'defaultTableOptions' => array()), $b, $c, array());
+        return $this->services['doctrine.dbal.default_connection'] = $this->get('doctrine.dbal.connection_factory')->createConnection(array('driver' => 'pdo_mysql', 'host' => '127.0.0.1', 'port' => 3306, 'dbname' => 'csvReaderDua', 'user' => 'wjoseperez', 'password' => '3squ3l3t0', 'charset' => 'UTF8', 'driverOptions' => array(), 'defaultTableOptions' => array()), $b, $c, array());
     }
 
     /**
@@ -952,6 +1069,136 @@ class appDevDebugProjectContainer extends Container
     }
 
     /**
+     * Gets the public 'doctrine\bundle\mongodbbundle\command\clearmetadatacachedoctrineodmcommand' shared service.
+     *
+     * @return \Doctrine\Bundle\MongoDBBundle\Command\ClearMetadataCacheDoctrineODMCommand
+     */
+    protected function getDoctrine_Bundle_Mongodbbundle_Command_ClearmetadatacachedoctrineodmcommandService()
+    {
+        return $this->services['doctrine\bundle\mongodbbundle\command\clearmetadatacachedoctrineodmcommand'] = new \Doctrine\Bundle\MongoDBBundle\Command\ClearMetadataCacheDoctrineODMCommand();
+    }
+
+    /**
+     * Gets the public 'doctrine\bundle\mongodbbundle\command\createschemadoctrineodmcommand' shared service.
+     *
+     * @return \Doctrine\Bundle\MongoDBBundle\Command\CreateSchemaDoctrineODMCommand
+     */
+    protected function getDoctrine_Bundle_Mongodbbundle_Command_CreateschemadoctrineodmcommandService()
+    {
+        return $this->services['doctrine\bundle\mongodbbundle\command\createschemadoctrineodmcommand'] = new \Doctrine\Bundle\MongoDBBundle\Command\CreateSchemaDoctrineODMCommand();
+    }
+
+    /**
+     * Gets the public 'doctrine\bundle\mongodbbundle\command\dropschemadoctrineodmcommand' shared service.
+     *
+     * @return \Doctrine\Bundle\MongoDBBundle\Command\DropSchemaDoctrineODMCommand
+     */
+    protected function getDoctrine_Bundle_Mongodbbundle_Command_DropschemadoctrineodmcommandService()
+    {
+        return $this->services['doctrine\bundle\mongodbbundle\command\dropschemadoctrineodmcommand'] = new \Doctrine\Bundle\MongoDBBundle\Command\DropSchemaDoctrineODMCommand();
+    }
+
+    /**
+     * Gets the public 'doctrine\bundle\mongodbbundle\command\generatedocumentsdoctrineodmcommand' shared service.
+     *
+     * @return \Doctrine\Bundle\MongoDBBundle\Command\GenerateDocumentsDoctrineODMCommand
+     */
+    protected function getDoctrine_Bundle_Mongodbbundle_Command_GeneratedocumentsdoctrineodmcommandService()
+    {
+        return $this->services['doctrine\bundle\mongodbbundle\command\generatedocumentsdoctrineodmcommand'] = new \Doctrine\Bundle\MongoDBBundle\Command\GenerateDocumentsDoctrineODMCommand();
+    }
+
+    /**
+     * Gets the public 'doctrine\bundle\mongodbbundle\command\generatehydratorsdoctrineodmcommand' shared service.
+     *
+     * @return \Doctrine\Bundle\MongoDBBundle\Command\GenerateHydratorsDoctrineODMCommand
+     */
+    protected function getDoctrine_Bundle_Mongodbbundle_Command_GeneratehydratorsdoctrineodmcommandService()
+    {
+        return $this->services['doctrine\bundle\mongodbbundle\command\generatehydratorsdoctrineodmcommand'] = new \Doctrine\Bundle\MongoDBBundle\Command\GenerateHydratorsDoctrineODMCommand();
+    }
+
+    /**
+     * Gets the public 'doctrine\bundle\mongodbbundle\command\generateproxiesdoctrineodmcommand' shared service.
+     *
+     * @return \Doctrine\Bundle\MongoDBBundle\Command\GenerateProxiesDoctrineODMCommand
+     */
+    protected function getDoctrine_Bundle_Mongodbbundle_Command_GenerateproxiesdoctrineodmcommandService()
+    {
+        return $this->services['doctrine\bundle\mongodbbundle\command\generateproxiesdoctrineodmcommand'] = new \Doctrine\Bundle\MongoDBBundle\Command\GenerateProxiesDoctrineODMCommand();
+    }
+
+    /**
+     * Gets the public 'doctrine\bundle\mongodbbundle\command\generaterepositoriesdoctrineodmcommand' shared service.
+     *
+     * @return \Doctrine\Bundle\MongoDBBundle\Command\GenerateRepositoriesDoctrineODMCommand
+     */
+    protected function getDoctrine_Bundle_Mongodbbundle_Command_GeneraterepositoriesdoctrineodmcommandService()
+    {
+        return $this->services['doctrine\bundle\mongodbbundle\command\generaterepositoriesdoctrineodmcommand'] = new \Doctrine\Bundle\MongoDBBundle\Command\GenerateRepositoriesDoctrineODMCommand();
+    }
+
+    /**
+     * Gets the public 'doctrine\bundle\mongodbbundle\command\infodoctrineodmcommand' shared service.
+     *
+     * @return \Doctrine\Bundle\MongoDBBundle\Command\InfoDoctrineODMCommand
+     */
+    protected function getDoctrine_Bundle_Mongodbbundle_Command_InfodoctrineodmcommandService()
+    {
+        return $this->services['doctrine\bundle\mongodbbundle\command\infodoctrineodmcommand'] = new \Doctrine\Bundle\MongoDBBundle\Command\InfoDoctrineODMCommand();
+    }
+
+    /**
+     * Gets the public 'doctrine\bundle\mongodbbundle\command\loaddatafixturesdoctrineodmcommand' shared service.
+     *
+     * @return \Doctrine\Bundle\MongoDBBundle\Command\LoadDataFixturesDoctrineODMCommand
+     */
+    protected function getDoctrine_Bundle_Mongodbbundle_Command_LoaddatafixturesdoctrineodmcommandService()
+    {
+        return $this->services['doctrine\bundle\mongodbbundle\command\loaddatafixturesdoctrineodmcommand'] = new \Doctrine\Bundle\MongoDBBundle\Command\LoadDataFixturesDoctrineODMCommand();
+    }
+
+    /**
+     * Gets the public 'doctrine\bundle\mongodbbundle\command\querydoctrineodmcommand' shared service.
+     *
+     * @return \Doctrine\Bundle\MongoDBBundle\Command\QueryDoctrineODMCommand
+     */
+    protected function getDoctrine_Bundle_Mongodbbundle_Command_QuerydoctrineodmcommandService()
+    {
+        return $this->services['doctrine\bundle\mongodbbundle\command\querydoctrineodmcommand'] = new \Doctrine\Bundle\MongoDBBundle\Command\QueryDoctrineODMCommand();
+    }
+
+    /**
+     * Gets the public 'doctrine\bundle\mongodbbundle\command\sharddoctrineodmcommand' shared service.
+     *
+     * @return \Doctrine\Bundle\MongoDBBundle\Command\ShardDoctrineODMCommand
+     */
+    protected function getDoctrine_Bundle_Mongodbbundle_Command_SharddoctrineodmcommandService()
+    {
+        return $this->services['doctrine\bundle\mongodbbundle\command\sharddoctrineodmcommand'] = new \Doctrine\Bundle\MongoDBBundle\Command\ShardDoctrineODMCommand();
+    }
+
+    /**
+     * Gets the public 'doctrine\bundle\mongodbbundle\command\tailcursordoctrineodmcommand' shared service.
+     *
+     * @return \Doctrine\Bundle\MongoDBBundle\Command\TailCursorDoctrineODMCommand
+     */
+    protected function getDoctrine_Bundle_Mongodbbundle_Command_TailcursordoctrineodmcommandService()
+    {
+        return $this->services['doctrine\bundle\mongodbbundle\command\tailcursordoctrineodmcommand'] = new \Doctrine\Bundle\MongoDBBundle\Command\TailCursorDoctrineODMCommand();
+    }
+
+    /**
+     * Gets the public 'doctrine\bundle\mongodbbundle\command\updateschemadoctrineodmcommand' shared service.
+     *
+     * @return \Doctrine\Bundle\MongoDBBundle\Command\UpdateSchemaDoctrineODMCommand
+     */
+    protected function getDoctrine_Bundle_Mongodbbundle_Command_UpdateschemadoctrineodmcommandService()
+    {
+        return $this->services['doctrine\bundle\mongodbbundle\command\updateschemadoctrineodmcommand'] = new \Doctrine\Bundle\MongoDBBundle\Command\UpdateSchemaDoctrineODMCommand();
+    }
+
+    /**
      * Gets the public 'doctrine_cache.contains_command' shared service.
      *
      * @return \Doctrine\Bundle\DoctrineCacheBundle\Command\ContainsCommand
@@ -1034,6 +1281,167 @@ class appDevDebugProjectContainer extends Container
     }
 
     /**
+     * Gets the public 'doctrine_mongodb' shared service.
+     *
+     * @return \Doctrine\Bundle\MongoDBBundle\ManagerRegistry
+     */
+    protected function getDoctrineMongodbService()
+    {
+        return $this->services['doctrine_mongodb'] = new \Doctrine\Bundle\MongoDBBundle\ManagerRegistry('MongoDB', array('default' => 'doctrine_mongodb.odm.default_connection'), array('default' => 'doctrine_mongodb.odm.default_document_manager'), 'default', 'default', 'Doctrine\\ODM\\MongoDB\\Proxy\\Proxy', $this);
+    }
+
+    /**
+     * Gets the public 'doctrine_mongodb.odm.cache.array' shared service.
+     *
+     * @return \Doctrine\Common\Cache\ArrayCache
+     */
+    protected function getDoctrineMongodb_Odm_Cache_ArrayService()
+    {
+        return $this->services['doctrine_mongodb.odm.cache.array'] = new \Doctrine\Common\Cache\ArrayCache();
+    }
+
+    /**
+     * Gets the public 'doctrine_mongodb.odm.default_configuration' shared service.
+     *
+     * @return \Doctrine\ODM\MongoDB\Configuration
+     */
+    protected function getDoctrineMongodb_Odm_DefaultConfigurationService()
+    {
+        $a = new \Doctrine\Common\Cache\ArrayCache();
+        $a->setNamespace('sf_mongodb_default_d2cdfcb57c658296f6255c13664656a3be31d2462ac4b91c0925603294aa488b');
+
+        $b = new \Doctrine\Bundle\MongoDBBundle\Logger\Logger($this->get('monolog.logger.doctrine', ContainerInterface::NULL_ON_INVALID_REFERENCE));
+        $b->setBatchInsertThreshold(4);
+
+        $this->services['doctrine_mongodb.odm.default_configuration'] = $instance = new \Doctrine\ODM\MongoDB\Configuration();
+
+        $instance->setDocumentNamespaces(array());
+        $instance->setMetadataCacheImpl($a);
+        $instance->setMetadataDriverImpl(new \Doctrine\Common\Persistence\Mapping\Driver\MappingDriverChain());
+        $instance->setProxyDir((__DIR__.'/doctrine/odm/mongodb/Proxies'));
+        $instance->setProxyNamespace('MongoDBODMProxies');
+        $instance->setAutoGenerateProxyClasses(0);
+        $instance->setHydratorDir((__DIR__.'/doctrine/odm/mongodb/Hydrators'));
+        $instance->setHydratorNamespace('Hydrators');
+        $instance->setAutoGenerateHydratorClasses(0);
+        $instance->setDefaultDB('test_database');
+        $instance->setDefaultCommitOptions(array());
+        $instance->setRetryConnect(0);
+        $instance->setRetryQuery(0);
+        $instance->setDefaultRepositoryClassName('Doctrine\\ODM\\MongoDB\\DocumentRepository');
+        $instance->setPersistentCollectionDir((__DIR__.'/doctrine/odm/mongodb/PersistentCollections'));
+        $instance->setPersistentCollectionNamespace('PersistentCollections');
+        $instance->setAutoGeneratePersistentCollectionClasses(0);
+        $instance->setLoggerCallable(array(0 => new \Doctrine\Bundle\MongoDBBundle\Logger\AggregateLogger(array(0 => $b, 1 => ${($_ = isset($this->services['doctrine_mongodb.odm.data_collector.pretty']) ? $this->services['doctrine_mongodb.odm.data_collector.pretty'] : $this->getDoctrineMongodb_Odm_DataCollector_PrettyService()) && false ?: '_'})), 1 => 'logQuery'));
+
+        return $instance;
+    }
+
+    /**
+     * Gets the public 'doctrine_mongodb.odm.default_connection' shared service.
+     *
+     * @return \Doctrine\MongoDB\Connection
+     */
+    protected function getDoctrineMongodb_Odm_DefaultConnectionService()
+    {
+        return $this->services['doctrine_mongodb.odm.default_connection'] = new \Doctrine\MongoDB\Connection('“mongodb://localhost:27017”', array(), $this->get('doctrine_mongodb.odm.default_configuration'), $this->get('doctrine_mongodb.odm.event_manager'), array());
+    }
+
+    /**
+     * Gets the public 'doctrine_mongodb.odm.default_document_manager' shared service.
+     *
+     * @return \Doctrine\ODM\MongoDB\DocumentManager
+     */
+    protected function getDoctrineMongodb_Odm_DefaultDocumentManagerService()
+    {
+        $this->services['doctrine_mongodb.odm.default_document_manager'] = $instance = \Doctrine\ODM\MongoDB\DocumentManager::create($this->get('doctrine_mongodb.odm.default_connection'), $this->get('doctrine_mongodb.odm.default_configuration'), $this->get('doctrine_mongodb.odm.event_manager'));
+
+        $this->get('doctrine_mongodb.odm.default_manager_configurator')->configure($instance);
+
+        return $instance;
+    }
+
+    /**
+     * Gets the public 'doctrine_mongodb.odm.default_manager_configurator' shared service.
+     *
+     * @return \Doctrine\Bundle\MongoDBBundle\ManagerConfigurator
+     */
+    protected function getDoctrineMongodb_Odm_DefaultManagerConfiguratorService()
+    {
+        return $this->services['doctrine_mongodb.odm.default_manager_configurator'] = new \Doctrine\Bundle\MongoDBBundle\ManagerConfigurator(array());
+    }
+
+    /**
+     * Gets the public 'doctrine_mongodb.odm.event_manager' shared service.
+     *
+     * @return \Symfony\Bridge\Doctrine\ContainerAwareEventManager
+     */
+    protected function getDoctrineMongodb_Odm_EventManagerService()
+    {
+        return $this->services['doctrine_mongodb.odm.event_manager'] = new \Symfony\Bridge\Doctrine\ContainerAwareEventManager($this);
+    }
+
+    /**
+     * Gets the public 'doctrine_mongodb.odm.metadata.annotation' shared service.
+     *
+     * @return \Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver
+     */
+    protected function getDoctrineMongodb_Odm_Metadata_AnnotationService()
+    {
+        return $this->services['doctrine_mongodb.odm.metadata.annotation'] = new \Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver($this->get('annotation_reader'), array());
+    }
+
+    /**
+     * Gets the public 'doctrine_mongodb.odm.metadata.chain' shared service.
+     *
+     * @return \Doctrine\Common\Persistence\Mapping\Driver\MappingDriverChain
+     */
+    protected function getDoctrineMongodb_Odm_Metadata_ChainService()
+    {
+        return $this->services['doctrine_mongodb.odm.metadata.chain'] = new \Doctrine\Common\Persistence\Mapping\Driver\MappingDriverChain();
+    }
+
+    /**
+     * Gets the public 'doctrine_mongodb.odm.metadata.xml' shared service.
+     *
+     * @return \Doctrine\Bundle\MongoDBBundle\Mapping\Driver\XmlDriver
+     */
+    protected function getDoctrineMongodb_Odm_Metadata_XmlService()
+    {
+        return $this->services['doctrine_mongodb.odm.metadata.xml'] = new \Doctrine\Bundle\MongoDBBundle\Mapping\Driver\XmlDriver(array());
+    }
+
+    /**
+     * Gets the public 'doctrine_mongodb.odm.metadata.yml' shared service.
+     *
+     * @return \Doctrine\Bundle\MongoDBBundle\Mapping\Driver\YamlDriver
+     */
+    protected function getDoctrineMongodb_Odm_Metadata_YmlService()
+    {
+        return $this->services['doctrine_mongodb.odm.metadata.yml'] = new \Doctrine\Bundle\MongoDBBundle\Mapping\Driver\YamlDriver(array());
+    }
+
+    /**
+     * Gets the public 'doctrine_odm.mongodb.validator.unique' shared service.
+     *
+     * @return \Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntityValidator
+     */
+    protected function getDoctrineOdm_Mongodb_Validator_UniqueService()
+    {
+        return $this->services['doctrine_odm.mongodb.validator.unique'] = new \Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntityValidator($this->get('doctrine_mongodb'));
+    }
+
+    /**
+     * Gets the public 'doctrine_odm.mongodb.validator_initializer' shared service.
+     *
+     * @return \Symfony\Bridge\Doctrine\Validator\DoctrineInitializer
+     */
+    protected function getDoctrineOdm_Mongodb_ValidatorInitializerService()
+    {
+        return $this->services['doctrine_odm.mongodb.validator_initializer'] = new \Symfony\Bridge\Doctrine\Validator\DoctrineInitializer($this->get('doctrine_mongodb'));
+    }
+
+    /**
      * Gets the public 'file_locator' shared service.
      *
      * @return \Symfony\Component\HttpKernel\Config\FileLocator
@@ -1070,7 +1478,7 @@ class appDevDebugProjectContainer extends Container
      */
     protected function getForm_RegistryService()
     {
-        return $this->services['form.registry'] = new \Symfony\Component\Form\FormRegistry(array(0 => new \Symfony\Component\Form\Extension\DependencyInjection\DependencyInjectionExtension($this, array('Symfony\\Component\\Form\\Extension\\Core\\Type\\FormType' => 'form.type.form', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\ChoiceType' => 'form.type.choice', 'Symfony\\Bridge\\Doctrine\\Form\\Type\\EntityType' => 'form.type.entity'), array('Symfony\\Component\\Form\\Extension\\Core\\Type\\FormType' => array(0 => 'form.type_extension.form.http_foundation', 1 => 'form.type_extension.form.validator', 2 => 'form.type_extension.upload.validator', 3 => 'form.type_extension.csrf', 4 => 'form.type_extension.form.data_collector'), 'Symfony\\Component\\Form\\Extension\\Core\\Type\\RepeatedType' => array(0 => 'form.type_extension.repeated.validator'), 'Symfony\\Component\\Form\\Extension\\Core\\Type\\SubmitType' => array(0 => 'form.type_extension.submit.validator')), array(0 => 'form.type_guesser.validator', 1 => 'form.type_guesser.doctrine'))), $this->get('form.resolved_type_factory'));
+        return $this->services['form.registry'] = new \Symfony\Component\Form\FormRegistry(array(0 => new \Symfony\Component\Form\Extension\DependencyInjection\DependencyInjectionExtension($this, array('Symfony\\Component\\Form\\Extension\\Core\\Type\\FormType' => 'form.type.form', 'Symfony\\Component\\Form\\Extension\\Core\\Type\\ChoiceType' => 'form.type.choice', 'Symfony\\Bridge\\Doctrine\\Form\\Type\\EntityType' => 'form.type.entity', 'Doctrine\\Bundle\\MongoDBBundle\\Form\\Type\\DocumentType' => 'form.type.mongodb_document'), array('Symfony\\Component\\Form\\Extension\\Core\\Type\\FormType' => array(0 => 'form.type_extension.form.http_foundation', 1 => 'form.type_extension.form.validator', 2 => 'form.type_extension.upload.validator', 3 => 'form.type_extension.csrf', 4 => 'form.type_extension.form.data_collector'), 'Symfony\\Component\\Form\\Extension\\Core\\Type\\RepeatedType' => array(0 => 'form.type_extension.repeated.validator'), 'Symfony\\Component\\Form\\Extension\\Core\\Type\\SubmitType' => array(0 => 'form.type_extension.submit.validator')), array(0 => 'form.type_guesser.validator', 1 => 'form.type_guesser.doctrine', 2 => 'form.type_guesser.doctrine.mongodb'))), $this->get('form.resolved_type_factory'));
     }
 
     /**
@@ -1321,6 +1729,16 @@ class appDevDebugProjectContainer extends Container
         @trigger_error('The "form.type.money" service is deprecated since Symfony 3.1 and will be removed in 4.0.', E_USER_DEPRECATED);
 
         return $this->services['form.type.money'] = new \Symfony\Component\Form\Extension\Core\Type\MoneyType();
+    }
+
+    /**
+     * Gets the public 'form.type.mongodb_document' shared service.
+     *
+     * @return \Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType
+     */
+    protected function getForm_Type_MongodbDocumentService()
+    {
+        return $this->services['form.type.mongodb_document'] = new \Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType($this->get('doctrine_mongodb'));
     }
 
     /**
@@ -1600,6 +2018,16 @@ class appDevDebugProjectContainer extends Container
     }
 
     /**
+     * Gets the public 'form.type_guesser.doctrine.mongodb' shared service.
+     *
+     * @return \Doctrine\Bundle\MongoDBBundle\Form\DoctrineMongoDBTypeGuesser
+     */
+    protected function getForm_TypeGuesser_Doctrine_MongodbService()
+    {
+        return $this->services['form.type_guesser.doctrine.mongodb'] = new \Doctrine\Bundle\MongoDBBundle\Form\DoctrineMongoDBTypeGuesser($this->get('doctrine_mongodb'));
+    }
+
+    /**
      * Gets the public 'form.type_guesser.validator' shared service.
      *
      * @return \Symfony\Component\Form\Extension\Validator\ValidatorTypeGuesser
@@ -1607,6 +2035,179 @@ class appDevDebugProjectContainer extends Container
     protected function getForm_TypeGuesser_ValidatorService()
     {
         return $this->services['form.type_guesser.validator'] = new \Symfony\Component\Form\Extension\Validator\ValidatorTypeGuesser($this->get('validator'));
+    }
+
+    /**
+     * Gets the public 'fos\restbundle\view\viewhandlerinterface' shared service.
+     *
+     * @return \FOS\RestBundle\View\ViewHandler
+     */
+    protected function getFos_Restbundle_View_ViewhandlerinterfaceService()
+    {
+        $this->services['fos\restbundle\view\viewhandlerinterface'] = $instance = new \FOS\RestBundle\View\ViewHandler($this->get('router'), $this->get('fos_rest.serializer'), $this->get('templating', ContainerInterface::NULL_ON_INVALID_REFERENCE), $this->get('request_stack'), array('json' => false, 'html' => true), 400, 204, false, array('html' => 302), 'twig');
+
+        $instance->setSerializeNullStrategy(false);
+
+        return $instance;
+    }
+
+    /**
+     * Gets the public 'fos_rest.body_listener' shared service.
+     *
+     * @return \FOS\RestBundle\EventListener\BodyListener
+     */
+    protected function getFosRest_BodyListenerService()
+    {
+        $this->services['fos_rest.body_listener'] = $instance = new \FOS\RestBundle\EventListener\BodyListener($this->get('fos_rest.decoder_provider'), false);
+
+        $instance->setDefaultFormat(NULL);
+
+        return $instance;
+    }
+
+    /**
+     * Gets the public 'fos_rest.decoder.json' shared service.
+     *
+     * @return \FOS\RestBundle\Decoder\JsonDecoder
+     */
+    protected function getFosRest_Decoder_JsonService()
+    {
+        return $this->services['fos_rest.decoder.json'] = new \FOS\RestBundle\Decoder\JsonDecoder();
+    }
+
+    /**
+     * Gets the public 'fos_rest.decoder.jsontoform' shared service.
+     *
+     * @return \FOS\RestBundle\Decoder\JsonToFormDecoder
+     */
+    protected function getFosRest_Decoder_JsontoformService()
+    {
+        return $this->services['fos_rest.decoder.jsontoform'] = new \FOS\RestBundle\Decoder\JsonToFormDecoder();
+    }
+
+    /**
+     * Gets the public 'fos_rest.decoder.xml' shared service.
+     *
+     * @return \FOS\RestBundle\Decoder\XmlDecoder
+     */
+    protected function getFosRest_Decoder_XmlService()
+    {
+        return $this->services['fos_rest.decoder.xml'] = new \FOS\RestBundle\Decoder\XmlDecoder();
+    }
+
+    /**
+     * Gets the public 'fos_rest.decoder_provider' shared service.
+     *
+     * @return \FOS\RestBundle\Decoder\ContainerDecoderProvider
+     */
+    protected function getFosRest_DecoderProviderService()
+    {
+        return $this->services['fos_rest.decoder_provider'] = new \FOS\RestBundle\Decoder\ContainerDecoderProvider($this, array('json' => 'fos_rest.decoder.json', 'xml' => 'fos_rest.decoder.xml'));
+    }
+
+    /**
+     * Gets the public 'fos_rest.format_listener' shared service.
+     *
+     * @return \FOS\RestBundle\EventListener\FormatListener
+     */
+    protected function getFosRest_FormatListenerService()
+    {
+        return $this->services['fos_rest.format_listener'] = new \FOS\RestBundle\EventListener\FormatListener($this->get('fos_rest.format_negotiator'));
+    }
+
+    /**
+     * Gets the public 'fos_rest.format_negotiator' shared service.
+     *
+     * @return \FOS\RestBundle\Negotiation\FormatNegotiator
+     */
+    protected function getFosRest_FormatNegotiatorService()
+    {
+        $this->services['fos_rest.format_negotiator'] = $instance = new \FOS\RestBundle\Negotiation\FormatNegotiator($this->get('request_stack'));
+
+        $instance->add(new \Symfony\Component\HttpFoundation\RequestMatcher('^/_profiler|_wdt/', NULL, NULL, NULL, array()), array('methods' => NULL, 'priorities' => array(0 => 'html', 1 => 'json'), 'fallback_format' => 'html', 'attributes' => array(), 'prefer_extension' => '2.0'));
+        $instance->add(new \Symfony\Component\HttpFoundation\RequestMatcher('^/', NULL, NULL, NULL, array()), array('priorities' => array(0 => 'json'), 'fallback_format' => 'json', 'prefer_extension' => false, 'methods' => NULL, 'attributes' => array(), 'stop' => false));
+
+        return $instance;
+    }
+
+    /**
+     * Gets the public 'fos_rest.inflector' shared service.
+     *
+     * @return \FOS\RestBundle\Inflector\DoctrineInflector
+     */
+    protected function getFosRest_InflectorService()
+    {
+        return $this->services['fos_rest.inflector'] = new \FOS\RestBundle\Inflector\DoctrineInflector();
+    }
+
+    /**
+     * Gets the public 'fos_rest.normalizer.camel_keys' shared service.
+     *
+     * @return \FOS\RestBundle\Normalizer\CamelKeysNormalizer
+     */
+    protected function getFosRest_Normalizer_CamelKeysService()
+    {
+        return $this->services['fos_rest.normalizer.camel_keys'] = new \FOS\RestBundle\Normalizer\CamelKeysNormalizer();
+    }
+
+    /**
+     * Gets the public 'fos_rest.normalizer.camel_keys_with_leading_underscore' shared service.
+     *
+     * @return \FOS\RestBundle\Normalizer\CamelKeysNormalizerWithLeadingUnderscore
+     */
+    protected function getFosRest_Normalizer_CamelKeysWithLeadingUnderscoreService()
+    {
+        return $this->services['fos_rest.normalizer.camel_keys_with_leading_underscore'] = new \FOS\RestBundle\Normalizer\CamelKeysNormalizerWithLeadingUnderscore();
+    }
+
+    /**
+     * Gets the public 'fos_rest.param_fetcher_listener' shared service.
+     *
+     * @return \FOS\RestBundle\EventListener\ParamFetcherListener
+     */
+    protected function getFosRest_ParamFetcherListenerService()
+    {
+        return $this->services['fos_rest.param_fetcher_listener'] = new \FOS\RestBundle\EventListener\ParamFetcherListener($this->get('fos_rest.request.param_fetcher'), false);
+    }
+
+    /**
+     * Gets the public 'fos_rest.request.param_fetcher' shared service.
+     *
+     * @return \FOS\RestBundle\Request\ParamFetcher
+     */
+    protected function getFosRest_Request_ParamFetcherService()
+    {
+        return $this->services['fos_rest.request.param_fetcher'] = new \FOS\RestBundle\Request\ParamFetcher($this, ${($_ = isset($this->services['fos_rest.request.param_fetcher.reader']) ? $this->services['fos_rest.request.param_fetcher.reader'] : $this->getFosRest_Request_ParamFetcher_ReaderService()) && false ?: '_'}, $this->get('request_stack'), $this->get('validator', ContainerInterface::NULL_ON_INVALID_REFERENCE));
+    }
+
+    /**
+     * Gets the public 'fos_rest.serializer' shared service.
+     *
+     * @return \FOS\RestBundle\Serializer\JMSSerializerAdapter
+     */
+    protected function getFosRest_SerializerService($lazyLoad = true)
+    {
+        return $this->services['fos_rest.serializer'] = new \FOS\RestBundle\Serializer\JMSSerializerAdapter($this->get('jms_serializer'), $this->get('jms_serializer.serialization_context_factory'), $this->get('jms_serializer.deserialization_context_factory'));
+    }
+
+    /**
+     * Gets the public 'fos_rest.serializer.form_error_handler' shared service.
+     *
+     * @return \FOS\RestBundle\Serializer\Normalizer\FormErrorHandler
+     */
+    protected function getFosRest_Serializer_FormErrorHandlerService()
+    {
+        return $this->services['fos_rest.serializer.form_error_handler'] = new \FOS\RestBundle\Serializer\Normalizer\FormErrorHandler(new \JMS\Serializer\Handler\FormErrorHandler($this->get('translator', ContainerInterface::NULL_ON_INVALID_REFERENCE), 'validators'));
+    }
+
+    /**
+     * Gets the public 'fos_rest.view_response_listener' shared service.
+     *
+     * @return \FOS\RestBundle\EventListener\ViewResponseListener
+     */
+    protected function getFosRest_ViewResponseListenerService()
+    {
+        return $this->services['fos_rest.view_response_listener'] = new \FOS\RestBundle\EventListener\ViewResponseListener($this->get('fos\restbundle\view\viewhandlerinterface'), true);
     }
 
     /**
@@ -1704,6 +2305,254 @@ class appDevDebugProjectContainer extends Container
     }
 
     /**
+     * Gets the public 'jms_serializer' shared service.
+     *
+     * @return \JMS\Serializer\Serializer
+     */
+    protected function getJmsSerializerService()
+    {
+        $a = new \Metadata\MetadataFactory(new \Metadata\Driver\LazyLoadingDriver($this, 'jms_serializer.metadata_driver'), 'Metadata\\ClassHierarchyMetadata', true);
+        $a->setCache(new \Metadata\Cache\FileCache((__DIR__.'/jms_serializer')));
+
+        $b = new \JMS\Serializer\EventDispatcher\LazyEventDispatcher($this);
+        $b->setListeners(array('serializer.pre_serialize' => array(0 => array(0 => array(0 => 'jms_serializer.stopwatch_subscriber', 1 => 'onPreSerialize'), 1 => NULL, 2 => NULL), 1 => array(0 => array(0 => 'jms_serializer.doctrine_proxy_subscriber', 1 => 'onPreSerializeTypedProxy'), 1 => NULL, 2 => NULL), 2 => array(0 => array(0 => 'jms_serializer.doctrine_proxy_subscriber', 1 => 'onPreSerialize'), 1 => NULL, 2 => NULL)), 'serializer.post_serialize' => array(0 => array(0 => array(0 => 'jms_serializer.stopwatch_subscriber', 1 => 'onPostSerialize'), 1 => NULL, 2 => NULL))));
+
+        $this->services['jms_serializer'] = $instance = new \JMS\Serializer\Serializer($a, $this->get('jms_serializer.handler_registry'), ${($_ = isset($this->services['jms_serializer.unserialize_object_constructor']) ? $this->services['jms_serializer.unserialize_object_constructor'] : $this->getJmsSerializer_UnserializeObjectConstructorService()) && false ?: '_'}, new \PhpCollection\Map(array('json' => $this->get('jms_serializer.json_serialization_visitor'), 'xml' => $this->get('jms_serializer.xml_serialization_visitor'), 'yml' => $this->get('jms_serializer.yaml_serialization_visitor'))), new \PhpCollection\Map(array('json' => $this->get('jms_serializer.json_deserialization_visitor'), 'xml' => $this->get('jms_serializer.xml_deserialization_visitor'))), $b, NULL, $this->get('jms_serializer.expression_evaluator'));
+
+        $instance->setSerializationContextFactory($this->get('jms_serializer.serialization_context_factory'));
+        $instance->setDeserializationContextFactory($this->get('jms_serializer.deserialization_context_factory'));
+
+        return $instance;
+    }
+
+    /**
+     * Gets the public 'jms_serializer.accessor_strategy' shared service.
+     *
+     * @return \JMS\Serializer\Accessor\ExpressionAccessorStrategy
+     */
+    protected function getJmsSerializer_AccessorStrategyService()
+    {
+        return $this->services['jms_serializer.accessor_strategy'] = new \JMS\Serializer\Accessor\ExpressionAccessorStrategy($this->get('jms_serializer.expression_evaluator'), new \JMS\Serializer\Accessor\DefaultAccessorStrategy());
+    }
+
+    /**
+     * Gets the public 'jms_serializer.array_collection_handler' shared service.
+     *
+     * @return \JMS\Serializer\Handler\ArrayCollectionHandler
+     */
+    protected function getJmsSerializer_ArrayCollectionHandlerService()
+    {
+        return $this->services['jms_serializer.array_collection_handler'] = new \JMS\Serializer\Handler\ArrayCollectionHandler(false);
+    }
+
+    /**
+     * Gets the public 'jms_serializer.constraint_violation_handler' shared service.
+     *
+     * @return \JMS\Serializer\Handler\ConstraintViolationHandler
+     */
+    protected function getJmsSerializer_ConstraintViolationHandlerService()
+    {
+        return $this->services['jms_serializer.constraint_violation_handler'] = new \JMS\Serializer\Handler\ConstraintViolationHandler();
+    }
+
+    /**
+     * Gets the public 'jms_serializer.datetime_handler' shared service.
+     *
+     * @return \JMS\Serializer\Handler\DateHandler
+     */
+    protected function getJmsSerializer_DatetimeHandlerService()
+    {
+        return $this->services['jms_serializer.datetime_handler'] = new \JMS\Serializer\Handler\DateHandler('Y-m-d\\TH:i:sP', 'Europe/Berlin', true);
+    }
+
+    /**
+     * Gets the public 'jms_serializer.deserialization_context_factory' shared service.
+     *
+     * @return \JMS\SerializerBundle\ContextFactory\ConfiguredContextFactory
+     */
+    protected function getJmsSerializer_DeserializationContextFactoryService()
+    {
+        return $this->services['jms_serializer.deserialization_context_factory'] = new \JMS\SerializerBundle\ContextFactory\ConfiguredContextFactory();
+    }
+
+    /**
+     * Gets the public 'jms_serializer.doctrine_proxy_subscriber' shared service.
+     *
+     * @return \JMS\Serializer\EventDispatcher\Subscriber\DoctrineProxySubscriber
+     */
+    protected function getJmsSerializer_DoctrineProxySubscriberService()
+    {
+        return $this->services['jms_serializer.doctrine_proxy_subscriber'] = new \JMS\Serializer\EventDispatcher\Subscriber\DoctrineProxySubscriber(true, false);
+    }
+
+    /**
+     * Gets the public 'jms_serializer.expression_evaluator' shared service.
+     *
+     * @return \JMS\Serializer\Expression\ExpressionEvaluator
+     */
+    protected function getJmsSerializer_ExpressionEvaluatorService()
+    {
+        $a = new \Symfony\Component\ExpressionLanguage\ExpressionLanguage();
+        $a->registerProvider(new \JMS\SerializerBundle\ExpressionLanguage\BasicSerializerFunctionsProvider());
+
+        return $this->services['jms_serializer.expression_evaluator'] = new \JMS\Serializer\Expression\ExpressionEvaluator($a, array('container' => $this));
+    }
+
+    /**
+     * Gets the public 'jms_serializer.handler_registry' shared service.
+     *
+     * @return \FOS\RestBundle\Serializer\JMSHandlerRegistry
+     */
+    protected function getJmsSerializer_HandlerRegistryService()
+    {
+        return $this->services['jms_serializer.handler_registry'] = new \FOS\RestBundle\Serializer\JMSHandlerRegistry(${($_ = isset($this->services['fos_rest.serializer.jms_handler_registry.inner']) ? $this->services['fos_rest.serializer.jms_handler_registry.inner'] : $this->getFosRest_Serializer_JmsHandlerRegistry_InnerService()) && false ?: '_'});
+    }
+
+    /**
+     * Gets the public 'jms_serializer.json_deserialization_visitor' shared service.
+     *
+     * @return \JMS\Serializer\JsonDeserializationVisitor
+     */
+    protected function getJmsSerializer_JsonDeserializationVisitorService()
+    {
+        return $this->services['jms_serializer.json_deserialization_visitor'] = new \JMS\Serializer\JsonDeserializationVisitor($this->get('jms_serializer.naming_strategy'));
+    }
+
+    /**
+     * Gets the public 'jms_serializer.json_serialization_visitor' shared service.
+     *
+     * @return \JMS\Serializer\JsonSerializationVisitor
+     */
+    protected function getJmsSerializer_JsonSerializationVisitorService()
+    {
+        $this->services['jms_serializer.json_serialization_visitor'] = $instance = new \JMS\Serializer\JsonSerializationVisitor($this->get('jms_serializer.naming_strategy'), $this->get('jms_serializer.accessor_strategy'));
+
+        $instance->setOptions(0);
+
+        return $instance;
+    }
+
+    /**
+     * Gets the public 'jms_serializer.metadata_driver' shared service.
+     *
+     * @return \JMS\Serializer\Metadata\Driver\DoctrineTypeDriver
+     */
+    protected function getJmsSerializer_MetadataDriverService()
+    {
+        $a = new \Metadata\Driver\FileLocator(array());
+
+        return $this->services['jms_serializer.metadata_driver'] = new \JMS\Serializer\Metadata\Driver\DoctrineTypeDriver(new \Metadata\Driver\DriverChain(array(0 => new \JMS\Serializer\Metadata\Driver\YamlDriver($a), 1 => new \JMS\Serializer\Metadata\Driver\XmlDriver($a), 2 => new \JMS\Serializer\Metadata\Driver\PhpDriver($a), 3 => new \JMS\Serializer\Metadata\Driver\AnnotationDriver($this->get('annotation_reader')))), $this->get('doctrine'));
+    }
+
+    /**
+     * Gets the public 'jms_serializer.naming_strategy' shared service.
+     *
+     * @return \JMS\Serializer\Naming\CacheNamingStrategy
+     */
+    protected function getJmsSerializer_NamingStrategyService()
+    {
+        return $this->services['jms_serializer.naming_strategy'] = new \JMS\Serializer\Naming\CacheNamingStrategy(new \JMS\Serializer\Naming\SerializedNameAnnotationStrategy(new \JMS\Serializer\Naming\CamelCaseNamingStrategy('_', true)));
+    }
+
+    /**
+     * Gets the public 'jms_serializer.object_constructor' shared service.
+     *
+     * @return \JMS\Serializer\Construction\DoctrineObjectConstructor
+     */
+    protected function getJmsSerializer_ObjectConstructorService()
+    {
+        return $this->services['jms_serializer.object_constructor'] = new \JMS\Serializer\Construction\DoctrineObjectConstructor($this->get('doctrine'), ${($_ = isset($this->services['jms_serializer.unserialize_object_constructor']) ? $this->services['jms_serializer.unserialize_object_constructor'] : $this->getJmsSerializer_UnserializeObjectConstructorService()) && false ?: '_'}, 'null');
+    }
+
+    /**
+     * Gets the public 'jms_serializer.php_collection_handler' shared service.
+     *
+     * @return \JMS\Serializer\Handler\PhpCollectionHandler
+     */
+    protected function getJmsSerializer_PhpCollectionHandlerService()
+    {
+        return $this->services['jms_serializer.php_collection_handler'] = new \JMS\Serializer\Handler\PhpCollectionHandler();
+    }
+
+    /**
+     * Gets the public 'jms_serializer.serialization_context_factory' shared service.
+     *
+     * @return \JMS\SerializerBundle\ContextFactory\ConfiguredContextFactory
+     */
+    protected function getJmsSerializer_SerializationContextFactoryService()
+    {
+        return $this->services['jms_serializer.serialization_context_factory'] = new \JMS\SerializerBundle\ContextFactory\ConfiguredContextFactory();
+    }
+
+    /**
+     * Gets the public 'jms_serializer.stopwatch_subscriber' shared service.
+     *
+     * @return \JMS\SerializerBundle\Serializer\StopwatchEventSubscriber
+     */
+    protected function getJmsSerializer_StopwatchSubscriberService()
+    {
+        return $this->services['jms_serializer.stopwatch_subscriber'] = new \JMS\SerializerBundle\Serializer\StopwatchEventSubscriber($this->get('debug.stopwatch'));
+    }
+
+    /**
+     * Gets the public 'jms_serializer.templating.helper.serializer' shared service.
+     *
+     * @return \JMS\SerializerBundle\Templating\SerializerHelper
+     */
+    protected function getJmsSerializer_Templating_Helper_SerializerService()
+    {
+        return $this->services['jms_serializer.templating.helper.serializer'] = new \JMS\SerializerBundle\Templating\SerializerHelper($this->get('jms_serializer'));
+    }
+
+    /**
+     * Gets the public 'jms_serializer.twig_extension.serializer_runtime_helper' shared service.
+     *
+     * @return \JMS\Serializer\Twig\SerializerRuntimeHelper
+     */
+    protected function getJmsSerializer_TwigExtension_SerializerRuntimeHelperService()
+    {
+        return $this->services['jms_serializer.twig_extension.serializer_runtime_helper'] = new \JMS\Serializer\Twig\SerializerRuntimeHelper($this->get('jms_serializer'));
+    }
+
+    /**
+     * Gets the public 'jms_serializer.xml_deserialization_visitor' shared service.
+     *
+     * @return \JMS\Serializer\XmlDeserializationVisitor
+     */
+    protected function getJmsSerializer_XmlDeserializationVisitorService()
+    {
+        $this->services['jms_serializer.xml_deserialization_visitor'] = $instance = new \JMS\Serializer\XmlDeserializationVisitor($this->get('jms_serializer.naming_strategy'));
+
+        $instance->setDoctypeWhitelist(array());
+
+        return $instance;
+    }
+
+    /**
+     * Gets the public 'jms_serializer.xml_serialization_visitor' shared service.
+     *
+     * @return \JMS\Serializer\XmlSerializationVisitor
+     */
+    protected function getJmsSerializer_XmlSerializationVisitorService()
+    {
+        $this->services['jms_serializer.xml_serialization_visitor'] = $instance = new \JMS\Serializer\XmlSerializationVisitor($this->get('jms_serializer.naming_strategy'), $this->get('jms_serializer.accessor_strategy'));
+
+        $instance->setFormatOutput(true);
+
+        return $instance;
+    }
+
+    /**
+     * Gets the public 'jms_serializer.yaml_serialization_visitor' shared service.
+     *
+     * @return \JMS\Serializer\YamlSerializationVisitor
+     */
+    protected function getJmsSerializer_YamlSerializationVisitorService()
+    {
+        return $this->services['jms_serializer.yaml_serialization_visitor'] = new \JMS\Serializer\YamlSerializationVisitor($this->get('jms_serializer.naming_strategy'), $this->get('jms_serializer.accessor_strategy'));
+    }
+
+    /**
      * Gets the public 'kernel' shared service.
      *
      * @throws RuntimeException always since this service is expected to be injected dynamically
@@ -1779,6 +2628,20 @@ class appDevDebugProjectContainer extends Container
     }
 
     /**
+     * Gets the public 'monolog.handler.my_channel' shared service.
+     *
+     * @return \Monolog\Handler\StreamHandler
+     */
+    protected function getMonolog_Handler_MyChannelService()
+    {
+        $this->services['monolog.handler.my_channel'] = $instance = new \Monolog\Handler\StreamHandler(($this->targetDirs[2].'/logs/dev-my_channel.log'), 100, true, NULL);
+
+        $instance->pushProcessor(${($_ = isset($this->services['monolog.processor.psr_log_message']) ? $this->services['monolog.processor.psr_log_message'] : $this->getMonolog_Processor_PsrLogMessageService()) && false ?: '_'});
+
+        return $instance;
+    }
+
+    /**
      * Gets the public 'monolog.handler.null_internal' shared service.
      *
      * @return \Monolog\Handler\NullHandler
@@ -1830,6 +2693,22 @@ class appDevDebugProjectContainer extends Container
 
         $instance->pushProcessor(${($_ = isset($this->services['debug.log_processor']) ? $this->services['debug.log_processor'] : $this->getDebug_LogProcessorService()) && false ?: '_'});
         $instance->pushHandler($this->get('monolog.handler.null_internal'));
+
+        return $instance;
+    }
+
+    /**
+     * Gets the public 'monolog.logger.my_channel' shared service.
+     *
+     * @return \Symfony\Bridge\Monolog\Logger
+     */
+    protected function getMonolog_Logger_MyChannelService()
+    {
+        $this->services['monolog.logger.my_channel'] = $instance = new \Symfony\Bridge\Monolog\Logger('my_channel');
+
+        $instance->pushProcessor(${($_ = isset($this->services['debug.log_processor']) ? $this->services['debug.log_processor'] : $this->getDebug_LogProcessorService()) && false ?: '_'});
+        $instance->pushHandler($this->get('monolog.handler.console'));
+        $instance->pushHandler($this->get('monolog.handler.my_channel'));
 
         return $instance;
     }
@@ -1947,6 +2826,26 @@ class appDevDebugProjectContainer extends Container
     }
 
     /**
+     * Gets the public 'nelmio_cors.cors_listener' shared service.
+     *
+     * @return \Nelmio\CorsBundle\EventListener\CorsListener
+     */
+    protected function getNelmioCors_CorsListenerService()
+    {
+        return $this->services['nelmio_cors.cors_listener'] = new \Nelmio\CorsBundle\EventListener\CorsListener($this->get('debug.event_dispatcher'), new \Nelmio\CorsBundle\Options\Resolver(array(0 => $this->get('nelmio_cors.options_provider.config'))));
+    }
+
+    /**
+     * Gets the public 'nelmio_cors.options_provider.config' shared service.
+     *
+     * @return \Nelmio\CorsBundle\Options\ConfigProvider
+     */
+    protected function getNelmioCors_OptionsProvider_ConfigService()
+    {
+        return $this->services['nelmio_cors.options_provider.config'] = new \Nelmio\CorsBundle\Options\ConfigProvider(array(), array('allow_origin' => true, 'allow_credentials' => false, 'allow_headers' => true, 'expose_headers' => array(), 'allow_methods' => array(0 => 'GET', 1 => 'POST', 2 => 'PUT', 3 => 'DELETE', 4 => 'OPTIONS'), 'max_age' => 3600, 'hosts' => array(), 'origin_regex' => false, 'forced_allow_origin_value' => NULL));
+    }
+
+    /**
      * Gets the public 'profiler' shared service.
      *
      * @return \Symfony\Component\HttpKernel\Profiler\Profiler
@@ -1980,6 +2879,7 @@ class appDevDebugProjectContainer extends Container
         $instance->add($c);
         $instance->add(new \Symfony\Bundle\SwiftmailerBundle\DataCollector\MessageDataCollector($this));
         $instance->add($this->get('data_collector.dump'));
+        $instance->add(${($_ = isset($this->services['doctrine_mongodb.odm.data_collector.pretty']) ? $this->services['doctrine_mongodb.odm.data_collector.pretty'] : $this->getDoctrineMongodb_Odm_DataCollector_PrettyService()) && false ?: '_'});
         $instance->add($d);
 
         return $instance;
@@ -2056,22 +2956,29 @@ class appDevDebugProjectContainer extends Container
      */
     protected function getRouting_LoaderService()
     {
-        $a = $this->get('file_locator');
-        $b = $this->get('annotation_reader');
+        $a = ${($_ = isset($this->services['controller_name_converter']) ? $this->services['controller_name_converter'] : $this->getControllerNameConverterService()) && false ?: '_'};
+        $b = $this->get('file_locator');
+        $c = $this->get('annotation_reader');
 
-        $c = new \Sensio\Bundle\FrameworkExtraBundle\Routing\AnnotatedRouteControllerLoader($b);
+        $d = new \Sensio\Bundle\FrameworkExtraBundle\Routing\AnnotatedRouteControllerLoader($c);
 
-        $d = new \Symfony\Component\Config\Loader\LoaderResolver();
-        $d->addLoader(new \Symfony\Component\Routing\Loader\XmlFileLoader($a));
-        $d->addLoader(new \Symfony\Component\Routing\Loader\YamlFileLoader($a));
-        $d->addLoader(new \Symfony\Component\Routing\Loader\PhpFileLoader($a));
-        $d->addLoader(new \Symfony\Component\Routing\Loader\DirectoryLoader($a));
-        $d->addLoader(new \Symfony\Component\Routing\Loader\DependencyInjection\ServiceRouterLoader($this));
-        $d->addLoader($c);
-        $d->addLoader(new \Symfony\Component\Routing\Loader\AnnotationDirectoryLoader($a, $c));
-        $d->addLoader(new \Symfony\Component\Routing\Loader\AnnotationFileLoader($a, $c));
+        $e = new \FOS\RestBundle\Routing\Loader\RestRouteProcessor();
 
-        return $this->services['routing.loader'] = new \Symfony\Bundle\FrameworkBundle\Routing\DelegatingLoader(${($_ = isset($this->services['controller_name_converter']) ? $this->services['controller_name_converter'] : $this->getControllerNameConverterService()) && false ?: '_'}, $d);
+        $f = new \Symfony\Component\Config\Loader\LoaderResolver();
+        $f->addLoader(new \Symfony\Component\Routing\Loader\XmlFileLoader($b));
+        $f->addLoader(new \Symfony\Component\Routing\Loader\YamlFileLoader($b));
+        $f->addLoader(new \Symfony\Component\Routing\Loader\PhpFileLoader($b));
+        $f->addLoader(new \Symfony\Component\Routing\Loader\DirectoryLoader($b));
+        $f->addLoader(new \Symfony\Component\Routing\Loader\DependencyInjection\ServiceRouterLoader($this));
+        $f->addLoader($d);
+        $f->addLoader(new \Symfony\Component\Routing\Loader\AnnotationDirectoryLoader($b, $d));
+        $f->addLoader(new \Symfony\Component\Routing\Loader\AnnotationFileLoader($b, $d));
+        $f->addLoader(new \FOS\RestBundle\Routing\Loader\DirectoryRouteLoader($b, $e));
+        $f->addLoader(new \FOS\RestBundle\Routing\Loader\RestRouteLoader($this, $b, $a, new \FOS\RestBundle\Routing\Loader\Reader\RestControllerReader(new \FOS\RestBundle\Routing\Loader\Reader\RestActionReader($c, ${($_ = isset($this->services['fos_rest.request.param_fetcher.reader']) ? $this->services['fos_rest.request.param_fetcher.reader'] : $this->getFosRest_Request_ParamFetcher_ReaderService()) && false ?: '_'}, $this->get('fos_rest.inflector'), true, array('json' => false, 'html' => true), true), $c), NULL));
+        $f->addLoader(new \FOS\RestBundle\Routing\Loader\RestYamlCollectionLoader($b, $e, true, array('json' => false, 'html' => true), NULL));
+        $f->addLoader(new \FOS\RestBundle\Routing\Loader\RestXmlCollectionLoader($b, $e, true, array('json' => false, 'html' => true), NULL));
+
+        return $this->services['routing.loader'] = new \Symfony\Bundle\FrameworkBundle\Routing\DelegatingLoader($a, $f);
     }
 
     /**
@@ -2159,7 +3066,7 @@ class appDevDebugProjectContainer extends Container
 
         $f = new \Symfony\Component\Security\Http\AccessMap();
 
-        return $this->services['security.firewall.map.context.main'] = new \Symfony\Bundle\SecurityBundle\Security\FirewallContext(array(0 => new \Symfony\Component\Security\Http\Firewall\ChannelListener($f, new \Symfony\Component\Security\Http\EntryPoint\RetryAuthenticationEntryPoint(80, 443), $a), 1 => new \Symfony\Component\Security\Http\Firewall\ContextListener($b, array(0 => new \Symfony\Component\Security\Core\User\InMemoryUserProvider()), 'main', $a, $this->get('debug.event_dispatcher', ContainerInterface::NULL_ON_INVALID_REFERENCE), $c), 2 => new \Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener($b, '5b699b711ebee2.94753945', $a, $d), 3 => new \Symfony\Component\Security\Http\Firewall\AccessListener($b, ${($_ = isset($this->services['debug.security.access.decision_manager']) ? $this->services['debug.security.access.decision_manager'] : $this->getDebug_Security_Access_DecisionManagerService()) && false ?: '_'}, $f, $d)), new \Symfony\Component\Security\Http\Firewall\ExceptionListener($b, $c, new \Symfony\Component\Security\Http\HttpUtils($e, $e), 'main', NULL, NULL, NULL, $a, false), new \Symfony\Bundle\SecurityBundle\Security\FirewallConfig('main', 'security.user_checker', NULL, true, false, 'security.user.provider.concrete.in_memory', 'main', NULL, NULL, NULL, array(0 => 'anonymous')));
+        return $this->services['security.firewall.map.context.main'] = new \Symfony\Bundle\SecurityBundle\Security\FirewallContext(array(0 => new \Symfony\Component\Security\Http\Firewall\ChannelListener($f, new \Symfony\Component\Security\Http\EntryPoint\RetryAuthenticationEntryPoint(80, 443), $a), 1 => new \Symfony\Component\Security\Http\Firewall\ContextListener($b, array(0 => new \Symfony\Component\Security\Core\User\InMemoryUserProvider()), 'main', $a, $this->get('debug.event_dispatcher', ContainerInterface::NULL_ON_INVALID_REFERENCE), $c), 2 => new \Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener($b, '5b84455dd55dd6.94988809', $a, $d), 3 => new \Symfony\Component\Security\Http\Firewall\AccessListener($b, ${($_ = isset($this->services['debug.security.access.decision_manager']) ? $this->services['debug.security.access.decision_manager'] : $this->getDebug_Security_Access_DecisionManagerService()) && false ?: '_'}, $f, $d)), new \Symfony\Component\Security\Http\Firewall\ExceptionListener($b, $c, new \Symfony\Component\Security\Http\HttpUtils($e, $e), 'main', NULL, NULL, NULL, $a, false), new \Symfony\Bundle\SecurityBundle\Security\FirewallConfig('main', 'security.user_checker', NULL, true, false, 'security.user.provider.concrete.in_memory', 'main', NULL, NULL, NULL, array(0 => 'anonymous')));
     }
 
     /**
@@ -2908,10 +3815,11 @@ class appDevDebugProjectContainer extends Container
         $instance->addExtension(new \Twig\Extension\DebugExtension());
         $instance->addExtension(new \Symfony\Bridge\Twig\Extension\FormExtension(array(0 => $this, 1 => 'twig.form.renderer')));
         $instance->addExtension(new \Doctrine\Bundle\DoctrineBundle\Twig\DoctrineExtension());
+        $instance->addExtension(new \JMS\Serializer\Twig\SerializerRuntimeExtension());
         $instance->addExtension(new \Symfony\Bridge\Twig\Extension\DumpExtension($this->get('var_dumper.cloner'), $d));
         $instance->addExtension(new \Symfony\Bundle\WebProfilerBundle\Twig\WebProfilerExtension($e));
         $instance->addGlobal('app', $f);
-        $instance->addRuntimeLoader(new \Symfony\Bundle\TwigBundle\ContainerAwareRuntimeLoader($this, array('Symfony\\Bridge\\Twig\\Extension\\HttpKernelRuntime' => 'twig.runtime.httpkernel', 'Symfony\\Bridge\\Twig\\Form\\TwigRenderer' => 'twig.form.renderer'), $this->get('logger', ContainerInterface::NULL_ON_INVALID_REFERENCE)));
+        $instance->addRuntimeLoader(new \Symfony\Bundle\TwigBundle\ContainerAwareRuntimeLoader($this, array('Symfony\\Bridge\\Twig\\Extension\\HttpKernelRuntime' => 'twig.runtime.httpkernel', 'Symfony\\Bridge\\Twig\\Form\\TwigRenderer' => 'twig.form.renderer', 'JMS\\Serializer\\Twig\\SerializerRuntimeHelper' => 'jms_serializer.twig_extension.serializer_runtime_helper'), $this->get('logger', ContainerInterface::NULL_ON_INVALID_REFERENCE)));
         (new \Symfony\Bundle\TwigBundle\DependencyInjection\Configurator\EnvironmentConfigurator('F j, Y H:i', '%d days', NULL, 0, '.', ','))->configure($instance);
 
         return $instance;
@@ -2971,6 +3879,7 @@ class appDevDebugProjectContainer extends Container
         $instance->addPath(($this->targetDirs[3].'/vendor/symfony/symfony/src/Symfony/Bundle/TwigBundle/Resources/views'), 'Twig');
         $instance->addPath(($this->targetDirs[3].'/vendor/symfony/swiftmailer-bundle/Resources/views'), 'Swiftmailer');
         $instance->addPath(($this->targetDirs[3].'/vendor/doctrine/doctrine-bundle/Resources/views'), 'Doctrine');
+        $instance->addPath(($this->targetDirs[3].'/vendor/doctrine/mongodb-odm-bundle/Resources/views'), 'DoctrineMongoDB');
         $instance->addPath(($this->targetDirs[3].'/vendor/symfony/symfony/src/Symfony/Bundle/DebugBundle/Resources/views'), 'Debug');
         $instance->addPath(($this->targetDirs[3].'/vendor/symfony/symfony/src/Symfony/Bundle/WebProfilerBundle/Resources/views'), 'WebProfiler');
         $instance->addPath(($this->targetDirs[3].'/app/Resources/views'));
@@ -3048,13 +3957,13 @@ class appDevDebugProjectContainer extends Container
     {
         $this->services['validator.builder'] = $instance = \Symfony\Component\Validator\Validation::createValidatorBuilder();
 
-        $instance->setConstraintValidatorFactory(new \Symfony\Bundle\FrameworkBundle\Validator\ConstraintValidatorFactory($this, array('validator.expression' => 'validator.expression', 'Symfony\\Component\\Validator\\Constraints\\ExpressionValidator' => 'validator.expression', 'Symfony\\Component\\Validator\\Constraints\\EmailValidator' => 'validator.email', 'security.validator.user_password' => 'security.validator.user_password', 'Symfony\\Component\\Security\\Core\\Validator\\Constraints\\UserPasswordValidator' => 'security.validator.user_password', 'doctrine.orm.validator.unique' => 'doctrine.orm.validator.unique', 'Symfony\\Bridge\\Doctrine\\Validator\\Constraints\\UniqueEntityValidator' => 'doctrine.orm.validator.unique')));
+        $instance->setConstraintValidatorFactory(new \Symfony\Bundle\FrameworkBundle\Validator\ConstraintValidatorFactory($this, array('validator.expression' => 'validator.expression', 'Symfony\\Component\\Validator\\Constraints\\ExpressionValidator' => 'validator.expression', 'Symfony\\Component\\Validator\\Constraints\\EmailValidator' => 'validator.email', 'security.validator.user_password' => 'security.validator.user_password', 'Symfony\\Component\\Security\\Core\\Validator\\Constraints\\UserPasswordValidator' => 'security.validator.user_password', 'doctrine.orm.validator.unique' => 'doctrine.orm.validator.unique', 'Symfony\\Bridge\\Doctrine\\Validator\\Constraints\\UniqueEntityValidator' => 'doctrine_odm.mongodb.validator.unique', 'doctrine_odm.mongodb.unique' => 'doctrine_odm.mongodb.validator.unique')));
         $instance->setTranslator($this->get('translator'));
         $instance->setTranslationDomain('validators');
         $instance->addXmlMappings(array(0 => ($this->targetDirs[3].'/vendor/symfony/symfony/src/Symfony/Component/Form/Resources/config/validation.xml')));
         $instance->enableAnnotationMapping($this->get('annotation_reader'));
         $instance->addMethodMapping('loadValidatorMetadata');
-        $instance->addObjectInitializers(array(0 => $this->get('doctrine.orm.validator_initializer')));
+        $instance->addObjectInitializers(array(0 => $this->get('doctrine.orm.validator_initializer'), 1 => $this->get('doctrine_odm.mongodb.validator_initializer')));
 
         return $instance;
     }
@@ -3121,7 +4030,7 @@ class appDevDebugProjectContainer extends Container
      */
     protected function getWebProfiler_Controller_ProfilerService()
     {
-        return $this->services['web_profiler.controller.profiler'] = new \Symfony\Bundle\WebProfilerBundle\Controller\ProfilerController($this->get('router', ContainerInterface::NULL_ON_INVALID_REFERENCE), $this->get('profiler', ContainerInterface::NULL_ON_INVALID_REFERENCE), $this->get('twig'), array('data_collector.request' => array(0 => 'request', 1 => '@WebProfiler/Collector/request.html.twig'), 'data_collector.time' => array(0 => 'time', 1 => '@WebProfiler/Collector/time.html.twig'), 'data_collector.memory' => array(0 => 'memory', 1 => '@WebProfiler/Collector/memory.html.twig'), 'data_collector.ajax' => array(0 => 'ajax', 1 => '@WebProfiler/Collector/ajax.html.twig'), 'data_collector.form' => array(0 => 'form', 1 => '@WebProfiler/Collector/form.html.twig'), 'data_collector.exception' => array(0 => 'exception', 1 => '@WebProfiler/Collector/exception.html.twig'), 'data_collector.logger' => array(0 => 'logger', 1 => '@WebProfiler/Collector/logger.html.twig'), 'data_collector.events' => array(0 => 'events', 1 => '@WebProfiler/Collector/events.html.twig'), 'data_collector.router' => array(0 => 'router', 1 => '@WebProfiler/Collector/router.html.twig'), 'data_collector.security' => array(0 => 'security', 1 => '@Security/Collector/security.html.twig'), 'data_collector.twig' => array(0 => 'twig', 1 => '@WebProfiler/Collector/twig.html.twig'), 'data_collector.doctrine' => array(0 => 'db', 1 => '@Doctrine/Collector/db.html.twig'), 'swiftmailer.data_collector' => array(0 => 'swiftmailer', 1 => '@Swiftmailer/Collector/swiftmailer.html.twig'), 'data_collector.dump' => array(0 => 'dump', 1 => '@Debug/Profiler/dump.html.twig'), 'data_collector.config' => array(0 => 'config', 1 => '@WebProfiler/Collector/config.html.twig')), 'bottom', ${($_ = isset($this->services['web_profiler.csp.handler']) ? $this->services['web_profiler.csp.handler'] : $this->getWebProfiler_Csp_HandlerService()) && false ?: '_'}, $this->targetDirs[3]);
+        return $this->services['web_profiler.controller.profiler'] = new \Symfony\Bundle\WebProfilerBundle\Controller\ProfilerController($this->get('router', ContainerInterface::NULL_ON_INVALID_REFERENCE), $this->get('profiler', ContainerInterface::NULL_ON_INVALID_REFERENCE), $this->get('twig'), array('data_collector.request' => array(0 => 'request', 1 => '@WebProfiler/Collector/request.html.twig'), 'data_collector.time' => array(0 => 'time', 1 => '@WebProfiler/Collector/time.html.twig'), 'data_collector.memory' => array(0 => 'memory', 1 => '@WebProfiler/Collector/memory.html.twig'), 'data_collector.ajax' => array(0 => 'ajax', 1 => '@WebProfiler/Collector/ajax.html.twig'), 'data_collector.form' => array(0 => 'form', 1 => '@WebProfiler/Collector/form.html.twig'), 'data_collector.exception' => array(0 => 'exception', 1 => '@WebProfiler/Collector/exception.html.twig'), 'data_collector.logger' => array(0 => 'logger', 1 => '@WebProfiler/Collector/logger.html.twig'), 'data_collector.events' => array(0 => 'events', 1 => '@WebProfiler/Collector/events.html.twig'), 'data_collector.router' => array(0 => 'router', 1 => '@WebProfiler/Collector/router.html.twig'), 'data_collector.security' => array(0 => 'security', 1 => '@Security/Collector/security.html.twig'), 'data_collector.twig' => array(0 => 'twig', 1 => '@WebProfiler/Collector/twig.html.twig'), 'data_collector.doctrine' => array(0 => 'db', 1 => '@Doctrine/Collector/db.html.twig'), 'swiftmailer.data_collector' => array(0 => 'swiftmailer', 1 => '@Swiftmailer/Collector/swiftmailer.html.twig'), 'data_collector.dump' => array(0 => 'dump', 1 => '@Debug/Profiler/dump.html.twig'), 'doctrine_mongodb.odm.data_collector.pretty' => array(0 => 'mongodb', 1 => '@DoctrineMongoDB/Collector/mongodb.html.twig'), 'data_collector.config' => array(0 => 'config', 1 => '@WebProfiler/Collector/config.html.twig')), 'bottom', ${($_ = isset($this->services['web_profiler.csp.handler']) ? $this->services['web_profiler.csp.handler'] : $this->getWebProfiler_Csp_HandlerService()) && false ?: '_'}, $this->targetDirs[3]);
     }
 
     /**
@@ -3161,7 +4070,7 @@ class appDevDebugProjectContainer extends Container
      */
     protected function getCache_AnnotationsService()
     {
-        return $this->services['cache.annotations'] = \Symfony\Component\Cache\Adapter\AbstractAdapter::createSystemCache('yLtyuwzhBe', 0, '45jf7GpAyvXqlxKXc2Ia0w', (__DIR__.'/pools'), $this->get('monolog.logger.cache', ContainerInterface::NULL_ON_INVALID_REFERENCE));
+        return $this->services['cache.annotations'] = \Symfony\Component\Cache\Adapter\AbstractAdapter::createSystemCache('yLtyuwzhBe', 0, 'zEaAKesC+6yXJ+k3FZc+q9', (__DIR__.'/pools'), $this->get('monolog.logger.cache', ContainerInterface::NULL_ON_INVALID_REFERENCE));
     }
 
     /**
@@ -3221,6 +4130,20 @@ class appDevDebugProjectContainer extends Container
     }
 
     /**
+     * Gets the private 'doctrine_mongodb.odm.data_collector.pretty' shared service.
+     *
+     * @return \Doctrine\Bundle\MongoDBBundle\DataCollector\PrettyDataCollector
+     */
+    protected function getDoctrineMongodb_Odm_DataCollector_PrettyService()
+    {
+        $this->services['doctrine_mongodb.odm.data_collector.pretty'] = $instance = new \Doctrine\Bundle\MongoDBBundle\DataCollector\PrettyDataCollector();
+
+        $instance->setBatchInsertThreshold(4);
+
+        return $instance;
+    }
+
+    /**
      * Gets the private 'form.server_params' shared service.
      *
      * @return \Symfony\Component\Form\Util\ServerParams
@@ -3228,6 +4151,36 @@ class appDevDebugProjectContainer extends Container
     protected function getForm_ServerParamsService()
     {
         return $this->services['form.server_params'] = new \Symfony\Component\Form\Util\ServerParams($this->get('request_stack'));
+    }
+
+    /**
+     * Gets the private 'fos_rest.request.param_fetcher.reader' shared service.
+     *
+     * @return \FOS\RestBundle\Request\ParamReader
+     */
+    protected function getFosRest_Request_ParamFetcher_ReaderService()
+    {
+        return $this->services['fos_rest.request.param_fetcher.reader'] = new \FOS\RestBundle\Request\ParamReader($this->get('annotation_reader'));
+    }
+
+    /**
+     * Gets the private 'fos_rest.serializer.jms_handler_registry.inner' shared service.
+     *
+     * @return \JMS\Serializer\Handler\LazyHandlerRegistry
+     */
+    protected function getFosRest_Serializer_JmsHandlerRegistry_InnerService()
+    {
+        return $this->services['fos_rest.serializer.jms_handler_registry.inner'] = new \JMS\Serializer\Handler\LazyHandlerRegistry($this, array(2 => array('DateTime' => array('json' => array(0 => 'jms_serializer.datetime_handler', 1 => 'deserializeDateTimeFromjson'), 'xml' => array(0 => 'jms_serializer.datetime_handler', 1 => 'deserializeDateTimeFromxml'), 'yml' => array(0 => 'jms_serializer.datetime_handler', 1 => 'deserializeDateTimeFromyml')), 'DateTimeImmutable' => array('json' => array(0 => 'jms_serializer.datetime_handler', 1 => 'deserializeDateTimeImmutableFromjson'), 'xml' => array(0 => 'jms_serializer.datetime_handler', 1 => 'deserializeDateTimeImmutableFromxml'), 'yml' => array(0 => 'jms_serializer.datetime_handler', 1 => 'deserializeDateTimeImmutableFromyml')), 'DateInterval' => array('json' => array(0 => 'jms_serializer.datetime_handler', 1 => 'deserializeDateIntervalFromjson'), 'xml' => array(0 => 'jms_serializer.datetime_handler', 1 => 'deserializeDateIntervalFromxml'), 'yml' => array(0 => 'jms_serializer.datetime_handler', 1 => 'deserializeDateIntervalFromyml')), 'ArrayCollection' => array('json' => array(0 => 'jms_serializer.array_collection_handler', 1 => 'deserializeCollection'), 'xml' => array(0 => 'jms_serializer.array_collection_handler', 1 => 'deserializeCollection'), 'yml' => array(0 => 'jms_serializer.array_collection_handler', 1 => 'deserializeCollection')), 'Doctrine\\Common\\Collections\\ArrayCollection' => array('json' => array(0 => 'jms_serializer.array_collection_handler', 1 => 'deserializeCollection'), 'xml' => array(0 => 'jms_serializer.array_collection_handler', 1 => 'deserializeCollection'), 'yml' => array(0 => 'jms_serializer.array_collection_handler', 1 => 'deserializeCollection')), 'Doctrine\\ORM\\PersistentCollection' => array('json' => array(0 => 'jms_serializer.array_collection_handler', 1 => 'deserializeCollection'), 'xml' => array(0 => 'jms_serializer.array_collection_handler', 1 => 'deserializeCollection'), 'yml' => array(0 => 'jms_serializer.array_collection_handler', 1 => 'deserializeCollection')), 'Doctrine\\ODM\\MongoDB\\PersistentCollection' => array('json' => array(0 => 'jms_serializer.array_collection_handler', 1 => 'deserializeCollection'), 'xml' => array(0 => 'jms_serializer.array_collection_handler', 1 => 'deserializeCollection'), 'yml' => array(0 => 'jms_serializer.array_collection_handler', 1 => 'deserializeCollection')), 'Doctrine\\ODM\\PHPCR\\PersistentCollection' => array('json' => array(0 => 'jms_serializer.array_collection_handler', 1 => 'deserializeCollection'), 'xml' => array(0 => 'jms_serializer.array_collection_handler', 1 => 'deserializeCollection'), 'yml' => array(0 => 'jms_serializer.array_collection_handler', 1 => 'deserializeCollection')), 'PhpCollection\\Sequence' => array('json' => array(0 => 'jms_serializer.php_collection_handler', 1 => 'deserializeSequence'), 'xml' => array(0 => 'jms_serializer.php_collection_handler', 1 => 'deserializeSequence'), 'yml' => array(0 => 'jms_serializer.php_collection_handler', 1 => 'deserializeSequence')), 'PhpCollection\\Map' => array('json' => array(0 => 'jms_serializer.php_collection_handler', 1 => 'deserializeMap'), 'xml' => array(0 => 'jms_serializer.php_collection_handler', 1 => 'deserializeMap'), 'yml' => array(0 => 'jms_serializer.php_collection_handler', 1 => 'deserializeMap'))), 1 => array('DateTime' => array('json' => array(0 => 'jms_serializer.datetime_handler', 1 => 'serializeDateTime'), 'xml' => array(0 => 'jms_serializer.datetime_handler', 1 => 'serializeDateTime'), 'yml' => array(0 => 'jms_serializer.datetime_handler', 1 => 'serializeDateTime')), 'DateTimeImmutable' => array('json' => array(0 => 'jms_serializer.datetime_handler', 1 => 'serializeDateTimeImmutable'), 'xml' => array(0 => 'jms_serializer.datetime_handler', 1 => 'serializeDateTimeImmutable'), 'yml' => array(0 => 'jms_serializer.datetime_handler', 1 => 'serializeDateTimeImmutable')), 'DateInterval' => array('json' => array(0 => 'jms_serializer.datetime_handler', 1 => 'serializeDateInterval'), 'xml' => array(0 => 'jms_serializer.datetime_handler', 1 => 'serializeDateInterval'), 'yml' => array(0 => 'jms_serializer.datetime_handler', 1 => 'serializeDateInterval')), 'ArrayCollection' => array('json' => array(0 => 'jms_serializer.array_collection_handler', 1 => 'serializeCollection'), 'xml' => array(0 => 'jms_serializer.array_collection_handler', 1 => 'serializeCollection'), 'yml' => array(0 => 'jms_serializer.array_collection_handler', 1 => 'serializeCollection')), 'Doctrine\\Common\\Collections\\ArrayCollection' => array('json' => array(0 => 'jms_serializer.array_collection_handler', 1 => 'serializeCollection'), 'xml' => array(0 => 'jms_serializer.array_collection_handler', 1 => 'serializeCollection'), 'yml' => array(0 => 'jms_serializer.array_collection_handler', 1 => 'serializeCollection')), 'Doctrine\\ORM\\PersistentCollection' => array('json' => array(0 => 'jms_serializer.array_collection_handler', 1 => 'serializeCollection'), 'xml' => array(0 => 'jms_serializer.array_collection_handler', 1 => 'serializeCollection'), 'yml' => array(0 => 'jms_serializer.array_collection_handler', 1 => 'serializeCollection')), 'Doctrine\\ODM\\MongoDB\\PersistentCollection' => array('json' => array(0 => 'jms_serializer.array_collection_handler', 1 => 'serializeCollection'), 'xml' => array(0 => 'jms_serializer.array_collection_handler', 1 => 'serializeCollection'), 'yml' => array(0 => 'jms_serializer.array_collection_handler', 1 => 'serializeCollection')), 'Doctrine\\ODM\\PHPCR\\PersistentCollection' => array('json' => array(0 => 'jms_serializer.array_collection_handler', 1 => 'serializeCollection'), 'xml' => array(0 => 'jms_serializer.array_collection_handler', 1 => 'serializeCollection'), 'yml' => array(0 => 'jms_serializer.array_collection_handler', 1 => 'serializeCollection')), 'PhpCollection\\Sequence' => array('json' => array(0 => 'jms_serializer.php_collection_handler', 1 => 'serializeSequence'), 'xml' => array(0 => 'jms_serializer.php_collection_handler', 1 => 'serializeSequence'), 'yml' => array(0 => 'jms_serializer.php_collection_handler', 1 => 'serializeSequence')), 'PhpCollection\\Map' => array('json' => array(0 => 'jms_serializer.php_collection_handler', 1 => 'serializeMap'), 'xml' => array(0 => 'jms_serializer.php_collection_handler', 1 => 'serializeMap'), 'yml' => array(0 => 'jms_serializer.php_collection_handler', 1 => 'serializeMap')), 'Symfony\\Component\\Validator\\ConstraintViolationList' => array('xml' => array(0 => 'jms_serializer.constraint_violation_handler', 1 => 'serializeListToxml'), 'json' => array(0 => 'jms_serializer.constraint_violation_handler', 1 => 'serializeListTojson'), 'yml' => array(0 => 'jms_serializer.constraint_violation_handler', 1 => 'serializeListToyml')), 'Symfony\\Component\\Validator\\ConstraintViolation' => array('xml' => array(0 => 'jms_serializer.constraint_violation_handler', 1 => 'serializeViolationToxml'), 'json' => array(0 => 'jms_serializer.constraint_violation_handler', 1 => 'serializeViolationTojson'), 'yml' => array(0 => 'jms_serializer.constraint_violation_handler', 1 => 'serializeViolationToyml')), 'Symfony\\Component\\Form\\Form' => array('xml' => array(0 => 'fos_rest.serializer.form_error_handler', 1 => 'serializeFormToxml'), 'json' => array(0 => 'fos_rest.serializer.form_error_handler', 1 => 'serializeFormTojson'), 'yml' => array(0 => 'fos_rest.serializer.form_error_handler', 1 => 'serializeFormToyml')), 'Symfony\\Component\\Form\\FormError' => array('xml' => array(0 => 'fos_rest.serializer.form_error_handler', 1 => 'serializeFormErrorToxml'), 'json' => array(0 => 'fos_rest.serializer.form_error_handler', 1 => 'serializeFormErrorTojson'), 'yml' => array(0 => 'fos_rest.serializer.form_error_handler', 1 => 'serializeFormErrorToyml')))));
+    }
+
+    /**
+     * Gets the private 'jms_serializer.unserialize_object_constructor' shared service.
+     *
+     * @return \JMS\Serializer\Construction\UnserializeObjectConstructor
+     */
+    protected function getJmsSerializer_UnserializeObjectConstructorService()
+    {
+        return $this->services['jms_serializer.unserialize_object_constructor'] = new \JMS\Serializer\Construction\UnserializeObjectConstructor();
     }
 
     /**
@@ -3257,7 +4210,7 @@ class appDevDebugProjectContainer extends Container
      */
     protected function getSecurity_Authentication_ManagerService()
     {
-        $this->services['security.authentication.manager'] = $instance = new \Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager(array(0 => new \Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider('5b699b711ebee2.94753945')), true);
+        $this->services['security.authentication.manager'] = $instance = new \Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager(array(0 => new \Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider('5b84455dd55dd6.94988809')), true);
 
         $instance->setEventDispatcher($this->get('debug.event_dispatcher'));
 
@@ -3469,6 +4422,26 @@ class appDevDebugProjectContainer extends Container
                     'path' => ($this->targetDirs[3].'/src/AppBundle'),
                     'namespace' => 'AppBundle',
                 ),
+                'FOSRestBundle' => array(
+                    'parent' => NULL,
+                    'path' => ($this->targetDirs[3].'/vendor/friendsofsymfony/rest-bundle'),
+                    'namespace' => 'FOS\\RestBundle',
+                ),
+                'JMSSerializerBundle' => array(
+                    'parent' => NULL,
+                    'path' => ($this->targetDirs[3].'/vendor/jms/serializer-bundle'),
+                    'namespace' => 'JMS\\SerializerBundle',
+                ),
+                'NelmioCorsBundle' => array(
+                    'parent' => NULL,
+                    'path' => ($this->targetDirs[3].'/vendor/nelmio/cors-bundle'),
+                    'namespace' => 'Nelmio\\CorsBundle',
+                ),
+                'DoctrineMongoDBBundle' => array(
+                    'parent' => NULL,
+                    'path' => ($this->targetDirs[3].'/vendor/doctrine/mongodb-odm-bundle'),
+                    'namespace' => 'Doctrine\\Bundle\\MongoDBBundle',
+                ),
                 'DebugBundle' => array(
                     'parent' => NULL,
                     'path' => ($this->targetDirs[3].'/vendor/symfony/symfony/src/Symfony/Bundle/DebugBundle'),
@@ -3520,6 +4493,10 @@ class appDevDebugProjectContainer extends Container
                 'DoctrineBundle' => 'Doctrine\\Bundle\\DoctrineBundle\\DoctrineBundle',
                 'SensioFrameworkExtraBundle' => 'Sensio\\Bundle\\FrameworkExtraBundle\\SensioFrameworkExtraBundle',
                 'AppBundle' => 'AppBundle\\AppBundle',
+                'FOSRestBundle' => 'FOS\\RestBundle\\FOSRestBundle',
+                'JMSSerializerBundle' => 'JMS\\SerializerBundle\\JMSSerializerBundle',
+                'NelmioCorsBundle' => 'Nelmio\\CorsBundle\\NelmioCorsBundle',
+                'DoctrineMongoDBBundle' => 'Doctrine\\Bundle\\MongoDBBundle\\DoctrineMongoDBBundle',
                 'DebugBundle' => 'Symfony\\Bundle\\DebugBundle\\DebugBundle',
                 'WebProfilerBundle' => 'Symfony\\Bundle\\WebProfilerBundle\\WebProfilerBundle',
                 'SensioDistributionBundle' => 'Sensio\\Bundle\\DistributionBundle\\SensioDistributionBundle',
@@ -3529,7 +4506,7 @@ class appDevDebugProjectContainer extends Container
             'kernel.container_class' => 'appDevDebugProjectContainer',
             'database_host' => '127.0.0.1',
             'database_port' => 3306,
-            'database_name' => 'csvReader',
+            'database_name' => 'csvReaderDua',
             'database_user' => 'wjoseperez',
             'database_password' => '3squ3l3t0',
             'mailer_transport' => 'smtp',
@@ -3537,6 +4514,7 @@ class appDevDebugProjectContainer extends Container
             'mailer_user' => NULL,
             'mailer_password' => NULL,
             'secret' => 'ThisTokenIsNotSoSecretChangeIt',
+            'mongodb_server' => '“mongodb://localhost:27017”',
             'locale' => 'en',
             'fragment.renderer.hinclude.global_template' => NULL,
             'fragment.path' => '/_fragment',
@@ -3615,6 +4593,13 @@ class appDevDebugProjectContainer extends Container
                     'type' => 'exclusive',
                     'elements' => array(
                         0 => 'event',
+                        1 => 'my_channel',
+                    ),
+                ),
+                'monolog.handler.my_channel' => array(
+                    'type' => 'inclusive',
+                    'elements' => array(
+                        0 => 'my_channel',
                     ),
                 ),
             ),
@@ -3775,6 +4760,149 @@ class appDevDebugProjectContainer extends Container
             'sensio_framework_extra.converter.doctrine.class' => 'Sensio\\Bundle\\FrameworkExtraBundle\\Request\\ParamConverter\\DoctrineParamConverter',
             'sensio_framework_extra.converter.datetime.class' => 'Sensio\\Bundle\\FrameworkExtraBundle\\Request\\ParamConverter\\DateTimeParamConverter',
             'sensio_framework_extra.view.listener.class' => 'Sensio\\Bundle\\FrameworkExtraBundle\\EventListener\\TemplateListener',
+            'fos_rest.format_listener.rules' => NULL,
+            'jms_serializer.metadata.file_locator.class' => 'Metadata\\Driver\\FileLocator',
+            'jms_serializer.metadata.annotation_driver.class' => 'JMS\\Serializer\\Metadata\\Driver\\AnnotationDriver',
+            'jms_serializer.metadata.chain_driver.class' => 'Metadata\\Driver\\DriverChain',
+            'jms_serializer.metadata.yaml_driver.class' => 'JMS\\Serializer\\Metadata\\Driver\\YamlDriver',
+            'jms_serializer.metadata.xml_driver.class' => 'JMS\\Serializer\\Metadata\\Driver\\XmlDriver',
+            'jms_serializer.metadata.php_driver.class' => 'JMS\\Serializer\\Metadata\\Driver\\PhpDriver',
+            'jms_serializer.metadata.doctrine_type_driver.class' => 'JMS\\Serializer\\Metadata\\Driver\\DoctrineTypeDriver',
+            'jms_serializer.metadata.doctrine_phpcr_type_driver.class' => 'JMS\\Serializer\\Metadata\\Driver\\DoctrinePHPCRTypeDriver',
+            'jms_serializer.metadata.lazy_loading_driver.class' => 'Metadata\\Driver\\LazyLoadingDriver',
+            'jms_serializer.metadata.metadata_factory.class' => 'Metadata\\MetadataFactory',
+            'jms_serializer.metadata.cache.file_cache.class' => 'Metadata\\Cache\\FileCache',
+            'jms_serializer.event_dispatcher.class' => 'JMS\\Serializer\\EventDispatcher\\LazyEventDispatcher',
+            'jms_serializer.camel_case_naming_strategy.class' => 'JMS\\Serializer\\Naming\\CamelCaseNamingStrategy',
+            'jms_serializer.identical_property_naming_strategy.class' => 'JMS\\Serializer\\Naming\\IdenticalPropertyNamingStrategy',
+            'jms_serializer.serialized_name_annotation_strategy.class' => 'JMS\\Serializer\\Naming\\SerializedNameAnnotationStrategy',
+            'jms_serializer.cache_naming_strategy.class' => 'JMS\\Serializer\\Naming\\CacheNamingStrategy',
+            'jms_serializer.doctrine_object_constructor.class' => 'JMS\\Serializer\\Construction\\DoctrineObjectConstructor',
+            'jms_serializer.unserialize_object_constructor.class' => 'JMS\\Serializer\\Construction\\UnserializeObjectConstructor',
+            'jms_serializer.version_exclusion_strategy.class' => 'JMS\\Serializer\\Exclusion\\VersionExclusionStrategy',
+            'jms_serializer.serializer.class' => 'JMS\\Serializer\\Serializer',
+            'jms_serializer.twig_extension.class' => 'JMS\\Serializer\\Twig\\SerializerExtension',
+            'jms_serializer.twig_runtime_extension.class' => 'JMS\\Serializer\\Twig\\SerializerRuntimeExtension',
+            'jms_serializer.twig_runtime_extension_helper.class' => 'JMS\\Serializer\\Twig\\SerializerRuntimeHelper',
+            'jms_serializer.templating.helper.class' => 'JMS\\SerializerBundle\\Templating\\SerializerHelper',
+            'jms_serializer.json_serialization_visitor.class' => 'JMS\\Serializer\\JsonSerializationVisitor',
+            'jms_serializer.json_serialization_visitor.options' => 0,
+            'jms_serializer.json_deserialization_visitor.class' => 'JMS\\Serializer\\JsonDeserializationVisitor',
+            'jms_serializer.xml_serialization_visitor.class' => 'JMS\\Serializer\\XmlSerializationVisitor',
+            'jms_serializer.xml_deserialization_visitor.class' => 'JMS\\Serializer\\XmlDeserializationVisitor',
+            'jms_serializer.xml_deserialization_visitor.doctype_whitelist' => array(
+
+            ),
+            'jms_serializer.xml_serialization_visitor.format_output' => true,
+            'jms_serializer.yaml_serialization_visitor.class' => 'JMS\\Serializer\\YamlSerializationVisitor',
+            'jms_serializer.handler_registry.class' => 'JMS\\Serializer\\Handler\\LazyHandlerRegistry',
+            'jms_serializer.datetime_handler.class' => 'JMS\\Serializer\\Handler\\DateHandler',
+            'jms_serializer.array_collection_handler.class' => 'JMS\\Serializer\\Handler\\ArrayCollectionHandler',
+            'jms_serializer.php_collection_handler.class' => 'JMS\\Serializer\\Handler\\PhpCollectionHandler',
+            'jms_serializer.form_error_handler.class' => 'JMS\\Serializer\\Handler\\FormErrorHandler',
+            'jms_serializer.constraint_violation_handler.class' => 'JMS\\Serializer\\Handler\\ConstraintViolationHandler',
+            'jms_serializer.doctrine_proxy_subscriber.class' => 'JMS\\Serializer\\EventDispatcher\\Subscriber\\DoctrineProxySubscriber',
+            'jms_serializer.stopwatch_subscriber.class' => 'JMS\\SerializerBundle\\Serializer\\StopwatchEventSubscriber',
+            'jms_serializer.configured_context_factory.class' => 'JMS\\SerializerBundle\\ContextFactory\\ConfiguredContextFactory',
+            'jms_serializer.expression_evaluator.class' => 'JMS\\Serializer\\Expression\\ExpressionEvaluator',
+            'jms_serializer.expression_language.class' => 'Symfony\\Component\\ExpressionLanguage\\ExpressionLanguage',
+            'jms_serializer.expression_language.function_provider.class' => 'JMS\\SerializerBundle\\ExpressionLanguage\\BasicSerializerFunctionsProvider',
+            'jms_serializer.accessor_strategy.default.class' => 'JMS\\Serializer\\Accessor\\DefaultAccessorStrategy',
+            'jms_serializer.accessor_strategy.expression.class' => 'JMS\\Serializer\\Accessor\\ExpressionAccessorStrategy',
+            'jms_serializer.cache.cache_warmer.class' => 'JMS\\SerializerBundle\\Cache\\CacheWarmer',
+            'nelmio_cors.map' => array(
+
+            ),
+            'nelmio_cors.defaults' => array(
+                'allow_origin' => true,
+                'allow_credentials' => false,
+                'allow_headers' => true,
+                'expose_headers' => array(
+
+                ),
+                'allow_methods' => array(
+                    0 => 'GET',
+                    1 => 'POST',
+                    2 => 'PUT',
+                    3 => 'DELETE',
+                    4 => 'OPTIONS',
+                ),
+                'max_age' => 3600,
+                'hosts' => array(
+
+                ),
+                'origin_regex' => false,
+                'forced_allow_origin_value' => NULL,
+            ),
+            'nelmio_cors.cors_listener.class' => 'Nelmio\\CorsBundle\\EventListener\\CorsListener',
+            'nelmio_cors.options_resolver.class' => 'Nelmio\\CorsBundle\\Options\\Resolver',
+            'nelmio_cors.options_provider.config.class' => 'Nelmio\\CorsBundle\\Options\\ConfigProvider',
+            'doctrine_mongodb.odm.connection.class' => 'Doctrine\\MongoDB\\Connection',
+            'doctrine_mongodb.odm.configuration.class' => 'Doctrine\\ODM\\MongoDB\\Configuration',
+            'doctrine_mongodb.odm.document_manager.class' => 'Doctrine\\ODM\\MongoDB\\DocumentManager',
+            'doctrine_mongodb.odm.manager_configurator.class' => 'Doctrine\\Bundle\\MongoDBBundle\\ManagerConfigurator',
+            'doctrine_mongodb.odm.logger.class' => 'Doctrine\\Bundle\\MongoDBBundle\\Logger\\Logger',
+            'doctrine_mongodb.odm.logger.aggregate.class' => 'Doctrine\\Bundle\\MongoDBBundle\\Logger\\AggregateLogger',
+            'doctrine_mongodb.odm.data_collector.standard.class' => 'Doctrine\\Bundle\\MongoDBBundle\\DataCollector\\StandardDataCollector',
+            'doctrine_mongodb.odm.data_collector.pretty.class' => 'Doctrine\\Bundle\\MongoDBBundle\\DataCollector\\PrettyDataCollector',
+            'doctrine_mongodb.odm.event_manager.class' => 'Symfony\\Bridge\\Doctrine\\ContainerAwareEventManager',
+            'doctrine_odm.mongodb.validator_initializer.class' => 'Symfony\\Bridge\\Doctrine\\Validator\\DoctrineInitializer',
+            'doctrine_odm.mongodb.validator.unique.class' => 'Symfony\\Bridge\\Doctrine\\Validator\\Constraints\\UniqueEntityValidator',
+            'doctrine_mongodb.odm.class' => 'Doctrine\\Bundle\\MongoDBBundle\\ManagerRegistry',
+            'doctrine_mongodb.odm.security.user.provider.class' => 'Symfony\\Bridge\\Doctrine\\Security\\User\\EntityUserProvider',
+            'doctrine_mongodb.odm.proxy_cache_warmer.class' => 'Doctrine\\Bundle\\MongoDBBundle\\CacheWarmer\\ProxyCacheWarmer',
+            'doctrine_mongodb.odm.hydrator_cache_warmer.class' => 'Doctrine\\Bundle\\MongoDBBundle\\CacheWarmer\\HydratorCacheWarmer',
+            'doctrine_mongodb.odm.persistent_collection_cache_warmer.class' => 'Doctrine\\Bundle\\MongoDBBundle\\CacheWarmer\\PersistentCollectionCacheWarmer',
+            'doctrine_mongodb.odm.cache.array.class' => 'Doctrine\\Common\\Cache\\ArrayCache',
+            'doctrine_mongodb.odm.cache.apc.class' => 'Doctrine\\Common\\Cache\\ApcCache',
+            'doctrine_mongodb.odm.cache.apcu.class' => 'Doctrine\\Common\\Cache\\ApcuCache',
+            'doctrine_mongodb.odm.cache.memcache.class' => 'Doctrine\\Common\\Cache\\MemcacheCache',
+            'doctrine_mongodb.odm.cache.memcache_host' => 'localhost',
+            'doctrine_mongodb.odm.cache.memcache_port' => 11211,
+            'doctrine_mongodb.odm.cache.memcache_instance.class' => 'Memcache',
+            'doctrine_mongodb.odm.cache.xcache.class' => 'Doctrine\\Common\\Cache\\XcacheCache',
+            'doctrine_mongodb.odm.metadata.driver_chain.class' => 'Doctrine\\Common\\Persistence\\Mapping\\Driver\\MappingDriverChain',
+            'doctrine_mongodb.odm.metadata.annotation.class' => 'Doctrine\\ODM\\MongoDB\\Mapping\\Driver\\AnnotationDriver',
+            'doctrine_mongodb.odm.metadata.xml.class' => 'Doctrine\\Bundle\\MongoDBBundle\\Mapping\\Driver\\XmlDriver',
+            'doctrine_mongodb.odm.metadata.yml.class' => 'Doctrine\\Bundle\\MongoDBBundle\\Mapping\\Driver\\YamlDriver',
+            'doctrine_mongodb.odm.mapping_dirs' => array(
+
+            ),
+            'doctrine_mongodb.odm.xml_mapping_dirs' => array(
+
+            ),
+            'doctrine_mongodb.odm.yml_mapping_dirs' => array(
+
+            ),
+            'doctrine_mongodb.odm.document_dirs' => array(
+
+            ),
+            'doctrine_mongodb.odm.fixtures_dirs' => array(
+
+            ),
+            'doctrine_mongodb.odm.logger.batch_insert_threshold' => 4,
+            'doctrine_mongodb.odm.listeners.resolve_target_document.class' => 'Doctrine\\ODM\\MongoDB\\Tools\\ResolveTargetDocumentListener',
+            'doctrine_mongodb.odm.default_connection' => 'default',
+            'doctrine_mongodb.odm.default_document_manager' => 'default',
+            'doctrine_mongodb.odm.proxy_namespace' => 'MongoDBODMProxies',
+            'doctrine_mongodb.odm.proxy_dir' => (__DIR__.'/doctrine/odm/mongodb/Proxies'),
+            'doctrine_mongodb.odm.auto_generate_proxy_classes' => 0,
+            'doctrine_mongodb.odm.hydrator_namespace' => 'Hydrators',
+            'doctrine_mongodb.odm.hydrator_dir' => (__DIR__.'/doctrine/odm/mongodb/Hydrators'),
+            'doctrine_mongodb.odm.auto_generate_hydrator_classes' => 0,
+            'doctrine_mongodb.odm.default_commit_options' => array(
+
+            ),
+            'doctrine_mongodb.odm.persistent_collection_dir' => (__DIR__.'/doctrine/odm/mongodb/PersistentCollections'),
+            'doctrine_mongodb.odm.persistent_collection_namespace' => 'PersistentCollections',
+            'doctrine_mongodb.odm.auto_generate_persistent_collection_classes' => 0,
+            'doctrine_mongodb.odm.fixture_loader' => 'Symfony\\Bridge\\Doctrine\\DataFixtures\\ContainerAwareLoader',
+            'doctrine_mongodb.odm.connections' => array(
+                'default' => 'doctrine_mongodb.odm.default_connection',
+            ),
+            'doctrine_mongodb.odm.document_managers' => array(
+                'default' => 'doctrine_mongodb.odm.default_document_manager',
+            ),
             'web_profiler.debug_toolbar.position' => 'bottom',
             'web_profiler.debug_toolbar.intercept_redirects' => false,
             'web_profiler.debug_toolbar.mode' => 2,
@@ -3835,6 +4963,10 @@ class appDevDebugProjectContainer extends Container
                     0 => 'dump',
                     1 => '@Debug/Profiler/dump.html.twig',
                 ),
+                'doctrine_mongodb.odm.data_collector.pretty' => array(
+                    0 => 'mongodb',
+                    1 => '@DoctrineMongoDB/Collector/mongodb.html.twig',
+                ),
                 'data_collector.config' => array(
                     0 => 'config',
                     1 => '@WebProfiler/Collector/config.html.twig',
@@ -3866,7 +4998,20 @@ class appDevDebugProjectContainer extends Container
                 22 => 'doctrine.query_sql_command',
                 23 => 'doctrine.schema_update_command',
                 24 => 'doctrine.schema_validate_command',
-                25 => 'sensio_distribution.security_checker.command',
+                25 => 'doctrine\\bundle\\mongodbbundle\\command\\clearmetadatacachedoctrineodmcommand',
+                26 => 'doctrine\\bundle\\mongodbbundle\\command\\createschemadoctrineodmcommand',
+                27 => 'doctrine\\bundle\\mongodbbundle\\command\\dropschemadoctrineodmcommand',
+                28 => 'doctrine\\bundle\\mongodbbundle\\command\\generatedocumentsdoctrineodmcommand',
+                29 => 'doctrine\\bundle\\mongodbbundle\\command\\generatehydratorsdoctrineodmcommand',
+                30 => 'doctrine\\bundle\\mongodbbundle\\command\\generateproxiesdoctrineodmcommand',
+                31 => 'doctrine\\bundle\\mongodbbundle\\command\\generaterepositoriesdoctrineodmcommand',
+                32 => 'doctrine\\bundle\\mongodbbundle\\command\\infodoctrineodmcommand',
+                33 => 'doctrine\\bundle\\mongodbbundle\\command\\loaddatafixturesdoctrineodmcommand',
+                34 => 'doctrine\\bundle\\mongodbbundle\\command\\querydoctrineodmcommand',
+                35 => 'doctrine\\bundle\\mongodbbundle\\command\\sharddoctrineodmcommand',
+                36 => 'doctrine\\bundle\\mongodbbundle\\command\\tailcursordoctrineodmcommand',
+                37 => 'doctrine\\bundle\\mongodbbundle\\command\\updateschemadoctrineodmcommand',
+                38 => 'sensio_distribution.security_checker.command',
             ),
         );
     }
