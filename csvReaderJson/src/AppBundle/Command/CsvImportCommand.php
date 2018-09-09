@@ -138,6 +138,10 @@ class CsvImportCommand extends ContainerAwareCommand
             $finder->files()->in($this->csv_directory)->name('*.csv')->exclude('csvRead');
             $fileSystem = new Filesystem();
 
+            if(!($fileSystem->exists($this->csv_directory.'csvRead'))){
+                $fileSystem->mkdir($this->csv_directory.'csvRead');
+            }
+
             $encoders = array(new JsonEncoder());
             $normalizers = array(new ObjectNormalizer());
             $serializer = new Serializer($normalizers, $encoders);
