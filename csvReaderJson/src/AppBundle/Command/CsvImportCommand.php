@@ -135,7 +135,7 @@ class CsvImportCommand extends ContainerAwareCommand
             $io = new SymfonyStyle($input, $output);
 
             $finder = new Finder();
-            $finder->files()->in($this->csv_directory)->name('*.csv');
+            $finder->files()->in($this->csv_directory)->name('*.csv')->exclude('csvRead');
             $fileSystem = new Filesystem();
 
             $encoders = array(new JsonEncoder());

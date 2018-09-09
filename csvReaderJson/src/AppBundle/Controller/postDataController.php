@@ -54,7 +54,7 @@ class postDataController extends FOSRestController
             curl_setopt($conexion, CURLOPT_POSTFIELDS,$envio);
 
             // --- Cabecera incluyendo la longitud de los datos de envio.
-            curl_setopt($conexion, CURLOPT_HTTPHEADER,array('Content-Type: application/json', 'Content-Length: '.strlen($envio)));
+            curl_setopt($conexion, CURLOPT_HTTPHEADER,array('Content-Type: application/json', 'Content-Length: '.strlen($envio),'company:'.(getenv('COMPANY'))));
 
             // --- Petición POST.
             curl_setopt($conexion, CURLOPT_POST, 1);
