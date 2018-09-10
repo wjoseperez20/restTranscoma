@@ -11,32 +11,31 @@ namespace AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-/* importacion de la fabrica*/
+
+/* Factory import */
 use AppBundle\Factory\LoggerFactory;
 use AppBundle\Factory\DotenvFactory;
 
 /**
- * Class bashController
+ * Class BashController
  * @package AppBundle\Controller
  */
 class BashController extends Controller
 {
-	/**
-	 * Constantes para esteblecer parametros de los loggers
-	 */
+
 	const CLASS_NAME = BashController::class;
 
 	/**
 	 * @return Response
-	 * @Route("ejecutar")
+	 * @Route("execute")
 	 * @throws \Exception
-	 * Funcion que ejecuta el .sh desde el navegador
+	 * This run the .sh from the browser
 	 */
-	public function ejecutarBashAction()
+	public function runBashAction()
 	{
         $dotenv = DotenvFactory::getDotEnv();
-//        require './';
-        /*indicando el archivo .env mediante ruta absoluta*/
+
+        /*indicating the ,env file using absolute path*/
         $dotenv->load(__DIR__.'/../../../.env');
         $log_directory= getenv('LOG_DIRECTORY');
         $logger = LoggerFactory::getLogger(self::CLASS_NAME);
@@ -45,8 +44,8 @@ class BashController extends Controller
 
 		try
 		{
-			$mensaje= system('./../csvReaderDaemon.sh') . "\n";
-			return new Response($mensaje);
+			$message= system('./../csvReaderDaemon.sh') . "\n";
+			return new Response($message);
 		}
 		catch (\RuntimeException $ee)
 		{
