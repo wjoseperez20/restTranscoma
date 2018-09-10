@@ -197,7 +197,7 @@ class CsvImportCommand extends ContainerAwareCommand
 
                 $jsonContent = $serializer->serialize($duaImport, 'json');//
                 $this->send_post->requestPostAction($jsonContent);
-                $output->writeln(sprintf("\033\143"));
+                $output->writeln(sprintf("\033\143". "\n"));
                 $output->writeln(sprintf("\033\143"));
                 $output->writeln(sprintf('Processing file reading Csv'));
                 $io->progressAdvance();

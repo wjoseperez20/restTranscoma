@@ -17,10 +17,10 @@ use FOS\RestBundle\View\View;
 use AppBundle\Factory\LoggerFactory;
 use AppBundle\Factory\DotenvFactory;
 
-class postDataController extends FOSRestController
+class PostDataController extends FOSRestController
 {
 
-    const CLASS_NAME = postDataController::class;
+    const CLASS_NAME = PostDataController::class;
 
     /**
      * Make a post request to a specific url with the json parameter

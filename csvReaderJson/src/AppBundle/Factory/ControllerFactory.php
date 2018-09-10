@@ -9,7 +9,7 @@
 namespace AppBundle\Factory;
 
 
-use AppBundle\Controller\postDataController;
+use AppBundle\Controller\PostDataController;
 
 class ControllerFactory
 {
@@ -19,6 +19,6 @@ class ControllerFactory
      */
     public static function getPostDataController()
     {
-        return new postDataController();
+        return new PostDataController();
     }
 }
