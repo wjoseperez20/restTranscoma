@@ -12,64 +12,58 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use FOS\RestBundle\Controller\FOSRestController;
 use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\View\View;
-/* importacion de la fabrica*/
+
+/* Factory import*/
 use AppBundle\Factory\LoggerFactory;
 use AppBundle\Factory\DotenvFactory;
 
 class postDataController extends FOSRestController
 {
-    /**
-     * Constantes para esteblecer parametros de los loggers
-     */
+
     const CLASS_NAME = postDataController::class;
 
     /**
-     * realiza una peticion post hacia una url especificada, con el parametro en formato json
-     * @Route("verificar", name="verificar")
-     * @param string $envio
+     * Make a post request to a specific url with the json parameter
+     * @Route("verify", name="verify")
+     * @param string $send
      * @return View
      * @throws \Exception
      */
-    public function peticion_postAction($envio)
+    public function requestPostAction($send)
     {
         $dotenv = DotenvFactory::getDotEnv();
 
-        /*indicando el archivo .env mediante ruta absoluta*/
+        /*Indicating the .env file using an absolute path*/
         $dotenv->load(__DIR__.'/../../../.env');
         $logger = LoggerFactory::getLogger(self::CLASS_NAME);
         $handler = LoggerFactory::getStreamHandler(getenv('LOG_DIRECTORY'));
         $logger->pushHandler($handler);
 
-        /*Url de prueba para peticiones post*/
+        /*Test url for post requests*/
         $url = getenv('URL_POST');
-
         try
         {
-            // --- inicia la conexion inicializando el objeto curl
-            $conexion = curl_init();
+            // --- Start the connection initializing the curl object
+            $connection = curl_init();
+            curl_setopt($connection, CURLOPT_URL,$url);
 
-            curl_setopt($conexion, CURLOPT_URL,$url);
+            // --- Data is sent by POST.
+            curl_setopt($connection, CURLOPT_POSTFIELDS,$send);
 
-            // --- Datos que se van a enviar por POST.
-            curl_setopt($conexion, CURLOPT_POSTFIELDS,$envio);
+            // --- Header including the lenght of the senfing date.
+            curl_setopt($connection, CURLOPT_HTTPHEADER,array('Content-Type: application/json', 'Content-Length: '.strlen($send),'company:'.(getenv('COMPANY'))));
 
-            // --- Cabecera incluyendo la longitud de los datos de envio.
-            curl_setopt($conexion, CURLOPT_HTTPHEADER,array('Content-Type: application/json', 'Content-Length: '.strlen($envio),'company:'.(getenv('COMPANY'))));
+            // --- POST request.
+            curl_setopt($connection, CURLOPT_POST, 1);
 
-            // --- Petición POST.
-            curl_setopt($conexion, CURLOPT_POST, 1);
+            // --- HTTPGET to false because its a GET request.
+            curl_setopt($connection, CURLOPT_HTTPGET, FALSE);
 
-            // --- HTTPGET a false porque no se trata de una petición GET.
-            curl_setopt($conexion, CURLOPT_HTTPGET, FALSE);
-
-            // -- HEADER a false.
-            curl_setopt($conexion, CURLOPT_HEADER, FALSE);
-
-            $respuesta=curl_exec($conexion);
-
-            curl_close($conexion);
-
-            return new View($respuesta,Response::HTTP_OK);
+            // -- HEADER to false.
+            curl_setopt($connection, CURLOPT_HEADER, FALSE);
+            $response=curl_exec($connection);
+            curl_close($connection);
+            return new View($response,Response::HTTP_OK);
         }
         catch (\Exception $e)
         {
