@@ -13,7 +13,7 @@ use Symfony\Component\Dotenv\Dotenv;
 class DotenvFactory
 {
     /**
-     * Returna la instancia de la carga de las variables de entorno
+     * Returns the instance of the enviroment variables
      * @return Dotenv
      */
     public static function getDotEnv()

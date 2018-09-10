@@ -14,7 +14,7 @@ use Monolog\Logger;
 abstract class LoggerFactory
 {
     /**
-     * retorna la instancia del Logger indicando el nombre del canal
+     * returns the instance of the logger indicating the channel name
      * @param $nameChannel
      * @return Logger
      */
@@ -24,7 +24,7 @@ abstract class LoggerFactory
     }
 
     /**
-     * establece la ubicacion del log
+     * set the location the log file
      * @param $logDirectory
      * @return StreamHandler
      * @throws \Exception
