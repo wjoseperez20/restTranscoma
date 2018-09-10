@@ -15,18 +15,15 @@ use Symfony\Component\Finder\Finder;
 use Monolog\Logger;
 use AppBundle\Document\DuaImport;
 
-/* importacion de la fabrica*/
-
+/* Factory import*/
 use AppBundle\Factory\DotenvFactory;
 use AppBundle\Factory\LoggerFactory;
 use AppBundle\Factory\ControllerFactory;
 
-/* para serializar objetos*/
-
+/* to serialize objects*/
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-
 
 /**
  * Class CsvImportCommand
@@ -34,7 +31,7 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
  */
 class CsvImportCommand extends ContainerAwareCommand
 {
-
+    
     const CLASS_NAME = CsvImportCommand::class;
 
     /**
@@ -65,10 +62,10 @@ class CsvImportCommand extends ContainerAwareCommand
     /**
      * @var
      */
-    private $envio_post;
+    private $send_post;
 
     /**
-     * Metodo que establece o inicializa los campos para el registro de los logger
+     * To set or initialize the field for logging the logs
      * @throws \Exception
      */
     public function setLogger()
@@ -80,9 +77,8 @@ class CsvImportCommand extends ContainerAwareCommand
 
             $this->log_directory = getenv('LOG_DIRECTORY_COMMAND');
             $this->csv_directory = getenv('CSV_DIRECTORY');
-            $this->envio_post = ControllerFactory::getPostDataController();
+            $this->send_post = ControllerFactory::getPostDataController();
 
-            /*instanciando los loggers*/
             $this->logger = LoggerFactory::getLogger(self::CLASS_NAME);
             $this->handler = LoggerFactory::getStreamHandler($this->log_directory);
             $this->logger->pushHandler($this->handler);
@@ -108,7 +104,7 @@ class CsvImportCommand extends ContainerAwareCommand
     }
 
     /**
-     * Configure para definir el comando csv:import
+     * Configure to define the csv:import command
      * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
      * @throws \Exception
      */
@@ -131,7 +127,7 @@ class CsvImportCommand extends ContainerAwareCommand
         {
             $this->setLogger();
             $this->logger->info('This process was started in ' . CsvImportCommand::class);
-            $this->envio_post = ControllerFactory::getPostDataController();
+            $this->send_post = ControllerFactory::getPostDataController();
             $io = new SymfonyStyle($input, $output);
 
             $finder = new Finder();
@@ -154,53 +150,53 @@ class CsvImportCommand extends ContainerAwareCommand
                 $reader = Reader::createFromPath($file);
                 $results = $reader->fetchAssoc();
                 $io->progressStart(iterator_count($results));
-                $tiempo_inicial = microtime(true); //true es para que sea calculado en segundos
+                $start_time = microtime(true); //true es para que sea calculado en segundos
 
                 foreach ($results as $row)
                 {
                     $duaImport = (new DuaImport())
-                        ->setTrackingNumber($this->validarCadenaVacia($row[getenv('COLUMNA1')]))
-                        ->setConocimientoAereo($this->validarCadenaVacia($row[getenv('COLUMNA2')]))
-                        ->setReference($this->validarCadenaVacia($row[getenv('COLUMNA3')]))
-                        ->setBagLabel($this->validarCadenaVacia($row[getenv('COLUMNA4')]))
-                        ->setOrigin($this->validarCadenaVacia($row[getenv('COLUMNA5')]))
-                        ->setDestination($this->validarCadenaVacia($row[getenv('COLUMNA6')]))
-                        ->setSumaria($this->validarCadenaVacia($row[getenv('COLUMNA7')]))
+                        ->setTrackingNumber($this->validateEmptyString($row[getenv('COLUMNA1')]))
+                        ->setConocimientoAereo($this->validateEmptyString($row[getenv('COLUMNA2')]))
+                        ->setReference($this->validateEmptyString($row[getenv('COLUMNA3')]))
+                        ->setBagLabel($this->validateEmptyString($row[getenv('COLUMNA4')]))
+                        ->setOrigin($this->validateEmptyString($row[getenv('COLUMNA5')]))
+                        ->setDestination($this->validateEmptyString($row[getenv('COLUMNA6')]))
+                        ->setSumaria($this->validateEmptyString($row[getenv('COLUMNA7')]))
                         ->setPartida($row[getenv('COLUMNA8')])
-                        ->setInternalAccountNumber($this->validarCadenaVacia($row[getenv('COLUMNA9')]))
-                        ->setShipperName($this->validarCadenaVacia($row[getenv('COLUMNA10')]))
-                        ->setShipAdd1($this->validarCadenaVacia($row[getenv('COLUMNA11')]))
-                        ->setShipAdd2($this->validarCadenaVacia($row[getenv('COLUMNA12')]))
-                        ->setShipAdd3($this->validarCadenaVacia($row[getenv('COLUMNA13')]))
-                        ->setShipCity($this->validarCadenaVacia($row[getenv('COLUMNA14')]))
-                        ->setShipState($this->validarCadenaVacia($row[getenv('COLUMNA15')]))
+                        ->setInternalAccountNumber($this->validateEmptyString($row[getenv('COLUMNA9')]))
+                        ->setShipperName($this->validateEmptyString($row[getenv('COLUMNA10')]))
+                        ->setShipAdd1($this->validateEmptyString($row[getenv('COLUMNA11')]))
+                        ->setShipAdd2($this->validateEmptyString($row[getenv('COLUMNA12')]))
+                        ->setShipAdd3($this->validateEmptyString($row[getenv('COLUMNA13')]))
+                        ->setShipCity($this->validateEmptyString($row[getenv('COLUMNA14')]))
+                        ->setShipState($this->validateEmptyString($row[getenv('COLUMNA15')]))
                         ->setShipZip($row[getenv('COLUMNA16')])
-                        ->setShipCountryCode($this->validarCadenaVacia($row[getenv('COLUMNA17')]))
-                        ->setNif($this->validarCadenaVacia($row[getenv('COLUMNA18')]))
-                        ->setConsignee($this->validarCadenaVacia($row[getenv('COLUMNA19')]))
-                        ->setAddress1($this->validarCadenaVacia($row[getenv('COLUMNA20')]))
-                        ->setAddress2($this->validarCadenaVacia($row[getenv('COLUMNA21')]))
-                        ->setAddress3($this->validarCadenaVacia($row[getenv('COLUMNA22')]))
-                        ->setCity($this->validarCadenaVacia($row[getenv('COLUMNA23')]))
-                        ->setState($this->validarCadenaVacia($row[getenv('COLUMNA24')]))
+                        ->setShipCountryCode($this->validateEmptyString($row[getenv('COLUMNA17')]))
+                        ->setNif($this->validateEmptyString($row[getenv('COLUMNA18')]))
+                        ->setConsignee($this->validateEmptyString($row[getenv('COLUMNA19')]))
+                        ->setAddress1($this->validateEmptyString($row[getenv('COLUMNA20')]))
+                        ->setAddress2($this->validateEmptyString($row[getenv('COLUMNA21')]))
+                        ->setAddress3($this->validateEmptyString($row[getenv('COLUMNA22')]))
+                        ->setCity($this->validateEmptyString($row[getenv('COLUMNA23')]))
+                        ->setState($this->validateEmptyString($row[getenv('COLUMNA24')]))
                         ->setZip($row[getenv('COLUMNA25')])
-                        ->setCountryCode($this->validarCadenaVacia($row[getenv('COLUMNA26')]))
-                        ->setEmail($this->validarCadenaVacia($row[getenv('COLUMNA27')]))
-                        ->setPhone($this->validarCadenaVacia($row[getenv('COLUMNA28')]))
+                        ->setCountryCode($this->validateEmptyString($row[getenv('COLUMNA26')]))
+                        ->setEmail($this->validateEmptyString($row[getenv('COLUMNA27')]))
+                        ->setPhone($this->validateEmptyString($row[getenv('COLUMNA28')]))
                         ->setPieces($row[getenv('COLUMNA29')])
                         ->setTotalWeight($row[getenv('COLUMNA30')])
-                        ->setWeightUOM($this->validarCadenaVacia($row[getenv('COLUMNA31')]))
-                        ->setTotalValue($this->validarCadenaVacia($row[getenv('COLUMNA32')]))
-                        ->setCurrency($this->validarCadenaVacia($row[getenv('COLUMNA33')]))
-                        ->setIncoterms($this->validarCadenaVacia($row[getenv('COLUMNA34')]))
-                        ->setService($this->validarCadenaVacia($row[getenv('COLUMNA35')]))
-                        ->setItemDescription($this->validarCadenaVacia($row[getenv('COLUMNA36')]))
+                        ->setWeightUOM($this->validateEmptyString($row[getenv('COLUMNA31')]))
+                        ->setTotalValue($this->validateEmptyString($row[getenv('COLUMNA32')]))
+                        ->setCurrency($this->validateEmptyString($row[getenv('COLUMNA33')]))
+                        ->setIncoterms($this->validateEmptyString($row[getenv('COLUMNA34')]))
+                        ->setService($this->validateEmptyString($row[getenv('COLUMNA35')]))
+                        ->setItemDescription($this->validateEmptyString($row[getenv('COLUMNA36')]))
                         ->setItemHsCode($row[getenv('COLUMNA37')])
                         ->setItemQuantity($row[getenv('COLUMNA38')])
                         ->setItemValue($row[getenv('COLUMNA39')]);
 
                 $jsonContent = $serializer->serialize($duaImport, 'json');//
-                $this->envio_post->peticion_postAction($jsonContent);
+                $this->send_post->requestPostAction($jsonContent);
                 $output->writeln(sprintf("\033\143"));
                 $output->writeln(sprintf("\033\143"));
                 $output->writeln(sprintf('Processing file reading Csv'));
@@ -213,10 +209,10 @@ class CsvImportCommand extends ContainerAwareCommand
             }
             $io->progressFinish();
             $io->success('Command Executed with Success!');
-            $tiempo_final = microtime(true);
-            $tiempo_transcurrido = $tiempo_final - $tiempo_inicial;
-            $tiempo_transcurrido_min = $tiempo_transcurrido / 60;
-            $this->logger->info('Success : Reading time : ' . $tiempo_transcurrido_min . ' min. into CsvImportCommand::insertAction');
+            $end_time = microtime(true);
+            $elapsed_time = $end_time - $start_time;
+            $elapsed_time_min = $elapsed_time / 60;
+            $this->logger->info('Success : Reading time : ' . $elapsed_time_min . ' min. into CsvImportCommand::insertAction');
         }
         catch (\Exception $e)
         {
@@ -230,20 +226,20 @@ class CsvImportCommand extends ContainerAwareCommand
     }
 
     /**
-     * Valida si el valor dentro del documento es vacio, escribe null,
-     * de lo contrario retorna su valor
-     * @param $valor
+     * Validates if the value inside the document is empty, write nuul,
+     * otherwise returns its value
+     * @param $value
      * @return string
      * @throws \Exception
      */
-    public function validarCadenaVacia($valor)
+    public function validateEmptyString($value)
     {
         try
         {
-            if (trim($valor) == '')
+            if (trim($value) == '')
                 return 'NULL';
             else
-                return $valor;
+                return $value;
         }
         catch (\Exception $e)
         {
