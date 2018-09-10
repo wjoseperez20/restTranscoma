@@ -147,71 +147,80 @@ class CsvImportCommand extends ContainerAwareCommand
 
                     $io->title('Reading .csv ...');
                     $postalDua = null;
-                    $this->logger->info('Reading ' . $file->getFilename() . 'file');
+                    $this->logger->info('Reading ' . $file->getFilename() .' file');
                     $reader = Reader::createFromPath($file);
                     $results = $reader->fetchAssoc();
                     $io->progressStart(iterator_count($results));
                     $start_time = microtime(true); //true is in seconds
-
+                    $pos=0;// pos =0 to indicate the first row, -1 to indicate that the document could not be read
                     foreach ($results as $row) {
-
-                        $duaImport = (new DuaImport())
-                            ->setTrackingNumber($this->validateEmptyString($row[getenv('COLUMNA1')]))
-                            ->setConocimientoAereo($this->validateEmptyString($row[getenv('COLUMNA2')]))
-                            ->setReference($this->validateEmptyString($row[getenv('COLUMNA3')]))
-                            ->setBagLabel($this->validateEmptyString($row[getenv('COLUMNA4')]))
-                            ->setOrigin($this->validateEmptyString($row[getenv('COLUMNA5')]))
-                            ->setDestination($this->validateEmptyString($row[getenv('COLUMNA6')]))
-                            ->setSumaria($this->validateEmptyString($row[getenv('COLUMNA7')]))
-                            ->setPartida($row[getenv('COLUMNA8')])
-                            ->setInternalAccountNumber($this->validateEmptyString($row[getenv('COLUMNA9')]))
-                            ->setShipperName($this->validateEmptyString($row[getenv('COLUMNA10')]))
-                            ->setShipAdd1($this->validateEmptyString($row[getenv('COLUMNA11')]))
-                            ->setShipAdd2($this->validateEmptyString($row[getenv('COLUMNA12')]))
-                            ->setShipAdd3($this->validateEmptyString($row[getenv('COLUMNA13')]))
-                            ->setShipCity($this->validateEmptyString($row[getenv('COLUMNA14')]))
-                            ->setShipState($this->validateEmptyString($row[getenv('COLUMNA15')]))
-                            ->setShipZip($row[getenv('COLUMNA16')])
-                            ->setShipCountryCode($this->validateEmptyString($row[getenv('COLUMNA17')]))
-                            ->setNif($this->validateEmptyString($row[getenv('COLUMNA18')]))
-                            ->setConsignee($this->validateEmptyString($row[getenv('COLUMNA19')]))
-                            ->setAddress1($this->validateEmptyString($row[getenv('COLUMNA20')]))
-                            ->setAddress2($this->validateEmptyString($row[getenv('COLUMNA21')]))
-                            ->setAddress3($this->validateEmptyString($row[getenv('COLUMNA22')]))
-                            ->setCity($this->validateEmptyString($row[getenv('COLUMNA23')]))
-                            ->setState($this->validateEmptyString($row[getenv('COLUMNA24')]))
-                            ->setZip($row[getenv('COLUMNA25')])
-                            ->setCountryCode($this->validateEmptyString($row[getenv('COLUMNA26')]))
-                            ->setEmail($this->validateEmptyString($row[getenv('COLUMNA27')]))
-                            ->setPhone($this->validateEmptyString($row[getenv('COLUMNA28')]))
-                            ->setPieces($row[getenv('COLUMNA29')])
-                            ->setTotalWeight($row[getenv('COLUMNA30')])
-                            ->setWeightUOM($this->validateEmptyString($row[getenv('COLUMNA31')]))
-                            ->setTotalValue($this->validateEmptyString($row[getenv('COLUMNA32')]))
-                            ->setCurrency($this->validateEmptyString($row[getenv('COLUMNA33')]))
-                            ->setIncoterms($this->validateEmptyString($row[getenv('COLUMNA34')]))
-                            ->setService($this->validateEmptyString($row[getenv('COLUMNA35')]))
-                            ->setItemDescription($this->validateEmptyString($row[getenv('COLUMNA36')]))
-                            ->setItemHsCode($row[getenv('COLUMNA37')])
-                            ->setItemQuantity($row[getenv('COLUMNA38')])
-                            ->setItemValue($row[getenv('COLUMNA39')]);
-                        $jsonContent = $serializer->serialize($duaImport, 'json');
-                        $this->send_post->requestPostAction($jsonContent);
-                        $output->writeln(sprintf("\033\143" . "\n"));
-                        $output->writeln(sprintf('Processing file reading Csv'));
-                        $io->progressAdvance();
+                            if ((count($row) >= getenv('CABECERAS'))) {
+                                $duaImport = (new DuaImport())
+                                    ->setTrackingNumber($this->validateEmptyString($row[getenv('COLUMNA1')]))
+                                    ->setConocimientoAereo($this->validateEmptyString($row[getenv('COLUMNA2')]))
+                                    ->setReference($this->validateEmptyString($row[getenv('COLUMNA3')]))
+                                    ->setBagLabel($this->validateEmptyString($row[getenv('COLUMNA4')]))
+                                    ->setOrigin($this->validateEmptyString($row[getenv('COLUMNA5')]))
+                                    ->setDestination($this->validateEmptyString($row[getenv('COLUMNA6')]))
+                                    ->setSumaria($this->validateEmptyString($row[getenv('COLUMNA7')]))
+                                    ->setPartida($row[getenv('COLUMNA8')])
+                                    ->setInternalAccountNumber($this->validateEmptyString($row[getenv('COLUMNA9')]))
+                                    ->setShipperName($this->validateEmptyString($row[getenv('COLUMNA10')]))
+                                    ->setShipAdd1($this->validateEmptyString($row[getenv('COLUMNA11')]))
+                                    ->setShipAdd2($this->validateEmptyString($row[getenv('COLUMNA12')]))
+                                    ->setShipAdd3($this->validateEmptyString($row[getenv('COLUMNA13')]))
+                                    ->setShipCity($this->validateEmptyString($row[getenv('COLUMNA14')]))
+                                    ->setShipState($this->validateEmptyString($row[getenv('COLUMNA15')]))
+                                    ->setShipZip($row[getenv('COLUMNA16')])
+                                    ->setShipCountryCode($this->validateEmptyString($row[getenv('COLUMNA17')]))
+                                    ->setNif($this->validateEmptyString($row[getenv('COLUMNA18')]))
+                                    ->setConsignee($this->validateEmptyString($row[getenv('COLUMNA19')]))
+                                    ->setAddress1($this->validateEmptyString($row[getenv('COLUMNA20')]))
+                                    ->setAddress2($this->validateEmptyString($row[getenv('COLUMNA21')]))
+                                    ->setAddress3($this->validateEmptyString($row[getenv('COLUMNA22')]))
+                                    ->setCity($this->validateEmptyString($row[getenv('COLUMNA23')]))
+                                    ->setState($this->validateEmptyString($row[getenv('COLUMNA24')]))
+                                    ->setZip($row[getenv('COLUMNA25')])
+                                    ->setCountryCode($this->validateEmptyString($row[getenv('COLUMNA26')]))
+                                    ->setEmail($this->validateEmptyString($row[getenv('COLUMNA27')]))
+                                    ->setPhone($this->validateEmptyString($row[getenv('COLUMNA28')]))
+                                    ->setPieces($row[getenv('COLUMNA29')])
+                                    ->setTotalWeight($row[getenv('COLUMNA30')])
+                                    ->setWeightUOM($this->validateEmptyString($row[getenv('COLUMNA31')]))
+                                    ->setTotalValue($this->validateEmptyString($row[getenv('COLUMNA32')]))
+                                    ->setCurrency($this->validateEmptyString($row[getenv('COLUMNA33')]))
+                                    ->setIncoterms($this->validateEmptyString($row[getenv('COLUMNA34')]))
+                                    ->setService($this->validateEmptyString($row[getenv('COLUMNA35')]))
+                                    ->setItemDescription($this->validateEmptyString($row[getenv('COLUMNA36')]))
+                                    ->setItemHsCode($row[getenv('COLUMNA37')])
+                                    ->setItemQuantity($row[getenv('COLUMNA38')])
+                                    ->setItemValue($row[getenv('COLUMNA39')]);
+                                $jsonContent = $serializer->serialize($duaImport, 'json');
+                                $this->send_post->requestPostAction($jsonContent);
+                                $output->writeln(sprintf("\033\143" ));
+                                $output->writeln(sprintf('Processing file reading Csv'."\n"));
+                                $io->progressAdvance();
+                                $pos++;
+                            } elseif ((count($row) < 39) && $pos === 0) {
+                                $pos = -1; // if not is complete the headers from document
+                            }
+                        }
+                    if($pos!=-1) {
+                        $this->logger->info('The file ' . $file->getFilename() . ' was read successfully');
+                        $fileSystem->copy(($this->csv_directory) . $file->getFilename(), ($this->csv_directory . ('csvRead/')) . $file->getFilename());
+                        $fileSystem->remove(($this->csv_directory) . $file->getFilename());
+                        $io->progressFinish();
+                        $io->success('Command Executed with Success!');
+                        $end_time = microtime(true);
+                        $elapsed_time = $end_time - $start_time;
+                        $elapsed_time_min = $elapsed_time / 60;
+                        $this->logger->info('Success : Reading time : ' . $elapsed_time_min . ' min. into CsvImportCommand::insertAction');
                     }
-
-                    $this->logger->info('The file ' . $file->getFilename() . ' was read successfully');
-                    $fileSystem->copy(($this->csv_directory) . $file->getFilename(), ($this->csv_directory . ('csvRead/')) . $file->getFilename());
-                    $fileSystem->remove(($this->csv_directory) . $file->getFilename());
-
-                    $io->progressFinish();
-                    $io->success('Command Executed with Success!');
-                    $end_time = microtime(true);
-                    $elapsed_time = $end_time - $start_time;
-                    $elapsed_time_min = $elapsed_time / 60;
-                    $this->logger->info('Success : Reading time : ' . $elapsed_time_min . ' min. into CsvImportCommand::insertAction');
+                    else {
+                        $output->writeln("\n");
+                        $io->note('The document ' . $file->getFilename() . ' reading can not be processed. Check if the headers are complete.');
+                        $this->logger->info('The document ' . $file->getFilename() . ' reading can not be processed. Check if the headers are complete.');
+                    }
                 }
                 elseif (file_get_contents($file) !== false)
                 {
