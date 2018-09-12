@@ -1,0 +1,80 @@
+
+column1: TrackingNumber
+
+column2: ConocimientoAereo
+
+column3: Reference
+
+column4: BagLabel
+
+column5: Origin
+
+column6: Destination
+
+column7: Sumaria
+
+column8: Partida
+
+column9: InternalAccountNumber
+
+column10: ShipperName
+
+column11: ShipAdd1
+
+column12: ShipAdd2
+
+column13: ShipAdd3
+
+column14: ShipCity
+
+column15: ShipState
+
+column16: ShipZip
+
+column17: ShipContryCode
+
+column18: NIF
+
+column19: Consignee
+
+column20: Address1
+
+column21: Address2
+
+column22: Address3
+
+column23: City
+
+column24: State
+
+column25: Zip
+
+column26: CountryCode
+
+column27: Email
+
+column28: Phone
+
+column29: Pieces
+
+column30: TotalWeight
+
+column31: WeightUOM
+
+column32: TotalValue
+
+column33: Currency
+
+column34: Incoterms
+
+column35: Service
+
+column36: ItemDescription
+
+column37: ItemHSCode
+
+column38: ItemQuantity
+
+column39: ItemValue
+
+
