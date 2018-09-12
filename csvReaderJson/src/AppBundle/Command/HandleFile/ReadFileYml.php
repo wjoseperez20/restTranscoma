@@ -46,8 +46,7 @@ class ReadFileYml
         try
         {
             $dotenv = DotenvFactory::getDotEnv();
-            $dotenv->load(__DIR__ . '/../../../.env');
-
+            $dotenv->load(__DIR__ . '/../../../../.env');
             $this->log_directory = getenv('LOG_DIRECTORY_COMMAND');
             $this->logger = LoggerFactory::getLogger(self::CLASS_NAME);
             $this->handler = LoggerFactory::getStreamHandler($this->log_directory);
@@ -68,6 +67,7 @@ class ReadFileYml
      */
     public function getColumn($column)
     {
+        $this->setLogger();
         try{
             $value =Yaml::parseFile('./../config_document.yml');
             return($value[$column]);
