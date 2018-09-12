@@ -64,6 +64,7 @@ class ReadFileYml
      * indicate the column name and its return your value.
      * @param $column
      * @return the given value from the column param
+     * @throws \Exception
      */
     public function getColumn($column)
     {
@@ -72,7 +73,7 @@ class ReadFileYml
             $value =Yaml::parseFile('./../config_document.yml');
             return($value[$column]);
         }
-        catch (Exception\ParseException $e)
+        catch (\Exception $e)
         {
             $this->logger->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()} with the param {$column}");
             throw $e;
