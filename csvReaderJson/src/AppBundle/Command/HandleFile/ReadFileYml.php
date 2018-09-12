@@ -70,7 +70,7 @@ class ReadFileYml
     {
         $this->setLogger();
         try{
-            $value =Yaml::parseFile('./../config_document.yml');
+            $value =Yaml::parseFile(__DIR__.'/../../../../config_document.yml');
             return($value[$column]);
         }
         catch (\Exception $e)
