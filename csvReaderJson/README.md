@@ -74,6 +74,7 @@ https://vabadus.es/blog/crear-tareas-programadas-en-symfony2-mediante-comandos-d
 
 #### Notes:
 
-Inside the file config_document you can find the name of the headers of the original documents (DuaPartidas). Inside
+Inside the file parameters.yml you can find the name of the headers of the original documents (DuaPartidas). Inside
 the folder Handle File is the function that performs the reading, once read, this returns an array, and this function 
-seeks the key and returns its value. In this case the key is the column and the value is the name of headers.
+seeks the key and returns its value. In this case the key is the column and the value is the name of headers. In addition 
+you will find the directories of the loggers for command and controller.
