@@ -10,11 +10,9 @@ namespace AppBundle\Command\HandleFile;
 
 use Monolog\Logger;
 use Symfony\Component\Yaml\Yaml;
-use Symfony\Component\Yaml\Exception;
 
 /* Factory import */
 use AppBundle\Factory\LoggerFactory;
-use AppBundle\Factory\DotenvFactory;
 
 
 class ReadFileYml
@@ -45,9 +43,7 @@ class ReadFileYml
     {
         try
         {
-            $dotenv = DotenvFactory::getDotEnv();
-            $dotenv->load(__DIR__ . '/../../../../.env');
-            $this->log_directory = getenv('LOG_DIRECTORY_COMMAND');
+            $this->log_directory = $this->getColumn('log_directory_command');
             $this->logger = LoggerFactory::getLogger(self::CLASS_NAME);
             $this->handler = LoggerFactory::getStreamHandler($this->log_directory);
             $this->logger->pushHandler($this->handler);
@@ -70,7 +66,7 @@ class ReadFileYml
     {
         $this->setLogger();
         try{
-            $value =Yaml::parseFile(__DIR__.'/../../../../config_document.yml');
+            $value =Yaml::parseFile(__DIR__ . '/../../../../parameters.yml');
             $val = $value[$column];
             return $val;
         }
