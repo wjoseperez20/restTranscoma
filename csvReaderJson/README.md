@@ -54,11 +54,11 @@ Restart service on Ubuntu:
 
 Line used in cron tab test mode:
 
-$ * * * * * /home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReader/csvReaderDaemon.sh >> /home/maggie/Documentos/prueba.log 2>&1
+> $ * * * * * /home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReader/csvReaderDaemon.sh >> /home/maggie/Documentos/prueba.log 2>&1
 
 Each 10 minutes
 
-$> */10 * * * * /home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReader/csvReaderDaemon.sh >> /home/maggie/Documentos/prueba.log 2>&1
+> $ */10 * * * * /home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReader/csvReaderDaemon.sh >> /home/maggie/Documentos/prueba.log 2>&1
 
 REFERENCES:
  
@@ -71,3 +71,9 @@ https://www.cyberciti.biz/faq/howto-linux-unix-start-restart-cron/
 https://symfony.com/legacy/doc/more-with-symfony/1_4/es/13-leveraging-the-power-of-the-command-line
 
 https://vabadus.es/blog/crear-tareas-programadas-en-symfony2-mediante-comandos-de-consola
+
+#### Notes:
+
+Inside the file config_document you can find the name of the headers of the original documents (DuaPartidas). Inside
+the folder Handle File is the function that performs the reading, once read, this returns an array, and this function 
+seeks the key and returns its value. In this case the key is the column and the value is the name of headers.
