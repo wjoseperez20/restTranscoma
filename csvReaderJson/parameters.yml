@@ -80,4 +80,12 @@ column38: ItemQuantity
 
 column39: ItemValue
 
+# Location of log records into Controller folder
 
+log_directory_controller: var/logs/Controller/controllerCsvImport.log
+
+log_directory_command: var/logs/Command/commandCsvImport.log
+
+# Location of .csv Documents indicating your directory
+
+csv_directory: assets/
