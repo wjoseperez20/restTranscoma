@@ -71,7 +71,8 @@ class ReadFileYml
         $this->setLogger();
         try{
             $value =Yaml::parseFile(__DIR__.'/../../../../config_document.yml');
-            return($value[$column]);
+            $val = $value[$column];
+            return $val;
         }
         catch (\Exception $e)
         {
