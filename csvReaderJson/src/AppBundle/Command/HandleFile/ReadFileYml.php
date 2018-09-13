@@ -64,7 +64,7 @@ class ReadFileYml
      */
     public function getColumn($column)
     {
-        $this->setLogger();
+      //  $this->setLogger();
         try{
             $value =Yaml::parseFile(__DIR__ . '/../../../../parameters.yml');
             $val = $value[$column];
@@ -72,7 +72,7 @@ class ReadFileYml
         }
         catch (\Exception $e)
         {
-            $this->logger->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()} with the param {$column}");
+            //$this->logger->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()} with the param {$column}");
             throw $e;
         }
     }
