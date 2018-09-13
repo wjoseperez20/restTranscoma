@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /* Factory import */
 use AppBundle\Factory\LoggerFactory;
-use AppBundle\Factory\DotenvFactory;
+use AppBundle\Factory\HandleFileFactory;
 
 /**
  * Class BashController
@@ -33,15 +33,11 @@ class BashController extends Controller
 	 */
 	public function runBashAction()
 	{
-        $dotenv = DotenvFactory::getDotEnv();
-
-        /*indicating the ,env file using absolute path*/
-        $dotenv->load(__DIR__.'/../../../.env');
-        $log_directory= getenv('LOG_DIRECTORY');
+        $handle_file =HandleFileFactory::getReadFileYml();
+        $log_directory= $handle_file->getColumn('log_directory_controller');
         $logger = LoggerFactory::getLogger(self::CLASS_NAME);
         $handler = LoggerFactory::getStreamHandler($log_directory);
         $logger->pushHandler($handler);
-
 		try
 		{
 			$message= system('./../csvReaderDaemon.sh') . "\n";
