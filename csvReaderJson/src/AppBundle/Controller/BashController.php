@@ -11,6 +11,8 @@ namespace AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Reader;
 
 /* Factory import */
 use AppBundle\Factory\LoggerFactory;
@@ -54,4 +56,49 @@ class BashController extends Controller
 			return new Response("The script could not be executed ". $e, Response::HTTP_NOT_FOUND);
 		}
 	}
+
+    /**
+     * @Route("read")
+     * @throws \Exception
+     */
+    public function readExternalDocument()
+    {
+        try {
+//            $reader  = $this->get('phpoffice.spreadsheet')->createReader('Xlsx');
+//            $spreadsheet = $reader->load(__DIR__."/../../../assets/postalP.xlsx");
+//            $reader = new Reader\Xlsx();
+//            $spreadsheet= $reader->load(__DIR__."/../../../assets/postalP.xlsx");
+            $spreadsheet = IOFactory::load(__DIR__."/../../../assets/postalP.xlsx");
+            $data = [];
+            foreach ($spreadsheet->getWorksheetIterator() as $worksheet) {
+                $worksheetTitle = $worksheet->getTitle();
+                $data[$worksheetTitle] = [
+                    'columnNames' => [],
+                    'columnValues' => [],
+                ];
+                foreach ($worksheet->getRowIterator() as $row) {
+                    $rowIndex = $row->getRowIndex();
+                    if ($rowIndex > 2) {
+                        $data[$worksheetTitle]['columnValues'][$rowIndex] = [];
+                    }
+                    $cellIterator = $row->getCellIterator();
+                    $cellIterator->setIterateOnlyExistingCells(false); // Loop over all cells, even if it is not set
+                    foreach ($cellIterator as $cell) {
+                        if ($rowIndex === 2) {
+                            $data[$worksheetTitle]['columnNames'][] = $cell->getCalculatedValue();
+                        }
+                        if ($rowIndex > 2) {
+                            $data[$worksheetTitle]['columnValues'][$rowIndex][] = $cell->getCalculatedValue();
+                        }
+                    }
+                }
+            }
+
+            return $data;
+        }
+        catch (\Exception $exception)
+        {
+            throw $exception;
+        }
+    }
 }
