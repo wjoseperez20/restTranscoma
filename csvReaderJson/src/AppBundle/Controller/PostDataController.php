@@ -16,6 +16,7 @@ use FOS\RestBundle\View\View;
 /* Factory import*/
 use AppBundle\Factory\LoggerFactory;
 use AppBundle\Factory\DotenvFactory;
+use AppBundle\Factory\HandleFileFactory;
 
 class PostDataController extends FOSRestController
 {
@@ -33,10 +34,13 @@ class PostDataController extends FOSRestController
     {
         $dotenv = DotenvFactory::getDotEnv();
 
+        $handle_file =HandleFileFactory::getReadFileYml();
+        $log_directory= $handle_file->getColumn('log_directory_controller');
+
         /*Indicating the .env file using an absolute path*/
         $dotenv->load(__DIR__.'/../../../.env');
         $logger = LoggerFactory::getLogger(self::CLASS_NAME);
-        $handler = LoggerFactory::getStreamHandler(getenv('LOG_DIRECTORY'));
+        $handler = LoggerFactory::getStreamHandler($log_directory);
         $logger->pushHandler($handler);
 
         /*Test url for post requests*/
