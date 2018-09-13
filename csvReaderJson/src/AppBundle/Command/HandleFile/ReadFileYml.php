@@ -65,7 +65,8 @@ class ReadFileYml
     public function getColumn($column)
     {
       //  $this->setLogger();
-        try{
+        try
+        {
             $value =Yaml::parseFile(__DIR__ . '/../../../../parameters.yml');
             $val = $value[$column];
             return $val;
