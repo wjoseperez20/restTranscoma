@@ -35,25 +35,6 @@ class ReadFileYml
      */
     private $log_directory;
 
-    /**
-     * To set or initialize the field for logging the logs
-     * @throws \Exception
-     */
-    public function setLogger()
-    {
-        try
-        {
-            $this->log_directory = $this->getColumn('log_directory_command');
-            $this->logger = LoggerFactory::getLogger(self::CLASS_NAME);
-            $this->handler = LoggerFactory::getStreamHandler($this->log_directory);
-            $this->logger->pushHandler($this->handler);
-        }
-        catch (\Exception $e)
-        {
-            $this->logger->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()}");
-            throw $e;
-        }
-    }
 
     /**
      * This reads the file "config_document" to set the name of the columns from document, using the $column param, to
@@ -64,7 +45,6 @@ class ReadFileYml
      */
     public function getColumn($column)
     {
-      //  $this->setLogger();
         try
         {
             $value =Yaml::parseFile(__DIR__ . '/../../../../parameters.yml');
@@ -73,7 +53,7 @@ class ReadFileYml
         }
         catch (\Exception $e)
         {
-            //$this->logger->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()} with the param {$column}");
+            $this->logger->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()} with the param {$column}");
             throw $e;
         }
     }
