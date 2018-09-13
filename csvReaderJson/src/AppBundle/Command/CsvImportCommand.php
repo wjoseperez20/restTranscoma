@@ -2,8 +2,6 @@
 
 namespace AppBundle\Command;
 
-
-use AppBundle\Factory\HandleFileFactory;
 use Doctrine\ORM\EntityManagerInterface;
 
 use League\Csv\Reader;
@@ -19,6 +17,7 @@ use AppBundle\Document\DuaImport;
 /* Factory import*/
 use AppBundle\Factory\LoggerFactory;
 use AppBundle\Factory\ControllerFactory;
+use AppBundle\Factory\HandleFileFactory;
 
 /* to serialize objects*/
 use Symfony\Component\Serializer\Serializer;
