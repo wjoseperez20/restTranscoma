@@ -12,7 +12,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Monolog\Logger;
-use AppBundle\Document\DuaImport;
+use AppBundle\Models\DuaImport;
 
 /* Factory import*/
 use AppBundle\Factory\LoggerFactory;
