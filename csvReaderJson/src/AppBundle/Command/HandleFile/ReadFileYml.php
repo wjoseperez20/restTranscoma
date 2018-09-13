@@ -53,6 +53,10 @@ class ReadFileYml
         }
         catch (\Exception $e)
         {
+            $this->log_directory = $this->getColumn('log_directory_command');
+            $this->logger = LoggerFactory::getLogger(self::CLASS_NAME);
+            $this->handler = LoggerFactory::getStreamHandler($this->log_directory);
+            $this->logger->pushHandler($this->handler);
             $this->logger->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()} with the param {$column}");
             throw $e;
         }
