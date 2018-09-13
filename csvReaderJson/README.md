@@ -78,3 +78,20 @@ Inside the file parameters.yml you can find the name of the headers of the origi
 the folder Handle File is the function that performs the reading, once read, this returns an array, and this function 
 seeks the key and returns its value. In this case the key is the column and the value is the name of headers. In addition 
 you will find the directories of the loggers for command and controller.
+
+
+Hay que instalar la libreria de phpoffice/phpspreadsheet 
+Para ello tiene que estar instalado o habilitado lo siguiente
+
+* php_xml
+
+* php_zip se instala con  sudo apt-get install php7.1-zip
+
+* php_gd2 enabled (if not compiled in)
+
+* composer require phpoffice/phpspreadsheet
+
+
+Referencia :https://phpspreadsheet.readthedocs.io/en/develop/
+
+Nota: hay que reiniciar el servidor de apache y el de symfony una vez se haya instalado.
