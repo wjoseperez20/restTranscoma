@@ -139,19 +139,20 @@ class CsvImportCommand extends ContainerAwareCommand
     }
 
     /**
-     * this function searches all the files in csv format located inside assets,
-     * then calls the function (readDocument)
+     * this function searches all the files in csv format located inside assets folder,
+     * then calls the (readDocument) function
      * @param SymfonyStyle $io
      * @param OutputInterface $output
      * @throws \Exception
      */
-    public function finderDirectory( SymfonyStyle $io,OutputInterface $output)
+    public function finderDirectory(SymfonyStyle $io , OutputInterface $output)
     {
         try {
             $finder = new Finder();
             $finder->files()->in($this->csv_directory)->name('*.csv')->exclude('csvRead');
             $fileSystem = new Filesystem();
             $this->validateExistsDirectory($fileSystem);
+
             /*param1: normalizer / param2: encoder*/
             $serializer = new Serializer(array(new ObjectNormalizer()), array(new JsonEncoder()));
             $getCol = HandleFileFactory::getReadFileYml();
@@ -160,8 +161,8 @@ class CsvImportCommand extends ContainerAwareCommand
                 if (file_get_contents($file)) {
                     $this->readDocument($io, $output, $serializer, $getCol, $fileSystem, $file);
                 } elseif (file_get_contents($file) !== false) { //if empty file, remove it.
-                    $this->logger->info('The file ' . $file->getFilename() . ' is empty. Removing this empty file');
-                    $fileSystem->remove(($this->csv_directory) . $file->getFilename());
+                    $this->logger->info('The file ' . $file->getFilename().' is empty. Removing this empty file');
+                    $fileSystem->remove(($this->csv_directory).$file->getFilename());
                 }
             }
         }
@@ -189,11 +190,11 @@ class CsvImportCommand extends ContainerAwareCommand
         $reader = Reader::createFromPath($file);
         $results = $reader->fetchAssoc();
         $io->progressStart(iterator_count($results));
+        $qtyHeaders= (string)$getCol->getColumn('headers');
         $start_time = microtime(true); //true is in seconds
         $pos=0;// pos =0 to indicate the first row, -1 to indicate that the document could not be read
-
         foreach ($results as $row) {
-            if ((count($row) >= (string)$getCol->getColumn('headers'))) {
+            if ((count($row) >= $qtyHeaders)) {
                 $duaImport= $this->settersDuaImport($row, $getCol);
                 $jsonContent = $serializer->serialize($duaImport, 'json');
                 $this->send_post->requestPostAction($jsonContent);
@@ -201,7 +202,7 @@ class CsvImportCommand extends ContainerAwareCommand
                 $output->writeln(sprintf('Processing file reading Csv'."\n"));
                 $io->progressAdvance();
                 $pos++;
-            } elseif ((count($row) < 39) && $pos === 0) {
+            } elseif ((count($row) < $qtyHeaders) && $pos === 0) {
                 $pos = -1; // if not is complete the headers from document
             }
         }
@@ -221,6 +222,7 @@ class CsvImportCommand extends ContainerAwareCommand
             $this->logger->info('The document ' . $file->getFilename() . ' reading can not be processed. Check if the headers are complete.');
         }
     }
+
 
     /**
      * @param $row
