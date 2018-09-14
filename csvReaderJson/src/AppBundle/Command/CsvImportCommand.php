@@ -2,8 +2,6 @@
 
 namespace AppBundle\Command;
 
-
-use AppBundle\Factory\HandleFileFactory;
 use Doctrine\ORM\EntityManagerInterface;
 
 use League\Csv\Reader;
@@ -14,12 +12,12 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Monolog\Logger;
-use AppBundle\Document\DuaImport;
+use AppBundle\Models\DuaImport;
 
 /* Factory import*/
-use AppBundle\Factory\DotenvFactory;
 use AppBundle\Factory\LoggerFactory;
 use AppBundle\Factory\ControllerFactory;
+use AppBundle\Factory\HandleFileFactory;
 
 /* to serialize objects*/
 use Symfony\Component\Serializer\Serializer;
@@ -73,13 +71,10 @@ class CsvImportCommand extends ContainerAwareCommand
     {
         try
         {
-            $dotenv = DotenvFactory::getDotEnv();
-            $dotenv->load(__DIR__ . '/../../../.env');
-
-            $this->log_directory = getenv('LOG_DIRECTORY_COMMAND');
-            $this->csv_directory = getenv('CSV_DIRECTORY');
+            $handle_file =HandleFileFactory::getReadFileYml();
+            $this->log_directory = $handle_file->getColumn('log_directory_command');
+            $this->csv_directory=$handle_file->getColumn('csv_directory');
             $this->send_post = ControllerFactory::getPostDataController();
-
             $this->logger = LoggerFactory::getLogger(self::CLASS_NAME);
             $this->handler = LoggerFactory::getStreamHandler($this->log_directory);
             $this->logger->pushHandler($this->handler);
