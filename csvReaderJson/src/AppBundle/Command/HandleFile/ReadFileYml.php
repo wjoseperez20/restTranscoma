@@ -47,7 +47,7 @@ class ReadFileYml
     {
         try
         {
-            $value =Yaml::parseFile(__DIR__ . '/../../../../parameters.yml');
+            $value =Yaml::parseFile(__DIR__ . '/../../../../configDocumentParams.yml');
             $val = $value[$column];
             return $val;
         }
