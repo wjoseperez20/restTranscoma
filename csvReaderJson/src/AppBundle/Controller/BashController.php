@@ -58,16 +58,17 @@ class BashController extends Controller
 	}
 
     /**
+     * reading files in xls or xlsx formats
      * @Route("read")
      * @throws \Exception
      */
     public function readExternalDocument()
     {
         try {
-//            $reader  = $this->get('phpoffice.spreadsheet')->createReader('Xlsx');
-//            $spreadsheet = $reader->load(__DIR__."/../../../assets/postalP.xlsx");
-//            $reader = new Reader\Xlsx();
-//            $spreadsheet= $reader->load(__DIR__."/../../../assets/postalP.xlsx");
+//          $reader  = $this->get('phpoffice.spreadsheet')->createReader('Xlsx');
+//          $spreadsheet = $reader->load(__DIR__."/../../../assets/postalP.xlsx");
+//          $reader = new Reader\Xlsx();
+//          $spreadsheet= $reader->load(__DIR__."/../../../assets/postalP.xlsx");
             $spreadsheet = IOFactory::load(__DIR__."/../../../assets/postalP.xlsx");
             $data = [];
             foreach ($spreadsheet->getWorksheetIterator() as $worksheet) {
@@ -100,5 +101,31 @@ class BashController extends Controller
         {
             throw $exception;
         }
+    }
+
+    /**
+     *
+     */
+    public function readCsv()
+    {
+        try {
+            $reader = new Reader\Csv();
+            $reader->setInputEncoding('CP1252'); // reading input format windows
+            $reader->setDelimiter(';');
+            $reader->setEnclosure('');
+            $reader->setSheetIndex(0); // specify which sheet to read from CSV
+            $spreadSheet = $reader->load("assets/dataPartidasDua.csv");
+            $data = [];
+            foreach ($spreadSheet as $row)
+            {
+
+            }
+        }
+        catch (\Exception $e)
+        {
+
+        }
+
+
     }
 }
