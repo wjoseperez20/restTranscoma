@@ -4,13 +4,13 @@ parameters:
     #parameter_name: value
 
 services:
-    console_command.csv_import:
-        class: AppBundle\Command\CsvImportCommand
-
-        arguments:
-        - "@doctrine.orm.default_entity_manager"
-        tags:
-        - { name: console.command }
+#    console_command.csv_import:
+#        class: AppBundle\Command\CsvImportCommand
+#
+#        arguments:
+#        - "@doctrine.orm.default_entity_manager"
+#        tags:
+#        - { name: console.command }
 
 #    # default configuration for services in *this* file
 #    _defaults:
