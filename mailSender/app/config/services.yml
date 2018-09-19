@@ -4,13 +4,13 @@ parameters:
     #parameter_name: value
 
 services:
-#    console_command.csv_import:
-#        class: AppBundle\Command\CsvImportCommand
+    console_command.send_email:
+        class: AppBundle\Command\SendEmailCommand
 #
 #        arguments:
 #        - "@doctrine.orm.default_entity_manager"
-#        tags:
-#        - { name: console.command }
+        tags:
+        - { name: console.command }
 
 #    # default configuration for services in *this* file
 #    _defaults:
