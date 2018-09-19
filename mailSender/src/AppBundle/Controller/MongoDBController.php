@@ -17,15 +17,15 @@ use Symfony\Component\Routing\Annotation\Route;
 
 
 /**
- * Class bashController
+ * Class mongoDBController
  * @package AppBundle\Controller
  */
-class bashController extends Controller
+class MongoDBController extends Controller
 {
     /**
      * Constantes para esteblecer parametros de los loggers
      */
-    const CLASS_NAME = bashController::class;
+    const CLASS_NAME = MongoDBController::class;
     //const LOG_DIRECTORY = '../var/logs/Controller/dev.log';
     const LOG_DIRECTORY = '/home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReaderMongoDB/var/logs/Controller/dev.log';
 
