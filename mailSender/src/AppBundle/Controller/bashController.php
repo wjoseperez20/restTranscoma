@@ -39,12 +39,11 @@ class bashController extends Controller
         $mail = new Mail();
         $mail->setSmtp('smtp.gmail.com');
         $mail->setUsuario('jdyepescash@gmail.com');
-
         $mail->setClave('trascenduniversal');
-        $mail->setAsunto('Prueba envio correo ososoos');
+        $mail->setAsunto('Prueba envio correo desde gmail');
         $mail->setFrom('jdyepescash@gmail@gmail.com');
-        $mail->setTo('jesusdyepes@gmail.com');
-        $mail->setBody(' Para el envio hay que permitir el uso de aplicaciones no seguras: https://myaccount.google.com/lesssecureapps');
+        $mail->setTo('jesusyepes.1205@gmail.com');
+        $mail->setBody(' Para el envio desde el gmail, en el usuario emisor hay que permitir el uso de aplicaciones no seguras: https://myaccount.google.com/lesssecureapps');
         $mail->setRead(false);
 
         $dm = $this->get('doctrine_mongodb')->getManager();
@@ -72,48 +71,43 @@ class bashController extends Controller
             if (!$mail) {
                 throw $this->createNotFoundException('No mail found for id ' . $id);
             }
-
             $mail->setRead($value);
             $dm->flush();
         } catch (\Exception $e) {
             $logger->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()} into 
             GetDataController");
-            return new View("Registro no encontrado " . $e, Response::HTTP_NOT_FOUND);
+            return new Response("Registro no encontrado " . $e, HTTP_NOT_FOUND);
             // throw $e;
         }
-        return $this->redirect($this->generateUrl('homepage'));
+        //return $this->redirect($this->generateUrl('homepage'));
     }
 
 
     /**
      * metodo que retorna todos registro del documento DataPartidasDua
      * desde la base de datos de mongodb en la coleccion PostalDua ubicado dentro de Document
-     * ejemplo: http://localhost:8000/consultar
+     * ejemplo: http://localhost:8000/obtener
      * @Rest\Get("/obtener/")
      * @return View|null|object
      * @throws \Exception
      */
     public function readDBMongo()
     {
-
-
         $logger = LoggerFactory::getLogger(self::CLASS_NAME);
         $handler = LoggerFactory::getStreamHandler(self::LOG_DIRECTORY);
         $logger->pushHandler($handler);
         try {
-            $csv = $this->get('doctrine_mongodb')
+            $content = $this->get('doctrine_mongodb')
                 ->getRepository('AppBundle:Mail')
                 ->findAll();
-            if (!$csv) {
+            if (!$content) {
                 throw $this->createNotFoundException('No records found.');
             }
-            // $obj= json_decode($csv);
-            return $csv;
+            return $content;
         } catch (\Exception $e) {
             $logger->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()} into 
             GetDataController");
             return new Response("Registro no encontrado " . $e, Response::HTTP_NOT_FOUND);
-            // throw $e;
         }
     }
 
@@ -128,36 +122,32 @@ class bashController extends Controller
     public function readCursor()
     {
         try {
-
             $content = $this->readDBMongo();
             $mes = null;
             $id = null;
-
-            foreach ($content as $item) {
-//                $mes="el id es " . $item->getBody();
-                // var_dump($item);
-                $id = $item->getId();
-                $smtp = $item->getSmtp();
-                $port = 587;
-                $usuario = $item->getUsuario();
-                $clave = $item->getClave();
-                $encry = 'tls';
-                $asunto = $item->getAsunto();
-                $from = $item->getFrom();
-                $To = $item->getTo();
-                $body = $item->getBody();
-                // print_r($item->getTo());
-                $leido = $item->getRead();
-                if ($leido === false) {
-                    $this->sendMail($smtp, $port, $usuario, $clave, $encry, $asunto, $from, $To, $body);
-                    //  $this->updateReadFieldAction($id,true);
-
-                } else {
-                    $mes = ' Ya este correo fue leido con el item: ';
+            if($content!=null){
+                foreach ($content as $item) {
+                    $id=$item->getId();
+                    $smtp = (string)$item->getSmtp();
+                    $port = 587;
+                    $usuario = (string)$item->getUsuario();
+                    $clave = (string)$item->getClave();
+                    $encry = 'tls';
+                    $asunto = (string)$item->getAsunto();
+                    $from = (string)$item->getUsuario();
+                    $To = (string)$item->getTo();
+                    $body = (string)$item->getBody();
+                    $leido= $item->getRead();
+                    if ($leido ===false) {
+                        $this->sendMail($smtp, $port, $usuario, $clave, $encry, $asunto, $from, $To, $body);
+                        $this->updateReadFieldAction($id,true);
+                        $mes = ' Se enviaron los correos ';
+                    } else {
+                        $mes = ' Ya los correos fueron leidos y enviados ';
+                    }
                 }
-
+                return $mes;
             }
-            return $mes;
         } catch (\Exception $e) {
             return $e;
         }
@@ -176,29 +166,33 @@ class bashController extends Controller
      * @param $body
      * @return Response
      * @Rest\Route("send")
+     * @throws \Exception
      */
     public function sendMail($smtp, $port, $userName, $userPasswd, $encryption, $subject, $from, $to, $body)
     {
-// gmail. 587 and encription tls
+       // gmail. 587 and encription tls
+        try{
+                $transport = \Swift_SmtpTransport::newInstance()
+                    ->setHost($smtp)
+                    ->setPort($port)
+                    ->setUsername($userName)
+                    ->setEncryption($encryption)
+                    ->setPassword($userPasswd);
+                $mailer = \Swift_Mailer::newInstance($transport);
+                $message = \Swift_Message::newInstance()
+                    ->setSubject($subject)
+                    ->setFrom($from)
+                    ->setTo($to)
+                    ->setBody($body);
+                $mailer->send($message);
 
-        $transport = \Swift_SmtpTransport::newInstance()
-            ->setHost($smtp)
-            ->setPort($port)
-            ->setUsername($userName)
-            ->setEncryption($encryption)
-            ->setPassword($userPasswd);
-        $mailer = \Swift_Mailer::newInstance($transport);
-        $message = \Swift_Message::newInstance()
-            ->setSubject($subject)
-            ->setFrom($from)
-            ->setTo($to)
-            ->setBody($body);
-        $mailer->send($message);
-
-//        if($mailer->send($message))
-        return new Response(' Se envio el email');
-//        else
-//            return new Response(' no se envio el email');
+        //        if($mailer->send($message))
+                return new Response(' Se envio el email');
+        //        else
+        //            return new Response(' no se envio el email');
+        }catch (\Exception $e){
+            throw $e;
+        }
     }
 
 
