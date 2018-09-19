@@ -49,12 +49,12 @@ class MongoDBController extends Controller
         $dm = $this->get('doctrine_mongodb')->getManager();
         $dm->persist($mail);
         $dm->flush();
-
         return new Response('Created mailer id ' . $mail->getId());
     }
 
     /**
      * @param $id
+     * Updates the read field, to indicates if it is send or no
      * @param $value
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \Exception
@@ -75,18 +75,13 @@ class MongoDBController extends Controller
             $dm->flush();
         } catch (\Exception $e) {
             $logger->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()} into 
-            GetDataController");
-            return new Response("Registro no encontrado " . $e, HTTP_NOT_FOUND);
-            // throw $e;
+            MongoDBController");
+            return new Response("Was a exception into updateReadFieldAction  " . $e, Response::HTTP_NOT_FOUND);
         }
-        //return $this->redirect($this->generateUrl('homepage'));
     }
 
 
     /**
-     * metodo que retorna todos registro del documento DataPartidasDua
-     * desde la base de datos de mongodb en la coleccion PostalDua ubicado dentro de Document
-     * ejemplo: http://localhost:8000/obtener
      * @Rest\Get("/obtener/")
      * @return View|null|object
      * @throws \Exception
@@ -106,14 +101,12 @@ class MongoDBController extends Controller
             return $content;
         } catch (\Exception $e) {
             $logger->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()} into 
-            GetDataController");
-            return new Response("Registro no encontrado " . $e, Response::HTTP_NOT_FOUND);
+            MongoDBController");
+            return new Response("Was a exception into readDBmongo " . $e, Response::HTTP_NOT_FOUND);
         }
     }
 
     /**
-     * metodo que retorna todos registro del documento DataPartidasDua
-     * desde la base de datos de mongodb en la coleccion PostalDua ubicado dentro de Document
      * ejemplo: http://localhost:8000/consultar
      * @Rest\Get("/cursor/")
      * @return View|null|object
@@ -121,6 +114,9 @@ class MongoDBController extends Controller
      */
     public function readCursor()
     {
+        $logger = LoggerFactory::getLogger(self::CLASS_NAME);
+        $handler = LoggerFactory::getStreamHandler(self::LOG_DIRECTORY);
+        $logger->pushHandler($handler);
         try {
             $content = $this->readDBMongo();
             $mes = null;
@@ -149,7 +145,9 @@ class MongoDBController extends Controller
                 return $mes;
             }
         } catch (\Exception $e) {
-            return $e;
+            $logger->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()} into 
+            MongoDBController");
+            return new Response("Was a exception into readDBmongo " . $e, Response::HTTP_NOT_FOUND);
         }
 
     }
@@ -171,6 +169,9 @@ class MongoDBController extends Controller
     public function sendMail($smtp, $port, $userName, $userPasswd, $encryption, $subject, $from, $to, $body)
     {
        // gmail. 587 and encription tls
+        $logger = LoggerFactory::getLogger(self::CLASS_NAME);
+        $handler = LoggerFactory::getStreamHandler(self::LOG_DIRECTORY);
+        $logger->pushHandler($handler);
         try{
                 $transport = \Swift_SmtpTransport::newInstance()
                     ->setHost($smtp)
@@ -185,13 +186,12 @@ class MongoDBController extends Controller
                     ->setTo($to)
                     ->setBody($body);
                 $mailer->send($message);
-
-        //        if($mailer->send($message))
                 return new Response(' Se envio el email');
-        //        else
-        //            return new Response(' no se envio el email');
+
         }catch (\Exception $e){
-            throw $e;
+            $logger->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()} into 
+            MongoDBController");
+            return new Response("Was a exception into sendMail " . $e, Response::HTTP_NOT_FOUND);
         }
     }
 
