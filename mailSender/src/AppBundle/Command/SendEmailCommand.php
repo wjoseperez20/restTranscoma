@@ -94,6 +94,7 @@ class SendEmailCommand extends ContainerAwareCommand
             $mes = null;
             $id = null;
             $cont = count($content);
+            $contRead=0;
             if($content!=null){
                 foreach ($content as $item) {
                     $id=$item->getId();
@@ -108,13 +109,15 @@ class SendEmailCommand extends ContainerAwareCommand
                     $body = (string)$item->getBody();
                     $leido= $item->getRead();
                     if ($leido ===false) {
+                        $contRead++;
                         $this->sendMail($smtp, $port, $usuario, $clave, $encry, $asunto, $from, $To, $body);
                         $obj->updateReadFieldAction($id,true,$dm);
-                        $mes = ' The '.$cont.' mails were sent ';
+                        $mes = ' The '.$contRead.' mails were sent ';
                     } else {
                         $mes = ' The '.$cont.' mails were read and sent ';
                     }
                 }
+
                 return $mes;
             }
         } catch (\Exception $e) {
