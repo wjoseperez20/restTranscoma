@@ -120,8 +120,7 @@ class SendEmailCommand extends ContainerAwareCommand
                 return $mes;
             }
         } catch (\Exception $e) {
-            $this->logger->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()} into 
-            SendEmailCommand");
+            $this->logger->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()} into SendEmailCommand");
             throw $e;
         }
     }
@@ -164,8 +163,7 @@ class SendEmailCommand extends ContainerAwareCommand
         }
         catch (\Exception $e)
         {
-            $this->logger->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()} into 
-            SendEmailCommand");
+            $this->logger->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()} into SendEmailCommand");
             throw $e;
         }
     }
