@@ -72,7 +72,7 @@ class SendEmailCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->setLogger();
-        $message = $this->readCursor();
+        $message = $this->readEmailQueue();
         $output->writeln($message);
     }
 
@@ -82,7 +82,7 @@ class SendEmailCommand extends ContainerAwareCommand
      * @return null|string
      * @throws \Exception
      */
-    public function readCursor()
+    public function readEmailQueue()
     {
         try {
             $obj = new MongoDBController();
@@ -91,6 +91,8 @@ class SendEmailCommand extends ContainerAwareCommand
             $content = $obj->readDBMongo($dm);
             $mes = null;
             $id = null;
+            $start_time = microtime(true); //true is in seconds
+            $end_time=null;
             $cont = count($content);
             $contRead = 0;
             if ($content != null) {
@@ -115,7 +117,15 @@ class SendEmailCommand extends ContainerAwareCommand
                         $mes = ' The ' . $cont . ' mails were read and sent ';
                     }
                 }
-                $this->logger->info('Inside the ' . self::CLASS_NAME . ' Class, the status of the mail is: ' . $mes);
+                $end_time = microtime(true);
+                $elapsed_time = ($end_time - $start_time)/60;
+                $this->logger->info('Inside the ' . self::CLASS_NAME . ' Class, the status of the mail is: ' . $mes. 'It is last: ' . $elapsed_time . ' min.');
+                return $mes;
+            }else{
+                $end_time = microtime(true);
+                $elapsed_time = ($end_time - $start_time)/60;
+                $mes='No records found from mongoDB. The mails were read and sent. It is last '.$elapsed_time.' min';
+                $this->logger->info($mes);
                 return $mes;
             }
         } catch (\Exception $e) {
