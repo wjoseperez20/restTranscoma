@@ -1,10 +1,10 @@
 #!/bin/bash
 
-echo "Ejecutando comando CsvImport"
+echo "Executing the send:email command"
 
 today=`date +%d/%m/%Y`
 hour=`date +%H:%M:%S`
 
-echo "en el dia $today y la hora actual es: $hour"
+echo "Day is: $today and the current time is: $hour"
 
-php /home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReaderMongoDB/bin/console csv:import
+php ./../bin/console send:email
