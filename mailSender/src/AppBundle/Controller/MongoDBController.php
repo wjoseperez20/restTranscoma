@@ -121,7 +121,7 @@ class MongoDBController extends Controller
     }
 
     /**
-     * this function reads all collections from mongoDB, then to send the mails that only are not read.
+     * this function reads only the collections that are not reads from mongoDB, then to send the mails that only are not read.
      * Its called from send:email command
      * @return array
      * @throws \Exception
