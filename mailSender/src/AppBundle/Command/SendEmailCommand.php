@@ -8,7 +8,7 @@
 
 namespace AppBundle\Command;
 
-use AppBundle\Factory\CommandFactory;
+use AppBundle\Controller\MongoDBController;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -74,18 +74,26 @@ class SendEmailCommand extends ContainerAwareCommand
     {
         $this->setLogger();
         $this->logger->info('This process was started in ' . SendEmailCommand::class);
-        $this->readCursor();
+        $message =$this->readCursor();
+        $output->writeln($message);
     }
 
-
+    /**
+     * this function reads all collections from mongo db, and updates the read field once it has been sent
+     * Note: To send gmail emails, there must be the configuration set below with the default values (port and encryption")
+     * @return null|string
+     * @throws \Exception
+     */
     public function readCursor()
     {
         try {
+            $obj = new MongoDBController();
             $this->setLogger();
-            $content = $this->readDBMongo();
+            $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
+            $content = $obj->readDBMongo($dm);
             $mes = null;
             $id = null;
-
+            $cont = count($content);
             if($content!=null){
                 foreach ($content as $item) {
                     $id=$item->getId();
@@ -101,10 +109,10 @@ class SendEmailCommand extends ContainerAwareCommand
                     $leido= $item->getRead();
                     if ($leido ===false) {
                         $this->sendMail($smtp, $port, $usuario, $clave, $encry, $asunto, $from, $To, $body);
-                        $this->updateReadFieldAction($id,true);
-                        $mes = ' Se enviaron los correos ';
+                        $obj->updateReadFieldAction($id,true,$dm);
+                        $mes = ' The '.$cont.' mails were sent ';
                     } else {
-                        $mes = ' Ya los correos fueron leidos y enviados ';
+                        $mes = ' The '.$cont.' mails were read and sent ';
                     }
                 }
                 return $mes;
@@ -114,9 +122,7 @@ class SendEmailCommand extends ContainerAwareCommand
             SendEmailCommand");
             throw $e;
         }
-
     }
-
 
     /**
      * This function to send gmail with 587 port and encription tls
@@ -158,45 +164,6 @@ class SendEmailCommand extends ContainerAwareCommand
         {
             $this->logger->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()} into 
             SendEmailCommand");
-            throw $e;
-        }
-    }
-/***************************************** Pendiente por separar*/
-    public function updateReadFieldAction($id, $value)
-    {
-        try {
-            $this->setLogger();
-            $dm = $this->getContainer()->get('doctrine_mongodb')->getManager();
-            $mail = $dm->getRepository('AppBundle:Mail')->find($id);
-
-            if (!$mail) {
-                return 'No mail found for id ' . $id;
-            }
-            $mail->setRead($value);
-            $dm->flush();
-        } catch (\Exception $e) {
-            $this->logger->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()}");
-            throw $e;
-        }
-    }
-
-    public function readDBMongo()
-    {
-
-        try {
-            $this->setLogger();
-            $content = $this->getContainer()->get('doctrine_mongodb')->getManager()
-                ->getRepository('AppBundle:Mail')
-                ->findAll();
-            if (!$content) {
-                return('No records found.');
-            }
-            return $content;
-        }
-        catch (\Exception $e)
-        {
-            $this->logger->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()} into 
-            MongoDBController");
             throw $e;
         }
     }
