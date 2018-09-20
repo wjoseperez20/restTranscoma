@@ -92,7 +92,7 @@ class SendEmailCommand extends ContainerAwareCommand
             $mes = null;
             $id = null;
             $start_time = microtime(true); //true is in seconds
-            $end_time=null;
+            $end_time = null;
             $cont = count($content);
             $contRead = 0;
             if ($content != null) {
@@ -118,13 +118,13 @@ class SendEmailCommand extends ContainerAwareCommand
                     }
                 }
                 $end_time = microtime(true);
-                $elapsed_time = ($end_time - $start_time)/60;
-                $this->logger->info('Inside the ' . self::CLASS_NAME . ' Class, the status of the mail is: ' . $mes. 'It is last: ' . $elapsed_time . ' min.');
+                $elapsed_time = ($end_time - $start_time) / 60;
+                $this->logger->info('Inside the ' . self::CLASS_NAME . ' Class, the status of the mail is: ' . $mes . 'It is last: ' . $elapsed_time . ' min.');
                 return $mes;
-            }else{
+            } else {
                 $end_time = microtime(true);
-                $elapsed_time = ($end_time - $start_time)/60;
-                $mes='No records found from mongoDB. The mails were read and sent. It is last '.$elapsed_time.' min';
+                $elapsed_time = ($end_time - $start_time) / 60;
+                $mes = 'No records found from mongoDB. The mails were read and sent. It is last ' . $elapsed_time . ' min';
                 $this->logger->info($mes);
                 return $mes;
             }

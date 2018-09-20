@@ -12,6 +12,7 @@ use Monolog\Logger;
 use Symfony\Component\Yaml\Yaml;
 
 /* Factory import */
+
 use AppBundle\Factory\LoggerFactory;
 
 
@@ -45,14 +46,11 @@ class ReadFileYml
      */
     public function getColumn($column)
     {
-        try
-        {
-            $value =Yaml::parseFile(__DIR__ . '/../../../../readConfigParams.yml');
+        try {
+            $value = Yaml::parseFile(__DIR__ . '/../../../../readConfigParams.yml');
             $val = $value[$column];
             return $val;
-        }
-        catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             $this->log_directory = $this->getColumn('log_directory_command');
             $this->logger = LoggerFactory::getLogger(self::CLASS_NAME);
             $this->handler = LoggerFactory::getStreamHandler($this->log_directory);
