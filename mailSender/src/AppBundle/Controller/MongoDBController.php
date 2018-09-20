@@ -41,7 +41,7 @@ class MongoDBController extends Controller
     /**
      * @var
      */
-    private  $handle_file;
+    private $handle_file;
 
     /**
      * @var
@@ -54,15 +54,12 @@ class MongoDBController extends Controller
     public function setLogger()
     {
         $this->logger = LoggerFactory::getLogger(self::CLASS_NAME);
-        try
-        {
-            $this->handle_file =HandleFileFactory::getReadFileYml();
-            $this->log_directory= $this->handle_file->getColumn('log_directory_controller');
+        try {
+            $this->handle_file = HandleFileFactory::getReadFileYml();
+            $this->log_directory = $this->handle_file->getColumn('log_directory_controller');
             $this->handler = LoggerFactory::getStreamHandler($this->log_directory);
             $this->logger->pushHandler($this->handler);
-        }
-        catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             $this->logger->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()}");
         }
     }
@@ -75,24 +72,21 @@ class MongoDBController extends Controller
     public function createAction()
     {
         $this->logger = LoggerFactory::getLogger(self::CLASS_NAME);
-        try
-        {
-        $mail = new Mail();
-        $mail->setSmtp('smtp.gmail.com');
-        $mail->setUsuario('jdyepescash@gmail.com');
-        $mail->setClave('trascenduniversal');
-        $mail->setAsunto('Prueba envio correo desde gmail');
-        $mail->setFrom('jdyepescash@gmail@gmail.com');
-        $mail->setTo('jesusyepes.1205@gmail.com');
-        $mail->setBody(' Para el envio desde el gmail, en el usuario emisor hay que permitir el uso de aplicaciones no seguras: https://myaccount.google.com/lesssecureapps');
-        $mail->setRead(false);
-        $dm = $this->get('doctrine_mongodb')->getManager();
-        $dm->persist($mail);
-        $dm->flush();
-        return new Response('Created mailer id ' . $mail->getId());
-        }
-        catch (\Exception $e)
-        {
+        try {
+            $mail = new Mail();
+            $mail->setSmtp('smtp.gmail.com');
+            $mail->setUsuario('jdyepescash@gmail.com');
+            $mail->setClave('trascenduniversal');
+            $mail->setAsunto('Prueba envio correo desde gmail');
+            $mail->setFrom('jdyepescash@gmail@gmail.com');
+            $mail->setTo('jesusyepes.1205@gmail.com');
+            $mail->setBody(' Para el envio desde el gmail, en el usuario emisor hay que permitir el uso de aplicaciones no seguras: https://myaccount.google.com/lesssecureapps');
+            $mail->setRead(false);
+            $dm = $this->get('doctrine_mongodb')->getManager();
+            $dm->persist($mail);
+            $dm->flush();
+            return new Response('Created mailer id ' . $mail->getId());
+        } catch (\Exception $e) {
             $this->logger->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()} into 
             MongoDBController");
             return new Response("Was a exception into createAction  " . $e, Response::HTTP_NOT_FOUND);
@@ -100,17 +94,17 @@ class MongoDBController extends Controller
     }
 
     /**
-     * Updates the read field, to indicates if it is send or no
+     * Updates the read field, to indicates if it is sent or no. Its called from send:email command
      * @param $id
      * @param $value
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @param $dm
+     * @return string
      * @throws \Exception
      */
-    public function updateReadFieldAction($id, $value)
+    public function updateReadFieldAction($id, $value,$dm)
     {
-        $this->setLogger();
+        $this->setLogger(); $message=null;
         try {
-            $dm = $this->get('doctrine_mongodb')->getManager();
             $mail = $dm->getRepository('AppBundle:Mail')->find($id);
 
             if (!$mail) {
@@ -118,122 +112,36 @@ class MongoDBController extends Controller
             }
             $mail->setRead($value);
             $dm->flush();
+            return 'the mails were updated';
         } catch (\Exception $e) {
             $this->logger->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()} into 
             MongoDBController");
-            return new Response("Was a exception into updateReadFieldAction  " . $e, Response::HTTP_NOT_FOUND);
+            throw $e;
         }
     }
 
     /**
-     * @Rest\Get("/obtener/")
-     * @return View|null|object
+     * this function reads all collections from mongoDB, then to send the mails that only are not read.
+     * Its called from send:email command
+     * @return array
      * @throws \Exception
+     * @param $dm
      */
-    public function readDBMongo()
+    public function readDBMongo($dm)
     {
         $this->setLogger();
         try {
-            $content = $this->get('doctrine_mongodb')
+            $content = $dm
                 ->getRepository('AppBundle:Mail')
                 ->findAll();
             if (!$content) {
                 throw $this->createNotFoundException('No records found.');
             }
             return $content;
-        }
-        catch (\Exception $e)
-        {
-            $this->logger->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()} into 
-            MongoDBController");
-            return new Response("Was a exception into readDBmongo " . $e, Response::HTTP_NOT_FOUND);
-        }
-    }
-
-    /**
-     * e.g.: http://localhost:8000/cursor
-     * @Rest\Get("/cursor/")
-     * @return View|null|object
-     * @throws \Exception
-     */
-    public function readCursor()
-    {
-        $this->setLogger();
-        try {
-            $content = $this->readDBMongo();
-            $mes = null;
-            $id = null;
-            if($content!=null){
-                foreach ($content as $item) {
-                    $id=$item->getId();
-                    $smtp = (string)$item->getSmtp();
-                    $port = 587;
-                    $usuario = (string)$item->getUsuario();
-                    $clave = (string)$item->getClave();
-                    $encry = 'tls';
-                    $asunto = (string)$item->getAsunto();
-                    $from = (string)$item->getUsuario();
-                    $To = (string)$item->getTo();
-                    $body = (string)$item->getBody();
-                    $leido= $item->getRead();
-                    if ($leido ===false) {
-                        $this->sendMail($smtp, $port, $usuario, $clave, $encry, $asunto, $from, $To, $body);
-                        $this->updateReadFieldAction($id,true);
-                        $mes = ' Se enviaron los correos ';
-                    } else {
-                        $mes = ' Ya los correos fueron leidos y enviados ';
-                    }
-                }
-                return $mes;
-            }
         } catch (\Exception $e) {
             $this->logger->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()} into 
             MongoDBController");
-            return new Response("Was a exception into readCursor " . $e, Response::HTTP_NOT_FOUND);
-        }
-
-    }
-
-    /**
-     * This function to send gmail with 587 port and encription tls
-     * @param $smtp
-     * @param $port
-     * @param $userName
-     * @param $userPasswd
-     * @param $encryption
-     * @param $subject
-     * @param $from
-     * @param $to
-     * @param $body
-     * @return Response
-     * @Rest\Route("send")
-     * @throws \Exception
-     */
-    public function sendMail($smtp, $port, $userName, $userPasswd, $encryption, $subject, $from, $to, $body)
-    {
-        $this->setLogger();
-        try{
-                $transport = \Swift_SmtpTransport::newInstance()
-                    ->setHost($smtp)
-                    ->setPort($port)
-                    ->setUsername($userName)
-                    ->setEncryption($encryption)
-                    ->setPassword($userPasswd);
-                $mailer = \Swift_Mailer::newInstance($transport);
-                $message = \Swift_Message::newInstance()
-                    ->setSubject($subject)
-                    ->setFrom($from)
-                    ->setTo($to)
-                    ->setBody($body);
-                $mailer->send($message);
-                return new Response(' Se envio el email');
-
-        }
-        catch (\Exception $e)
-        {
-            $this->logger->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()} into 
-            MongoDBController");
-            return new Response("Was a exception into sendMail " . $e, Response::HTTP_NOT_FOUND);
+            throw $e;
         }
     }
 }
