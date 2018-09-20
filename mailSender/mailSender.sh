@@ -7,4 +7,4 @@ hour=`date +%H:%M:%S`
 
 echo "Day is: $today and the current time is: $hour"
 
-php ./../bin/console send:email
+php /home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/mailSender/bin/console send:email
