@@ -131,9 +131,11 @@ class MongoDBController extends Controller
     {
         $this->setLogger();
         try {
-            $content = $dm
-                ->getRepository('AppBundle:Mail')
-                ->findAll();
+            $repository = $dm
+                ->getRepository('AppBundle:Mail');
+            $content = $repository->findBy(
+                array('read'=>false)
+            );
             if (!$content) {
                 throw $this->createNotFoundException('No records found.');
             }
