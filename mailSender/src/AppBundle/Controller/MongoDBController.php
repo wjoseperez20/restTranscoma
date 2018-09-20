@@ -9,7 +9,6 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Document\Mail;
-use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -101,9 +100,10 @@ class MongoDBController extends Controller
      * @return string
      * @throws \Exception
      */
-    public function updateReadFieldAction($id, $value,$dm)
+    public function updateReadFieldAction($id, $value, $dm)
     {
-        $this->setLogger(); $message=null;
+        $this->setLogger();
+        $message = null;
         try {
             $mail = $dm->getRepository('AppBundle:Mail')->find($id);
 

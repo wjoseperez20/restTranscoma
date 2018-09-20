@@ -15,6 +15,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Monolog\Logger;
 
 /* Factory import*/
+
 use AppBundle\Factory\LoggerFactory;
 use AppBundle\Factory\HandleFileFactory;
 
@@ -43,20 +44,18 @@ class SendEmailCommand extends ContainerAwareCommand
      */
     public function setLogger()
     {
-        try
-        {
-            $handle_file =HandleFileFactory::getReadFileYml();
+        try {
+            $handle_file = HandleFileFactory::getReadFileYml();
             $this->log_directory = $handle_file->getColumn('log_directory_command');
             $this->logger = LoggerFactory::getLogger(self::CLASS_NAME);
             $this->handler = LoggerFactory::getStreamHandler($this->log_directory);
             $this->logger->pushHandler($this->handler);
-        }
-        catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             $this->logger->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()}");
             throw $e;
         }
     }
+
     protected function configure()
     {
         $this
@@ -73,7 +72,7 @@ class SendEmailCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->setLogger();
-        $message =$this->readCursor();
+        $message = $this->readCursor();
         $output->writeln($message);
     }
 
@@ -93,10 +92,10 @@ class SendEmailCommand extends ContainerAwareCommand
             $mes = null;
             $id = null;
             $cont = count($content);
-            $contRead=0;
-            if($content!=null){
+            $contRead = 0;
+            if ($content != null) {
                 foreach ($content as $item) {
-                    $id=$item->getId();
+                    $id = $item->getId();
                     $smtp = (string)$item->getSmtp();
                     $port = 587;
                     $usuario = (string)$item->getUsuario();
@@ -106,17 +105,17 @@ class SendEmailCommand extends ContainerAwareCommand
                     $from = (string)$item->getUsuario();
                     $To = (string)$item->getTo();
                     $body = (string)$item->getBody();
-                    $leido= $item->getRead();
-                    if ($leido ===false) {
+                    $leido = $item->getRead();
+                    if ($leido === false) {
                         $contRead++;
                         $this->sendMail($smtp, $port, $usuario, $clave, $encry, $asunto, $from, $To, $body);
-                        $obj->updateReadFieldAction($id,true,$dm);
-                        $mes = ' The '.$contRead.' mails were sent ';
+                        $obj->updateReadFieldAction($id, true, $dm);
+                        $mes = ' The ' . $contRead . ' mails were sent ';
                     } else {
-                        $mes = ' The '.$cont.' mails were read and sent ';
+                        $mes = ' The ' . $cont . ' mails were read and sent ';
                     }
                 }
-                $this->logger->info('Inside the '.self::CLASS_NAME.' Class, the status of the mail is: '.$mes);
+                $this->logger->info('Inside the ' . self::CLASS_NAME . ' Class, the status of the mail is: ' . $mes);
                 return $mes;
             }
         } catch (\Exception $e) {
@@ -143,8 +142,8 @@ class SendEmailCommand extends ContainerAwareCommand
     public function sendMail($smtp, $port, $userName, $userPasswd, $encryption, $subject, $from, $to, $body)
     {
         $this->setLogger();
-        $message=null;
-        try{
+        $message = null;
+        try {
             $transport = \Swift_SmtpTransport::newInstance()
                 ->setHost($smtp)
                 ->setPort($port)
@@ -158,11 +157,9 @@ class SendEmailCommand extends ContainerAwareCommand
                 ->setTo($to)
                 ->setBody($body);
             $mailer->send($message);
-            return $message= ' mail send';
+            return $message = ' mail send';
 
-        }
-        catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             $this->logger->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()} into SendEmailCommand");
             throw $e;
         }
