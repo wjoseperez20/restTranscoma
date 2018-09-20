@@ -123,7 +123,7 @@ class MongoDBController extends Controller
     /**
      * this function reads only the collections that are not reads from mongoDB, then to send the mails that only are not read.
      * Its called from send:email command
-     * @return array
+     * @return array|string
      * @throws \Exception
      * @param $dm
      */
@@ -137,7 +137,7 @@ class MongoDBController extends Controller
                 array('read'=>false)
             );
             if (!$content) {
-                throw $this->createNotFoundException('No records found.');
+                return null;
             }
             return $content;
         } catch (\Exception $e) {
