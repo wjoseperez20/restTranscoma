@@ -73,7 +73,6 @@ class SendEmailCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->setLogger();
-        $this->logger->info('This process was started in ' . SendEmailCommand::class);
         $message =$this->readCursor();
         $output->writeln($message);
     }
