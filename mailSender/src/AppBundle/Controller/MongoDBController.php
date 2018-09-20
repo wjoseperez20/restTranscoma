@@ -64,7 +64,8 @@ class MongoDBController extends Controller
     }
 
     /**
-     * @Route("crear")
+     * This function saves the record into mongodb in test mode.
+     * @Route("create")
      * @throws \Exception
      * @return Response
      */
@@ -134,7 +135,7 @@ class MongoDBController extends Controller
             $repository = $dm
                 ->getRepository('AppBundle:Mail');
             $content = $repository->findBy(
-                array('read'=>false)
+                array('read' => false)
             );
             if (!$content) {
                 return null;
