@@ -117,7 +117,7 @@ class SendEmailCommand extends ContainerAwareCommand
                         $mes = ' The '.$cont.' mails were read and sent ';
                     }
                 }
-
+                $this->logger->info('Inside the '.self::CLASS_NAME.' Class, the status of the mail is: '.$mes);
                 return $mes;
             }
         } catch (\Exception $e) {
