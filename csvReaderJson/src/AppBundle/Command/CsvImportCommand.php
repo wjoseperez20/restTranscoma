@@ -146,15 +146,22 @@ class CsvImportCommand extends ContainerAwareCommand
     {
         try {
             $finder = new Finder();
-            $finder->files()->in($this->csv_directory)->name('*.csv')->exclude('csvRead');
+            $finder->files()->in($this->csv_directory)->name('*.csv')->exclude('csvRead')->exclude('onProcess');
             $fileSystem = new Filesystem();
-
             $this->validateExistsDirectory($fileSystem, 'csvRead');
+            $this->validateExistsDirectory($fileSystem, 'onProcess');
 
             /*param1: normalizer / param2: encoder*/
             $serializer = new Serializer(array(new ObjectNormalizer()), array(new JsonEncoder()));
             $getCol = HandleFileFactory::getReadFileYml();
 
+            /* Copy all files csv inside onProcess folder*/
+            foreach ($finder as $file) {
+            $fileSystem->copy(($this->csv_directory) . $file->getFilename(), ($this->csv_directory . ('onProcess/')) . $file->getFilename());
+            $fileSystem->remove(($this->csv_directory) . $file->getFilename());
+            }
+
+            $finder->files()->in($this->csv_directory.'onProcess')->name('*.csv')->exclude('csvRead');
             foreach ($finder as $file) {
                 if (file_get_contents($file)) {
                     $this->readDocument($io, $output, $serializer, $getCol, $fileSystem, $file);
@@ -205,8 +212,8 @@ class CsvImportCommand extends ContainerAwareCommand
         }
         if ($pos != -1) {
             $this->logger->info('The file ' . $file->getFilename() . ' was read successfully');
-            $fileSystem->copy(($this->csv_directory) . $file->getFilename(), ($this->csv_directory . ('csvRead/')) . $file->getFilename());
-            $fileSystem->remove(($this->csv_directory) . $file->getFilename());
+            $fileSystem->copy(($this->csv_directory).'onProcess/' . $file->getFilename(), ($this->csv_directory . ('csvRead/')) . $file->getFilename());
+            $fileSystem->remove(($this->csv_directory) .'onProcess/'. $file->getFilename());
             $io->progressFinish();
             $io->success('Command Executed with Success!');
             $end_time = microtime(true);
@@ -218,7 +225,6 @@ class CsvImportCommand extends ContainerAwareCommand
             $this->logger->info('The document ' . $file->getFilename() . ' reading can not be processed. Check if the headers are complete.');
         }
     }
-
 
     /**
      * @param $row
