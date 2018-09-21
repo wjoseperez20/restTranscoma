@@ -12,7 +12,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use PhpOffice\PhpSpreadsheet\IOFactory;
-use PhpOffice\PhpSpreadsheet\Reader;
+//use PhpOffice\PhpSpreadsheet\Reader;
+use League\Csv\Reader;
 
 /* Factory import */
 use AppBundle\Factory\LoggerFactory;
@@ -70,26 +71,30 @@ class BashController extends Controller
 //          $reader = new Reader\Xlsx();
 //          $spreadsheet= $reader->load(__DIR__."/../../../assets/postalP.xlsx");
             $spreadsheet = IOFactory::load(__DIR__."/../../../assets/postalP.xlsx");
-            $data = [];
+            $data = []; $title =[];
+
             foreach ($spreadsheet->getWorksheetIterator() as $worksheet) {
                 $worksheetTitle = $worksheet->getTitle();
-                $data[$worksheetTitle] = [
-                    'columnNames' => [],
-                    'columnValues' => [],
-                ];
+//                $data[$worksheetTitle] = [
+//                    'columnNames' => [],
+//                    'columnValues' => [],
+//                ];
                 foreach ($worksheet->getRowIterator() as $row) {
                     $rowIndex = $row->getRowIndex();
-                    if ($rowIndex > 2) {
-                        $data[$worksheetTitle]['columnValues'][$rowIndex] = [];
-                    }
+//                    if ($rowIndex > 0) {
+//                        $data[$worksheetTitle]['columnValues'][$rowIndex] = [];
+//                    }
                     $cellIterator = $row->getCellIterator();
                     $cellIterator->setIterateOnlyExistingCells(false); // Loop over all cells, even if it is not set
                     foreach ($cellIterator as $cell) {
-                        if ($rowIndex === 2) {
-                            $data[$worksheetTitle]['columnNames'][] = $cell->getCalculatedValue();
-                        }
-                        if ($rowIndex > 2) {
-                            $data[$worksheetTitle]['columnValues'][$rowIndex][] = $cell->getCalculatedValue();
+//                        if ($rowIndex === 0) {
+//                            $data[$worksheetTitle]['columnNames'][] = $cell->getCalculatedValue();
+//                        }
+//                        if (($rowIndex >0) && ($rowIndex==1)){
+//                            $title[] = $cell->getCalculatedValue();
+//                        }
+                        if ($rowIndex > 1) {
+                            $data[$rowIndex][] = $cell->getCalculatedValue();
                         }
                     }
                 }
@@ -102,7 +107,21 @@ class BashController extends Controller
             throw $exception;
         }
     }
-
+        /**
+        reading files in xls or xlsx formats
+        * @Route("leer")
+        * @throws \Exception
+             */
+    public function consultar(){
+        $reader = Reader::createFromPath('/home/maggie/Documentos/Aplicaciones/symfonyRest/restTranscoma/csvReaderJson/assets/dataPartidasDua.csv');
+        // https://github.com/thephpleague/csv/issues/208
+        $results = $reader->fetchAssoc();
+        $data = [];
+        foreach ($results as $row){
+            $data[]=$row;
+        }
+        return $data;
+    }
     /**
      *
      */
