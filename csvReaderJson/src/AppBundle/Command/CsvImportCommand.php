@@ -301,6 +301,7 @@ class CsvImportCommand extends ContainerAwareCommand
     /**
      * Validates if exist the folder directory (csvRead), if it not exists then it creates
      * @param Filesystem $fileSystem
+     * @param $nameFolder
      */
     public function validateExistsDirectory(FileSystem $fileSystem, $nameFolder)
     {
