@@ -151,7 +151,8 @@ class CsvImportCommand extends ContainerAwareCommand
             $finder = new Finder();
             $finder->files()->in($this->csv_directory)->name('*.csv')->exclude('csvRead');
             $fileSystem = new Filesystem();
-            $this->validateExistsDirectory($fileSystem);
+
+            $this->validateExistsDirectory($fileSystem, 'csvRead');
 
             /*param1: normalizer / param2: encoder*/
             $serializer = new Serializer(array(new ObjectNormalizer()), array(new JsonEncoder()));
@@ -301,10 +302,10 @@ class CsvImportCommand extends ContainerAwareCommand
      * Validates if exist the folder directory (csvRead), if it not exists then it creates
      * @param Filesystem $fileSystem
      */
-    public function validateExistsDirectory(FileSystem $fileSystem)
+    public function validateExistsDirectory(FileSystem $fileSystem, $nameFolder)
     {
-        if (!($fileSystem->exists($this->csv_directory . 'csvRead'))) {
-            $fileSystem->mkdir($this->csv_directory . 'csvRead');
+        if (!($fileSystem->exists($this->csv_directory . $nameFolder))) {
+            $fileSystem->mkdir($this->csv_directory . $nameFolder);
         }
     }
 }
