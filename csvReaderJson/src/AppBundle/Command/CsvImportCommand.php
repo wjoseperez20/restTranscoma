@@ -177,7 +177,6 @@ class CsvImportCommand extends ContainerAwareCommand
      *
      * @param SymfonyStyle $io
      * @param OutputInterface $output
-     * @param Serializer $serializer
      * @param ReadFileYml $getCol
      * @param Filesystem $fileSystem
      * @param \SplFileInfo $file
