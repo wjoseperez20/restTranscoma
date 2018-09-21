@@ -18,11 +18,13 @@ use Monolog\Logger;
 use AppBundle\Models\DuaImport;
 
 /* Factory import*/
+
 use AppBundle\Factory\LoggerFactory;
 use AppBundle\Factory\ControllerFactory;
 use AppBundle\Factory\HandleFileFactory;
 
 /* to serialize objects*/
+
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
@@ -33,7 +35,7 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
  */
 class CsvImportCommand extends ContainerAwareCommand
 {
-    
+
     const CLASS_NAME = CsvImportCommand::class;
 
     /**
@@ -72,19 +74,16 @@ class CsvImportCommand extends ContainerAwareCommand
      */
     public function setLogger()
     {
-        try
-        {
-            $handle_file =HandleFileFactory::getReadFileYml();
+        try {
+            $handle_file = HandleFileFactory::getReadFileYml();
             $this->log_directory = $handle_file->getColumn('log_directory_command');
-            $this->csv_directory=$handle_file->getColumn('csv_directory');
+            $this->csv_directory = $handle_file->getColumn('csv_directory');
             $this->send_post = ControllerFactory::getPostDataController();
             $this->logger = LoggerFactory::getLogger(self::CLASS_NAME);
             $this->handler = LoggerFactory::getStreamHandler($this->log_directory);
             $this->logger->pushHandler($this->handler);
             $this->send_post = ControllerFactory::getPostDataController();
-        }
-        catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             $this->logger->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()}");
             throw $e;
         }
@@ -122,18 +121,16 @@ class CsvImportCommand extends ContainerAwareCommand
      * @throws \Exception
      */
     protected function execute(InputInterface $input, OutputInterface $output)
-     {
+    {
         try {
             $this->setLogger();
             $this->logger->info('This process was started in ' . CsvImportCommand::class);
             $io = new SymfonyStyle($input, $output);
-            $this->finderDirectory($io,$output);
-        }
-        catch (\Exception $e){
+            $this->finderDirectory($io, $output);
+        } catch (\Exception $e) {
             $this->logger->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()} into execute method");
             throw $e;
-        }
-        finally{
+        } finally {
             $this->logger->info('The process was finally into CsvImportCommand::execute()');
         }
     }
@@ -145,7 +142,7 @@ class CsvImportCommand extends ContainerAwareCommand
      * @param OutputInterface $output
      * @throws \Exception
      */
-    public function finderDirectory(SymfonyStyle $io , OutputInterface $output)
+    public function finderDirectory(SymfonyStyle $io, OutputInterface $output)
     {
         try {
             $finder = new Finder();
@@ -162,12 +159,11 @@ class CsvImportCommand extends ContainerAwareCommand
                 if (file_get_contents($file)) {
                     $this->readDocument($io, $output, $serializer, $getCol, $fileSystem, $file);
                 } elseif (file_get_contents($file) !== false) { //if empty file, remove it.
-                    $this->logger->info('The file ' . $file->getFilename().' is empty. Removing this empty file');
-                    $fileSystem->remove(($this->csv_directory).$file->getFilename());
+                    $this->logger->info('The file ' . $file->getFilename() . ' is empty. Removing this empty file');
+                    $fileSystem->remove(($this->csv_directory) . $file->getFilename());
                 }
             }
-        }
-        catch (\Exception $e){
+        } catch (\Exception $e) {
             $this->logger->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()} into scrollDirectory");
             throw $e;
         }
@@ -183,41 +179,40 @@ class CsvImportCommand extends ContainerAwareCommand
      * @param \SplFileInfo $file
      * @throws \Exception
      */
-    public function readDocument(SymfonyStyle $io,OutputInterface $output, Serializer $serializer,
-                                 ReadFileYml $getCol, Filesystem $fileSystem , \SplFileInfo $file)
+    public function readDocument(SymfonyStyle $io, OutputInterface $output, Serializer $serializer,
+                                 ReadFileYml $getCol, Filesystem $fileSystem, \SplFileInfo $file)
     {
         $io->title('Reading .csv ...');
-        $this->logger->info('Reading ' . $file->getFilename() .' file');
+        $this->logger->info('Reading ' . $file->getFilename() . ' file');
         $reader = Reader::createFromPath($file);
         $results = $reader->fetchAssoc();
         $io->progressStart(iterator_count($results));
-        $qtyHeaders= (string)$getCol->getColumn('headers');
+        $qtyHeaders = (string)$getCol->getColumn('headers');
         $start_time = microtime(true); //true is in seconds
-        $pos=0;// pos =0 to indicate the first row, -1 to indicate that the document could not be read
+        $pos = 0;// pos =0 to indicate the first row, -1 to indicate that the document could not be read
         foreach ($results as $row) {
             if ((count($row) >= $qtyHeaders)) {
-                $duaImport= $this->settersDuaImport($row, $getCol);
+                $duaImport = $this->settersDuaImport($row, $getCol);
                 $jsonContent = $serializer->serialize($duaImport, 'json');
                 $this->send_post->requestPostAction($jsonContent);
-                $output->writeln(sprintf("\033\143" ));
-                $output->writeln(sprintf('Processing file reading Csv'."\n"));
+                $output->writeln(sprintf("\033\143"));
+                $output->writeln(sprintf('Processing file reading Csv' . "\n"));
                 $io->progressAdvance();
                 $pos++;
             } elseif ((count($row) < $qtyHeaders) && $pos === 0) {
                 $pos = -1; // if not is complete the headers from document
             }
         }
-        if($pos!=-1) {
+        if ($pos != -1) {
             $this->logger->info('The file ' . $file->getFilename() . ' was read successfully');
             $fileSystem->copy(($this->csv_directory) . $file->getFilename(), ($this->csv_directory . ('csvRead/')) . $file->getFilename());
             $fileSystem->remove(($this->csv_directory) . $file->getFilename());
             $io->progressFinish();
             $io->success('Command Executed with Success!');
             $end_time = microtime(true);
-            $elapsed_time = ($end_time - $start_time)/60;
+            $elapsed_time = ($end_time - $start_time) / 60;
             $this->logger->info('Success : Reading time : ' . $elapsed_time . ' min. into CsvImportCommand::insertAction');
-        }
-        else {
+        } else {
             $output->writeln("\n");
             $io->note('The document ' . $file->getFilename() . ' reading can not be processed. Check if the headers are complete.');
             $this->logger->info('The document ' . $file->getFilename() . ' reading can not be processed. Check if the headers are complete.');
@@ -285,13 +280,12 @@ class CsvImportCommand extends ContainerAwareCommand
      */
     public function validateEmptyString($value)
     {
-        try{
+        try {
             if (trim($value) == '')
                 return 'NULL';
             else
                 return $value;
-        }
-        catch (\Exception $e){
+        } catch (\Exception $e) {
             $this->logger
                 ->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()}");
             throw $e;
