@@ -150,21 +150,18 @@ class CsvImportCommand extends ContainerAwareCommand
             $fileSystem = new Filesystem();
             $this->validateExistsDirectory($fileSystem, 'csvRead');
             $this->validateExistsDirectory($fileSystem, 'onProcess');
-
-            /*param1: normalizer / param2: encoder*/
-            $serializer = new Serializer(array(new ObjectNormalizer()), array(new JsonEncoder()));
             $getCol = HandleFileFactory::getReadFileYml();
 
             /* Copy all files csv inside onProcess folder*/
             foreach ($finder as $file) {
-            $fileSystem->copy(($this->csv_directory) . $file->getFilename(), ($this->csv_directory . ('onProcess/')) . $file->getFilename());
-            $fileSystem->remove(($this->csv_directory) . $file->getFilename());
+                $fileSystem->copy(($this->csv_directory) . $file->getFilename(), ($this->csv_directory . ('onProcess/')) . $file->getFilename());
+                $fileSystem->remove(($this->csv_directory) . $file->getFilename());
             }
 
-            $finder->files()->in($this->csv_directory.'onProcess')->name('*.csv')->exclude('csvRead');
+            $finder->files()->in($this->csv_directory . 'onProcess')->name('*.csv')->exclude('csvRead');
             foreach ($finder as $file) {
                 if (file_get_contents($file)) {
-                    $this->readDocument($io, $output, $serializer, $getCol, $fileSystem, $file);
+                    $this->readDocument($io, $output, $getCol, $fileSystem, $file);
                 } elseif (file_get_contents($file) !== false) { //if empty file, remove it.
                     $this->logger->info('The file ' . $file->getFilename() . ' is empty. Removing this empty file');
                     $fileSystem->remove(($this->csv_directory) . $file->getFilename());
@@ -186,7 +183,7 @@ class CsvImportCommand extends ContainerAwareCommand
      * @param \SplFileInfo $file
      * @throws \Exception
      */
-    public function readDocument(SymfonyStyle $io, OutputInterface $output, Serializer $serializer,
+    public function readDocument(SymfonyStyle $io, OutputInterface $output,
                                  ReadFileYml $getCol, Filesystem $fileSystem, \SplFileInfo $file)
     {
         $io->title('Reading .csv ...');
@@ -194,9 +191,13 @@ class CsvImportCommand extends ContainerAwareCommand
         $reader = Reader::createFromPath($file);
         $results = $reader->fetchAssoc();
         $io->progressStart(iterator_count($results));
+
+        /*param1: normalizer / param2: encoder*/
+        $serializer = new Serializer(array(new ObjectNormalizer()), array(new JsonEncoder()));
         $qtyHeaders = (string)$getCol->getColumn('headers');
         $start_time = microtime(true); //true is in seconds
         $pos = 0;// pos =0 to indicate the first row, -1 to indicate that the document could not be read
+
         foreach ($results as $row) {
             if ((count($row) >= $qtyHeaders)) {
                 $duaImport = $this->settersDuaImport($row, $getCol);
@@ -212,8 +213,8 @@ class CsvImportCommand extends ContainerAwareCommand
         }
         if ($pos != -1) {
             $this->logger->info('The file ' . $file->getFilename() . ' was read successfully');
-            $fileSystem->copy(($this->csv_directory).'onProcess/' . $file->getFilename(), ($this->csv_directory . ('csvRead/')) . $file->getFilename());
-            $fileSystem->remove(($this->csv_directory) .'onProcess/'. $file->getFilename());
+            $fileSystem->copy(($this->csv_directory) . 'onProcess/' . $file->getFilename(), ($this->csv_directory . ('csvRead/')) . $file->getFilename());
+            $fileSystem->remove(($this->csv_directory) . 'onProcess/' . $file->getFilename());
             $io->progressFinish();
             $io->success('Command Executed with Success!');
             $end_time = microtime(true);
