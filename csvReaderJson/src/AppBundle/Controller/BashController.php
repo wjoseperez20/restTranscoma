@@ -69,8 +69,6 @@ class BashController extends Controller
 
             $spreadsheet = IOFactory::load(__DIR__."/../../../assets/postalP.xlsx");
             $data = [];
-       //     $cellValue=$spreadsheet->getActiveSheet()->getCellByColumnAndRow(1,1)->getValue();
-
             $sheet=$spreadsheet->getSheet(0);
             $highestRow= $sheet->getHighestRow();
             $highestColumn = $sheet->getHighestColumn();
@@ -84,7 +82,6 @@ class BashController extends Controller
                 $rowData = array_combine($headings[0], $rowData[0]);
                 $data[]=$rowData;
             }
-           // print_r($data);
             return $data;
         }
         catch (\Exception $exception)
@@ -92,6 +89,7 @@ class BashController extends Controller
             throw $exception;
         }
     }
+
         /**
         reading files in xls or xlsx formats
         * @Route("leer")
@@ -105,32 +103,6 @@ class BashController extends Controller
         foreach ($results as $row){
             $data[]=$row;
         }
-      //  print_r($data);
         return $data;
-    }
-    /**
-     *
-     */
-    public function readCsv()
-    {
-        try {
-            $reader = new Reader\Csv();
-            $reader->setInputEncoding('CP1252'); // reading input format windows
-            $reader->setDelimiter(';');
-            $reader->setEnclosure('');
-            $reader->setSheetIndex(0); // specify which sheet to read from CSV
-            $spreadSheet = $reader->load("assets/dataPartidasDua.csv");
-            $data = [];
-            foreach ($spreadSheet as $row)
-            {
-
-            }
-        }
-        catch (\Exception $e)
-        {
-
-        }
-
-
     }
 }
