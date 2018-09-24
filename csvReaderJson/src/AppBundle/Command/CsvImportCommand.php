@@ -144,7 +144,7 @@ class CsvImportCommand extends ContainerAwareCommand
     {
         try {
             $finder = new Finder();
-            $finder->files()->in($this->csv_directory)->name('*.xlsx','*.csv')->exclude('csvRead','onProcess');
+            $finder->files()->in($this->csv_directory)->name('*.xls*')->name('*.csv')->exclude('csvRead')->exclude('onProcess');
             $fileSystem = new Filesystem();
             $this->validateExistsDirectory($fileSystem, 'csvRead');
             $this->validateExistsDirectory($fileSystem, 'onProcess');
@@ -153,18 +153,18 @@ class CsvImportCommand extends ContainerAwareCommand
             /* Copy all files csv inside onProcess folder*/
             foreach ($finder as $file) {
                 $fileSystem->copy(($this->csv_directory) . $file->getFilename(), ($this->csv_directory . ('onProcess/')) . $file->getFilename());
-             //   $fileSystem->remove(($this->csv_directory) . $file->getFilename());
+                $fileSystem->remove(($this->csv_directory) . $file->getFilename());
             }
 
-//            $finder->files()->in($this->csv_directory . 'onProcess')->name('*.csv')->exclude('csvRead');
-//            foreach ($finder as $file) {
-//                if (file_get_contents($file)) {
-//                    $this->readDocumentCsv($io, $output, $getCol, $fileSystem, $file);
-//                } elseif (file_get_contents($file) !== false) { //if empty file, remove it.
-//                    $this->logger->info('The file ' . $file->getFilename() . ' is empty. Removing this empty file');
-//                    $fileSystem->remove(($this->csv_directory) . $file->getFilename());
-//                }
-//            }
+            $finder->files()->in($this->csv_directory . 'onProcess')->name('*.csv')->exclude('csvRead');
+            foreach ($finder as $file) {
+                if (file_get_contents($file)) {
+                    $this->readDocumentCsv($io, $output, $getCol, $fileSystem, $file);
+                } elseif (file_get_contents($file) !== false) { //if empty file, remove it.
+                    $this->logger->info('The file ' . $file->getFilename() . ' is empty. Removing this empty file');
+                    $fileSystem->remove(($this->csv_directory) . $file->getFilename());
+                }
+            }
 
             $finder->files()->in($this->csv_directory . 'onProcess')->name('*.xls','*.xlsx')->exclude('csvRead');
             foreach ($finder as $file) {
@@ -272,7 +272,7 @@ class CsvImportCommand extends ContainerAwareCommand
                 $duaImport = $this->settersDuaImport($rowData, $getCol);
                 $jsonContent = $serializer->serialize($duaImport, 'json');
                 $this->send_post->requestPostAction($jsonContent);
-                //$output->writeln(sprintf("\033\143"));
+                $output->writeln(sprintf("\033\143"));
                 $output->writeln(sprintf('Processing file reading excel' . "\n"));
                 $io->progressAdvance();
             }
