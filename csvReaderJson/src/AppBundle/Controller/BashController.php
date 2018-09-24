@@ -66,40 +66,28 @@ class BashController extends Controller
     public function readExternalDocument()
     {
         try {
-//          $reader  = $this->get('phpoffice.spreadsheet')->createReader('Xlsx');
-//          $spreadsheet = $reader->load(__DIR__."/../../../assets/postalP.xlsx");
-//          $reader = new Reader\Xlsx();
-//          $spreadsheet= $reader->load(__DIR__."/../../../assets/postalP.xlsx");
+
             $spreadsheet = IOFactory::load(__DIR__."/../../../assets/postalP.xlsx");
-            $data = []; $title =[];
+            $data = [];
+       //     $cellValue=$spreadsheet->getActiveSheet()->getCellByColumnAndRow(1,1)->getValue();
 
-            foreach ($spreadsheet->getWorksheetIterator() as $worksheet) {
-                $worksheetTitle = $worksheet->getTitle();
-//                $data[$worksheetTitle] = [
-//                    'columnNames' => [],
-//                    'columnValues' => [],
-//                ];
-                foreach ($worksheet->getRowIterator() as $row) {
-                    $rowIndex = $row->getRowIndex();
-//                    if ($rowIndex > 0) {
-//                        $data[$worksheetTitle]['columnValues'][$rowIndex] = [];
-//                    }
-                    $cellIterator = $row->getCellIterator();
-                    $cellIterator->setIterateOnlyExistingCells(false); // Loop over all cells, even if it is not set
-                    foreach ($cellIterator as $cell) {
-//                        if ($rowIndex === 0) {
-//                            $data[$worksheetTitle]['columnNames'][] = $cell->getCalculatedValue();
-//                        }
-//                        if (($rowIndex >0) && ($rowIndex==1)){
-//                            $title[] = $cell->getCalculatedValue();
-//                        }
-                        if ($rowIndex > 1) {
-                            $data[$rowIndex][] = $cell->getCalculatedValue();
-                        }
-                    }
-                }
+            $sheet=$spreadsheet->getSheet(0);
+            $highestRow= $sheet->getHighestRow();
+            $highestColumn = $sheet->getHighestColumn();
+            $headings = $sheet->rangeToArray('A1:' . $highestColumn . 1,
+                NULL,
+                TRUE,
+                FALSE);
+
+            for ($row = 2; $row <= $highestRow; $row++){
+                //  Read a row of data into an array
+                $rowData= $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row,
+                    NULL,
+                    TRUE,
+                    FALSE);
+                $rowData[0] = array_combine($headings[0], $rowData[0]);
+                $data[]=$rowData;
             }
-
             return $data;
         }
         catch (\Exception $exception)
