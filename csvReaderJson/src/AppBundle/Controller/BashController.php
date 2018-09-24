@@ -81,10 +81,10 @@ class BashController extends Controller
                 //  Read a row of data into an array
                 $rowData= $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row,
                     NULL,TRUE,FALSE);
-                $rowData[0] = array_combine($headings[0], $rowData[0]);
+                $rowData = array_combine($headings[0], $rowData[0]);
                 $data[]=$rowData;
             }
-          //  print_r($data);
+           // print_r($data);
             return $data;
         }
         catch (\Exception $exception)
@@ -105,7 +105,7 @@ class BashController extends Controller
         foreach ($results as $row){
             $data[]=$row;
         }
-        print_r($data);
+      //  print_r($data);
         return $data;
     }
     /**
