@@ -144,7 +144,7 @@ class CsvImportCommand extends ContainerAwareCommand
     {
         try {
             $finder = new Finder();
-            $finder->files()->in($this->csv_directory)->name('*.csv','*.xls','*.xlsx')->exclude('csvRead','onProcess');
+            $finder->files()->in($this->csv_directory)->name('*.xlsx','*.csv')->exclude('csvRead','onProcess');
             $fileSystem = new Filesystem();
             $this->validateExistsDirectory($fileSystem, 'csvRead');
             $this->validateExistsDirectory($fileSystem, 'onProcess');
@@ -153,18 +153,18 @@ class CsvImportCommand extends ContainerAwareCommand
             /* Copy all files csv inside onProcess folder*/
             foreach ($finder as $file) {
                 $fileSystem->copy(($this->csv_directory) . $file->getFilename(), ($this->csv_directory . ('onProcess/')) . $file->getFilename());
-                $fileSystem->remove(($this->csv_directory) . $file->getFilename());
+             //   $fileSystem->remove(($this->csv_directory) . $file->getFilename());
             }
 
-            $finder->files()->in($this->csv_directory . 'onProcess')->name('*.csv')->exclude('csvRead');
-            foreach ($finder as $file) {
-                if (file_get_contents($file)) {
-                    $this->readDocumentCsv($io, $output, $getCol, $fileSystem, $file);
-                } elseif (file_get_contents($file) !== false) { //if empty file, remove it.
-                    $this->logger->info('The file ' . $file->getFilename() . ' is empty. Removing this empty file');
-                    $fileSystem->remove(($this->csv_directory) . $file->getFilename());
-                }
-            }
+//            $finder->files()->in($this->csv_directory . 'onProcess')->name('*.csv')->exclude('csvRead');
+//            foreach ($finder as $file) {
+//                if (file_get_contents($file)) {
+//                    $this->readDocumentCsv($io, $output, $getCol, $fileSystem, $file);
+//                } elseif (file_get_contents($file) !== false) { //if empty file, remove it.
+//                    $this->logger->info('The file ' . $file->getFilename() . ' is empty. Removing this empty file');
+//                    $fileSystem->remove(($this->csv_directory) . $file->getFilename());
+//                }
+//            }
 
             $finder->files()->in($this->csv_directory . 'onProcess')->name('*.xls','*.xlsx')->exclude('csvRead');
             foreach ($finder as $file) {
@@ -239,13 +239,17 @@ class CsvImportCommand extends ContainerAwareCommand
 
     /**
      * reading files in xls or xlsx formats
+     * @param SymfonyStyle $io
+     * @param OutputInterface $output
+     * @param ReadFileYml $getCol
+     * @param Filesystem $fileSystem
+     * @param \SplFileInfo $file
      * @throws \Exception
      */
     public function readDocumentExcel(SymfonyStyle $io, OutputInterface $output,
                                       ReadFileYml $getCol, Filesystem $fileSystem, \SplFileInfo $file)
     {
         try {
-
             $spreadsheet = IOFactory::load($file);
             $data = [];
             $sheet=$spreadsheet->getSheet(0);
@@ -256,6 +260,7 @@ class CsvImportCommand extends ContainerAwareCommand
 
             /*param1: normalizer / param2: encoder*/
             $serializer = new Serializer(array(new ObjectNormalizer()), array(new JsonEncoder()));
+            $io->progressStart($highestRow);
 
             for ($row = 2; $row <= $highestRow; $row++){
                 //  Read a row of data into an array
@@ -264,13 +269,13 @@ class CsvImportCommand extends ContainerAwareCommand
                 $rowData = array_combine($headings[0], $rowData[0]);
                 $data[]=$rowData;
 
-                $duaImport = $this->settersDuaImport($row, $getCol);
+                $duaImport = $this->settersDuaImport($rowData, $getCol);
                 $jsonContent = $serializer->serialize($duaImport, 'json');
                 $this->send_post->requestPostAction($jsonContent);
-                $output->writeln(sprintf("\033\143"));
-                $output->writeln(sprintf('Processing file reading Csv' . "\n"));
+                //$output->writeln(sprintf("\033\143"));
+                $output->writeln(sprintf('Processing file reading excel' . "\n"));
+                $io->progressAdvance();
             }
-          //  return $data;
         }
         catch (\Exception $exception)
         {
