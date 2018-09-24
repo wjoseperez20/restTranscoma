@@ -29,6 +29,7 @@
         "jms/serializer-bundle": "^2.4",
         "league/csv": "^8.0",
         "nelmio/cors-bundle": "^1.5",
+        "phpoffice/phpspreadsheet": "^1.4",
         "sensio/distribution-bundle": "^5.0.22",
         "sensio/framework-extra-bundle": "^5.0.0",
         "symfony/dotenv": "^4.1",
