@@ -74,20 +74,17 @@ class BashController extends Controller
             $sheet=$spreadsheet->getSheet(0);
             $highestRow= $sheet->getHighestRow();
             $highestColumn = $sheet->getHighestColumn();
-            $headings = $sheet->rangeToArray('A1:' . $highestColumn . 1,
-                NULL,
-                TRUE,
-                FALSE);
+            $headings = $sheet->rangeToArray('A1:'.$highestColumn . 1,
+                NULL,TRUE,FALSE);
 
             for ($row = 2; $row <= $highestRow; $row++){
                 //  Read a row of data into an array
                 $rowData= $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row,
-                    NULL,
-                    TRUE,
-                    FALSE);
+                    NULL,TRUE,FALSE);
                 $rowData[0] = array_combine($headings[0], $rowData[0]);
                 $data[]=$rowData;
             }
+          //  print_r($data);
             return $data;
         }
         catch (\Exception $exception)
@@ -108,6 +105,7 @@ class BashController extends Controller
         foreach ($results as $row){
             $data[]=$row;
         }
+        print_r($data);
         return $data;
     }
     /**
