@@ -229,6 +229,7 @@ class CsvImportCommand extends ContainerAwareCommand
             $end_time = microtime(true);
             $elapsed_time = ($end_time - $start_time) / 60;
             $this->logger->info('Success : Reading time : ' . $elapsed_time . ' min. into CsvImportCommand::insertAction');
+
         } else {
             $output->writeln("\n");
             $io->note('The document ' . $file->getFilename() . ' reading can not be processed. Check if the headers are complete.');
@@ -253,14 +254,23 @@ class CsvImportCommand extends ContainerAwareCommand
             $headings = $sheet->rangeToArray('A1:'.$highestColumn . 1,
                 NULL,TRUE,FALSE);
 
+            /*param1: normalizer / param2: encoder*/
+            $serializer = new Serializer(array(new ObjectNormalizer()), array(new JsonEncoder()));
+
             for ($row = 2; $row <= $highestRow; $row++){
                 //  Read a row of data into an array
                 $rowData= $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row,
                     NULL,TRUE,FALSE);
                 $rowData = array_combine($headings[0], $rowData[0]);
                 $data[]=$rowData;
+
+                $duaImport = $this->settersDuaImport($row, $getCol);
+                $jsonContent = $serializer->serialize($duaImport, 'json');
+                $this->send_post->requestPostAction($jsonContent);
+                $output->writeln(sprintf("\033\143"));
+                $output->writeln(sprintf('Processing file reading Csv' . "\n"));
             }
-            return $data;
+          //  return $data;
         }
         catch (\Exception $exception)
         {
