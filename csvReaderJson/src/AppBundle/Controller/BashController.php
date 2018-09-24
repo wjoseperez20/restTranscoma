@@ -63,7 +63,7 @@ class BashController extends Controller
      * @Route("read")
      * @throws \Exception
      */
-    public function readExternalDocument()
+    public function readExcelDocument()
     {
         try {
 
