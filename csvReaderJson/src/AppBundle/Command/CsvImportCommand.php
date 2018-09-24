@@ -258,9 +258,10 @@ class CsvImportCommand extends ContainerAwareCommand
             $headings = $sheet->rangeToArray('A1:'.$highestColumn . 1,
                 NULL,TRUE,FALSE);
 
+            $start_time = microtime(true); //true is in seconds
             /*param1: normalizer / param2: encoder*/
             $serializer = new Serializer(array(new ObjectNormalizer()), array(new JsonEncoder()));
-            $io->progressStart($highestRow);
+            $io->progressStart($highestRow-1);
 
             for ($row = 2; $row <= $highestRow; $row++){
                 //  Read a row of data into an array
@@ -276,6 +277,15 @@ class CsvImportCommand extends ContainerAwareCommand
                 $output->writeln(sprintf('Processing file reading excel' . "\n"));
                 $io->progressAdvance();
             }
+            $this->logger->info('The file ' . $file->getFilename() . ' was read successfully');
+            $fileSystem->copy(($this->csv_directory) . 'onProcess/' . $file->getFilename(), ($this->csv_directory . ('csvRead/')) . $file->getFilename());
+            $fileSystem->remove(($this->csv_directory) . 'onProcess/' . $file->getFilename());
+            $io->progressFinish();
+            $io->success('Command Executed with Success!');
+            $end_time = microtime(true);
+            $elapsed_time = ($end_time - $start_time) / 60;
+            $this->logger->info('Success : Reading time : ' . $elapsed_time . ' min. into CsvImportCommand::insertAction');
+
         }
         catch (\Exception $exception)
         {
