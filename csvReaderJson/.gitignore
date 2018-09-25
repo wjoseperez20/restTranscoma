@@ -18,7 +18,7 @@
 # Parameters
 #/app/config/parameters.yml
 /app/config/parameters.ini
-#.env
+.env
 
 # Managed by Composer
 /app/bootstrap.php.cache
@@ -26,7 +26,7 @@
 /bin/*
 !bin/console
 !bin/symfony_requirements
-/vendor/
+/vendor/*
 
 # Assets and user uploads
 /web/bundles/
