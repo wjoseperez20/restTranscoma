@@ -135,7 +135,8 @@ class CsvImportCommand extends ContainerAwareCommand
 
     /**
      * this function searches all the files in csv and xls or xlsx formats located inside assets folder,
-     * then calls the (readDocument) function depending on the document extension
+     * then calls the (readDocument) function depending on the document extension, calling the finderCsvFiles and
+     * finderExcelFiles function
      * @param SymfonyStyle $io
      * @param OutputInterface $output
      * @throws \Exception
@@ -156,7 +157,28 @@ class CsvImportCommand extends ContainerAwareCommand
                 $fileSystem->remove(($this->csv_directory) . $file->getFilename());
             }
 
+            $this->finderCsvFiles($io, $output, $getCol);
+            $this->finderExcelFiles($io, $output, $getCol);
+
+        } catch (\Exception $e) {
+            $this->logger->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()} into finderDirectory function");
+            throw $e;
+        }
+    }
+
+    /**
+     * @param $io
+     * @param $output
+     * @param $getCol
+     * @throws \Exception
+     */
+    public function finderCsvFiles($io, $output, $getCol)
+    {
+        try {
+            $finder = new Finder();
+            $fileSystem = new Filesystem();
             $finder->files()->in($this->csv_directory . 'onProcess')->name('*.csv')->exclude('csvRead');
+
             foreach ($finder as $file) {
                 if (file_get_contents($file)) {
                     $this->readDocumentCsv($io, $output, $getCol, $fileSystem, $file);
@@ -166,7 +188,25 @@ class CsvImportCommand extends ContainerAwareCommand
                 }
             }
 
+        } catch (\Exception $e) {
+            $this->logger->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()} into finderCsvFiles function");
+            throw $e;
+        }
+    }
+
+    /**
+     * @param $io
+     * @param $output
+     * @param $getCol
+     * @throws \Exception
+     */
+    public function finderExcelFiles($io, $output, $getCol)
+    {
+        try {
+            $finder = new Finder();
+            $fileSystem = new Filesystem();
             $finder->files()->in($this->csv_directory . 'onProcess')->name('*.xls*')->exclude('csvRead');
+
             foreach ($finder as $file) {
                 if (file_get_contents($file)) {
                     $this->readDocumentExcel($io, $output, $getCol, $fileSystem, $file);
@@ -177,7 +217,7 @@ class CsvImportCommand extends ContainerAwareCommand
             }
 
         } catch (\Exception $e) {
-            $this->logger->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()} into scrollDirectory");
+            $this->logger->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()} into finderExcelFiles function");
             throw $e;
         }
     }
@@ -192,7 +232,7 @@ class CsvImportCommand extends ContainerAwareCommand
      * @throws \Exception
      */
     public function readDocumentCsv(SymfonyStyle $io, OutputInterface $output,
-                                 ReadFileYml $getCol, Filesystem $fileSystem, \SplFileInfo $file)
+                                    ReadFileYml $getCol, Filesystem $fileSystem, \SplFileInfo $file)
     {
         $io->title('Reading .csv ...');
         $this->logger->info('Reading ' . $file->getFilename() . ' file');
@@ -252,23 +292,23 @@ class CsvImportCommand extends ContainerAwareCommand
         try {
             $spreadsheet = IOFactory::load($file);
             $data = [];
-            $sheet=$spreadsheet->getSheet(0);
-            $highestRow= $sheet->getHighestRow();
+            $sheet = $spreadsheet->getSheet(0);
+            $highestRow = $sheet->getHighestRow();
             $highestColumn = $sheet->getHighestColumn();
-            $headings = $sheet->rangeToArray('A1:'.$highestColumn . 1,
-                NULL,TRUE,FALSE);
+            $headings = $sheet->rangeToArray('A1:' . $highestColumn . 1,
+                NULL, TRUE, FALSE);
 
             $start_time = microtime(true); //true is in seconds
             /*param1: normalizer / param2: encoder*/
             $serializer = new Serializer(array(new ObjectNormalizer()), array(new JsonEncoder()));
-            $io->progressStart($highestRow-1);
+            $io->progressStart($highestRow - 1);
 
-            for ($row = 2; $row <= $highestRow; $row++){
+            for ($row = 2; $row <= $highestRow; $row++) {
                 //  Read a row of data into an array
-                $rowData= $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row,
-                    NULL,TRUE,FALSE);
+                $rowData = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row,
+                    NULL, TRUE, FALSE);
                 $rowData = array_combine($headings[0], $rowData[0]);
-                $data[]=$rowData;
+                $data[] = $rowData;
 
                 $duaImport = $this->settersDuaImport($rowData, $getCol);
                 $jsonContent = $serializer->serialize($duaImport, 'json');
@@ -286,9 +326,7 @@ class CsvImportCommand extends ContainerAwareCommand
             $elapsed_time = ($end_time - $start_time) / 60;
             $this->logger->info('Success : Reading time : ' . $elapsed_time . ' min. into CsvImportCommand::insertAction');
 
-        }
-        catch (\Exception $exception)
-        {
+        } catch (\Exception $exception) {
             throw $exception;
         }
     }
