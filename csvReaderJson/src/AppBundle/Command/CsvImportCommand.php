@@ -134,8 +134,8 @@ class CsvImportCommand extends ContainerAwareCommand
     }
 
     /**
-     * this function searches all the files in csv format located inside assets folder,
-     * then calls the (readDocument) function
+     * this function searches all the files in csv and xls or xlsx formats located inside assets folder,
+     * then calls the (readDocument) function depending on the document extension
      * @param SymfonyStyle $io
      * @param OutputInterface $output
      * @throws \Exception
@@ -150,7 +150,7 @@ class CsvImportCommand extends ContainerAwareCommand
             $this->validateExistsDirectory($fileSystem, 'onProcess');
             $getCol = HandleFileFactory::getReadFileYml();
 
-            /* Copy all files csv inside onProcess folder*/
+            /* Copy all csv and xls files inside onProcess folder*/
             foreach ($finder as $file) {
                 $fileSystem->copy(($this->csv_directory) . $file->getFilename(), ($this->csv_directory . ('onProcess/')) . $file->getFilename());
                 $fileSystem->remove(($this->csv_directory) . $file->getFilename());
@@ -166,7 +166,7 @@ class CsvImportCommand extends ContainerAwareCommand
                 }
             }
 
-            $finder->files()->in($this->csv_directory . 'onProcess')->name('*.xls','*.xlsx')->exclude('csvRead');
+            $finder->files()->in($this->csv_directory . 'onProcess')->name('*.xls*')->exclude('csvRead');
             foreach ($finder as $file) {
                 if (file_get_contents($file)) {
                     $this->readDocumentExcel($io, $output, $getCol, $fileSystem, $file);
