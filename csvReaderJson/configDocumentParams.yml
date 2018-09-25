@@ -82,9 +82,9 @@ column39: ItemValue
 
 # Location of log records into Controller folder
 
-log_directory_controller: var/logs/Controller/controllerCsvImport.log
+log_directory_controller: var/logs/Controller/DocSheetImport.log
 
-log_directory_command: var/logs/Command/commandCsvImport.log
+log_directory_command: var/logs/Command/DocSheetImport.log
 
 # Location of .csv Documents indicating your directory
 

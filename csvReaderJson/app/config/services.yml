@@ -5,7 +5,7 @@ parameters:
 
 services:
     console_command.csv_import:
-        class: AppBundle\Command\CsvImportCommand
+        class: AppBundle\Command\DocSheetImportCommand
 
         arguments:
         - "@doctrine.orm.default_entity_manager"

@@ -28,13 +28,13 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 /**
- * Class CsvImportCommand
+ * Class DocSheetImportCommand
  * @package AppBundle\ConsoleCommand
  */
-class CsvImportCommand extends ContainerAwareCommand
+class DocSheetImportCommand extends ContainerAwareCommand
 {
 
-    const CLASS_NAME = CsvImportCommand::class;
+    const CLASS_NAME = DocSheetImportCommand::class;
 
     /**
      * @var EntityManagerInterface
@@ -88,7 +88,7 @@ class CsvImportCommand extends ContainerAwareCommand
     }
 
     /**
-     * CsvImportCommand constructor.
+     * DocSheetImportCommand constructor.
      *
      * @param EntityManagerInterface $em
      *
@@ -122,14 +122,14 @@ class CsvImportCommand extends ContainerAwareCommand
     {
         try {
             $this->setLogger();
-            $this->logger->info('This process was started in ' . CsvImportCommand::class);
+            $this->logger->info('This process was started in ' . DocSheetImportCommand::class);
             $io = new SymfonyStyle($input, $output);
             $this->finderDirectory($io, $output);
         } catch (\Exception $e) {
             $this->logger->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()} into execute method");
             throw $e;
         } finally {
-            $this->logger->info('The process was finally into CsvImportCommand::execute()');
+            $this->logger->info('The process was finally into DocSheetImportCommand::execute()');
         }
     }
 
@@ -268,7 +268,7 @@ class CsvImportCommand extends ContainerAwareCommand
             $io->success('Command Executed with Success!');
             $end_time = microtime(true);
             $elapsed_time = ($end_time - $start_time) / 60;
-            $this->logger->info('Success : Reading time : ' . $elapsed_time . ' min. into CsvImportCommand::insertAction');
+            $this->logger->info('Success : Reading time : ' . $elapsed_time . ' min. into DocSheetImportCommand::insertAction');
 
         } else {
             $output->writeln("\n");
@@ -324,7 +324,7 @@ class CsvImportCommand extends ContainerAwareCommand
             $io->success('Command Executed with Success!');
             $end_time = microtime(true);
             $elapsed_time = ($end_time - $start_time) / 60;
-            $this->logger->info('Success : Reading time : ' . $elapsed_time . ' min. into CsvImportCommand::insertAction');
+            $this->logger->info('Success : Reading time : ' . $elapsed_time . ' min. into DocSheetImportCommand::insertAction');
 
         } catch (\Exception $exception) {
             throw $exception;
