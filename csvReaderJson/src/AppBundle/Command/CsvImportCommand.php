@@ -138,6 +138,7 @@ class CsvImportCommand extends ContainerAwareCommand
             $serializer = new Serializer($normalizers, $encoders);
             $getCol = HandleFileFactory::getReadFileYml();
 
+            $finder->files()->in($this->csv_directory . 'onProcess')->name('*.xls*')->exclude('csvRead');
             foreach ($finder as $file) {
 
                 if (file_get_contents($file)){
@@ -231,7 +232,114 @@ class CsvImportCommand extends ContainerAwareCommand
             $this->logger->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()}");
             throw $e;
         }
-        finally
+    }
+
+    /**
+     *
+     * @param SymfonyStyle $io
+     * @param OutputInterface $output
+     * @param ReadFileYml $getCol
+     * @param Filesystem $fileSystem
+     * @param \SplFileInfo $file
+     * @throws \Exception
+     */
+    public function readDocumentCsv(SymfonyStyle $io, OutputInterface $output,
+                                 ReadFileYml $getCol, Filesystem $fileSystem, \SplFileInfo $file)
+    {
+        $io->title('Reading .csv ...');
+        $this->logger->info('Reading ' . $file->getFilename() . ' file');
+        $reader = Reader::createFromPath($file);
+        $results = $reader->fetchAssoc();
+        $io->progressStart(iterator_count($results));
+
+        /*param1: normalizer / param2: encoder*/
+        $serializer = new Serializer(array(new ObjectNormalizer()), array(new JsonEncoder()));
+
+        $qtyHeaders = (string)$getCol->getColumn('headers');
+        $start_time = microtime(true); //true is in seconds
+        $pos = 0;// pos =0 to indicate the first row, -1 to indicate that the document could not be read
+
+        foreach ($results as $row) {
+            if ((count($row) >= $qtyHeaders)) {
+                $duaImport = $this->settersDuaImport($row, $getCol);
+                $jsonContent = $serializer->serialize($duaImport, 'json');
+                $this->send_post->requestPostAction($jsonContent);
+           //     $output->writeln(sprintf("\033\143"));
+                $output->writeln(sprintf('Processing file reading Csv' . "\n"));
+                $io->progressAdvance();
+                $pos++;
+            } elseif ((count($row) < $qtyHeaders) && $pos === 0) {
+                $pos = -1; // if not is complete the headers from document
+            }
+        }
+        if ($pos != -1) {
+            $this->logger->info('The file ' . $file->getFilename() . ' was read successfully');
+            $fileSystem->copy(($this->csv_directory) . 'onProcess/' . $file->getFilename(), ($this->csv_directory . ('csvRead/')) . $file->getFilename());
+            $fileSystem->remove(($this->csv_directory) . 'onProcess/' . $file->getFilename());
+            $io->progressFinish();
+            $io->success('Command Executed with Success!');
+            $end_time = microtime(true);
+            $elapsed_time = ($end_time - $start_time) / 60;
+            $this->logger->info('Success : Reading time : ' . $elapsed_time . ' min. into CsvImportCommand::insertAction');
+
+        } else {
+            $output->writeln("\n");
+            $io->note('The document ' . $file->getFilename() . ' reading can not be processed. Check if the headers are complete.');
+            $this->logger->info('The document ' . $file->getFilename() . ' reading can not be processed. Check if the headers are complete.');
+        }
+    }
+
+    /**
+     * reading files in xls or xlsx formats
+     * @param SymfonyStyle $io
+     * @param OutputInterface $output
+     * @param ReadFileYml $getCol
+     * @param Filesystem $fileSystem
+     * @param \SplFileInfo $file
+     * @throws \Exception
+     */
+    public function readDocumentExcel(SymfonyStyle $io, OutputInterface $output,
+                                      ReadFileYml $getCol, Filesystem $fileSystem, \SplFileInfo $file)
+    {
+        try {
+            $spreadsheet = IOFactory::load($file);
+            $data = [];
+            $sheet=$spreadsheet->getSheet(0);
+            $highestRow= $sheet->getHighestRow();
+            $highestColumn = $sheet->getHighestColumn();
+            $headings = $sheet->rangeToArray('A1:'.$highestColumn . 1,
+                NULL,TRUE,FALSE);
+
+            $start_time = microtime(true); //true is in seconds
+            /*param1: normalizer / param2: encoder*/
+            $serializer = new Serializer(array(new ObjectNormalizer()), array(new JsonEncoder()));
+            $io->progressStart($highestRow-1);
+
+            for ($row = 2; $row <= $highestRow; $row++){
+                //  Read a row of data into an array
+                $rowData= $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row,
+                    NULL,TRUE,FALSE);
+                $rowData = array_combine($headings[0], $rowData[0]);
+                $data[]=$rowData;
+
+                $duaImport = $this->settersDuaImport($rowData, $getCol);
+                $jsonContent = $serializer->serialize($duaImport, 'json');
+                $this->send_post->requestPostAction($jsonContent);
+                $output->writeln(sprintf("\033\143"));
+                $output->writeln(sprintf('Processing file reading excel' . "\n"));
+                $io->progressAdvance();
+            }
+            $this->logger->info('The file ' . $file->getFilename() . ' was read successfully');
+            $fileSystem->copy(($this->csv_directory) . 'onProcess/' . $file->getFilename(), ($this->csv_directory . ('csvRead/')) . $file->getFilename());
+            $fileSystem->remove(($this->csv_directory) . 'onProcess/' . $file->getFilename());
+            $io->progressFinish();
+            $io->success('Command Executed with Success!');
+            $end_time = microtime(true);
+            $elapsed_time = ($end_time - $start_time) / 60;
+            $this->logger->info('Success : Reading time : ' . $elapsed_time . ' min. into CsvImportCommand::insertAction');
+
+        }
+        catch (\Exception $exception)
         {
             $this->logger->info('The process was finally into CsvImportCommand::execute()');
         }
