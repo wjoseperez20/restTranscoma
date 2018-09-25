@@ -268,7 +268,7 @@ class DocSheetImportCommand extends ContainerAwareCommand
             $io->success('Command Executed with Success!');
             $end_time = microtime(true);
             $elapsed_time = ($end_time - $start_time) / 60;
-            $this->logger->info('Success : Reading time : ' . $elapsed_time . ' min. into DocSheetImportCommand::insertAction');
+            $this->logger->info('Success : Reading time : ' . $elapsed_time . ' min. into DocSheetImportCommand::readDocumentCsv');
 
         } else {
             $output->writeln("\n");
@@ -324,7 +324,7 @@ class DocSheetImportCommand extends ContainerAwareCommand
             $io->success('Command Executed with Success!');
             $end_time = microtime(true);
             $elapsed_time = ($end_time - $start_time) / 60;
-            $this->logger->info('Success : Reading time : ' . $elapsed_time . ' min. into DocSheetImportCommand::insertAction');
+            $this->logger->info('Success : Reading time : ' . $elapsed_time . ' min. into DocSheetImportCommand::readDocumentExcel');
 
         } catch (\Exception $exception) {
             throw $exception;
