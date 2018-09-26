@@ -145,9 +145,9 @@ class DocSheetImportCommand extends ContainerAwareCommand
     {
         try {
             $finder = new Finder();
-            $finder->files()->in($this->csv_directory)->name('*.xls*')->name('*.csv')->exclude('csvRead')->exclude('onProcess');
+            $finder->files()->in($this->csv_directory)->name('*.xls*')->name('*.csv')->exclude('docRead')->exclude('onProcess');
             $fileSystem = new Filesystem();
-            $this->validateExistsDirectory($fileSystem, 'csvRead');
+            $this->validateExistsDirectory($fileSystem, 'docRead');
             $this->validateExistsDirectory($fileSystem, 'onProcess');
             $getCol = HandleFileFactory::getReadFileYml();
 
@@ -177,7 +177,7 @@ class DocSheetImportCommand extends ContainerAwareCommand
         try {
             $finder = new Finder();
             $fileSystem = new Filesystem();
-            $finder->files()->in($this->csv_directory . 'onProcess')->name('*.csv')->exclude('csvRead');
+            $finder->files()->in($this->csv_directory . 'onProcess')->name('*.csv')->exclude('docRead');
 
             foreach ($finder as $file) {
                 if (file_get_contents($file)) {
@@ -205,7 +205,7 @@ class DocSheetImportCommand extends ContainerAwareCommand
         try {
             $finder = new Finder();
             $fileSystem = new Filesystem();
-            $finder->files()->in($this->csv_directory . 'onProcess')->name('*.xls*')->exclude('csvRead');
+            $finder->files()->in($this->csv_directory . 'onProcess')->name('*.xls*')->exclude('docRead');
 
             foreach ($finder as $file) {
                 if (file_get_contents($file)) {
@@ -262,7 +262,7 @@ class DocSheetImportCommand extends ContainerAwareCommand
         }
         if ($pos != -1) {
             $this->logger->info('The file ' . $file->getFilename() . ' was read successfully');
-            $fileSystem->copy(($this->csv_directory) . 'onProcess/' . $file->getFilename(), ($this->csv_directory . ('csvRead/')) . $file->getFilename());
+            $fileSystem->copy(($this->csv_directory) . 'onProcess/' . $file->getFilename(), ($this->csv_directory . ('docRead/')) . $file->getFilename());
             $fileSystem->remove(($this->csv_directory) . 'onProcess/' . $file->getFilename());
             $io->progressFinish();
             $io->success('Command Executed with Success!');
@@ -318,7 +318,7 @@ class DocSheetImportCommand extends ContainerAwareCommand
                 $io->progressAdvance();
             }
             $this->logger->info('The file ' . $file->getFilename() . ' was read successfully');
-            $fileSystem->copy(($this->csv_directory) . 'onProcess/' . $file->getFilename(), ($this->csv_directory . ('csvRead/')) . $file->getFilename());
+            $fileSystem->copy(($this->csv_directory) . 'onProcess/' . $file->getFilename(), ($this->csv_directory . ('docRead/')) . $file->getFilename());
             $fileSystem->remove(($this->csv_directory) . 'onProcess/' . $file->getFilename());
             $io->progressFinish();
             $io->success('Command Executed with Success!');
@@ -404,7 +404,7 @@ class DocSheetImportCommand extends ContainerAwareCommand
     }
 
     /**
-     * Validates if exist the folder directory (csvRead), if it not exists then it creates
+     * Validates if exist the folder directory (docRead), if it not exists then it creates
      * @param Filesystem $fileSystem
      * @param $nameFolder
      */
