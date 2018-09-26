@@ -62,33 +62,20 @@ class DocSheetImportCommand extends ContainerAwareCommand
     private $send_post;
 
     /**
-     * To set or initialize the field for logging the logs
-     * @throws \Exception
-     */
-    public function setLogger()
-    {
-        try {
-            $handle_file = HandleFileFactory::getReadFileYml();
-            $this->log_directory = $handle_file->getColumn('log_directory_command');
-            $this->csv_directory = $handle_file->getColumn('csv_directory');
-            $this->send_post = ControllerFactory::getPostDataController();
-            $this->logger = LoggerFactory::getLogger(self::CLASS_NAME);
-            $this->handler = LoggerFactory::getStreamHandler($this->log_directory);
-            $this->logger->pushHandler($this->handler);
-            $this->send_post = ControllerFactory::getPostDataController();
-        } catch (\Exception $e) {
-            $this->logger->error("({$e->getCode()}) Message: '{$e->getMessage()}' in file: '{$e->getFile()}' in line: {$e->getLine()}");
-            throw $e;
-        }
-    }
-
-    /**
      * DocSheetImportCommand constructor.
-     *
      * @throws \Symfony\Component\Console\Exception\LogicException
+     * @throws \Exception
      */
     public function __construct()
     {
+        $handle_file = HandleFileFactory::getReadFileYml();
+        $this->log_directory = $handle_file->getColumn('log_directory_command');
+        $this->csv_directory = (string)$handle_file->getColumn('csv_directory');
+        $this->send_post = ControllerFactory::getPostDataController();
+        $this->logger = LoggerFactory::getLogger(self::CLASS_NAME);
+        $this->handler = LoggerFactory::getStreamHandler($this->log_directory);
+        $this->logger->pushHandler($this->handler);
+        $this->send_post = ControllerFactory::getPostDataController();
         parent::__construct();
     }
 
@@ -113,7 +100,6 @@ class DocSheetImportCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         try {
-            $this->setLogger();
             $this->logger->info('This process was started in ' . DocSheetImportCommand::class);
             $io = new SymfonyStyle($input, $output);
             $this->finderDirectory($io, $output);
