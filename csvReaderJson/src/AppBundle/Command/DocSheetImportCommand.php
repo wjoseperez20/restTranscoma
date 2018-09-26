@@ -37,11 +37,6 @@ class DocSheetImportCommand extends ContainerAwareCommand
     const CLASS_NAME = DocSheetImportCommand::class;
 
     /**
-     * @var EntityManagerInterface
-     */
-    private $em;
-
-    /**
      * @var logger
      */
     private $logger;
@@ -90,14 +85,11 @@ class DocSheetImportCommand extends ContainerAwareCommand
     /**
      * DocSheetImportCommand constructor.
      *
-     * @param EntityManagerInterface $em
-     *
      * @throws \Symfony\Component\Console\Exception\LogicException
      */
-    public function __construct(EntityManagerInterface $em)
+    public function __construct()
     {
         parent::__construct();
-        $this->em = $em;
     }
 
     /**
